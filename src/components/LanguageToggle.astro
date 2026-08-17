@@ -1,0 +1,39 @@
+---
+import { getLangFromUrl } from "@/i18n/utils"
+
+const lang = getLangFromUrl(Astro.url)
+const isEn = lang === "en"
+const pathname = Astro.url.pathname
+const toggleHref = isEn 
+  ? pathname.replace(/^\/en(\/|$)/, "/") 
+  : `/en${pathname === "/" ? "" : pathname}`
+const toggleLabel = isEn ? "Passer en Français" : "Switch to English"
+const toggleText = isEn ? "FR" : "EN"
+const toggleStorage = isEn ? "fr" : "en"
+---
+
+<a
+  href={toggleHref}
+  class="lang-toggle-btn"
+  data-icon-button
+  aria-label={toggleLabel}
+  title={toggleLabel}
+  onclick={`localStorage.setItem('lang-preference', '${toggleStorage}')`}
+>
+  <span>{toggleText}</span>
+</a>
+
+<style>
+  .lang-toggle-btn {
+    text-decoration: none;
+    color: var(--foreground);
+    font-size: 0.8rem;
+    font-weight: 700;
+    font-family: var(--font-sans);
+  }
+
+  .lang-toggle-btn span {
+    display: inline-block;
+    line-height: 1;
+  }
+</style>

@@ -1,0 +1,10 @@
+@@ -79,6 +79,7 @@
+       <bento-cell style="grid-area: a">
+         <bento-layer>
+-          <img src={bgAbout.src} alt="" />
++          <ABackgroundDark data-theme-dark />
++          <ABackgroundLight data-theme-light />
+         </bento-layer>
+         <bento-layer data-overlay>
+-          <img src={fgAbout.src} alt="" />
++          <AForegroundDark data-theme-dark />
