@@ -1,0 +1,89 @@
+---
+import Base from "@/layouts/Base.astro"
+import Socials from "@/components/Socials.astro"
+import PostList from "@/components/PostList.astro"
+import { highlights } from "@/data/highlights"
+import { SITE, SOCIALS } from "@/data/site"
+import type { Locale } from "@/data/types"
+import { t } from "@/i18n/ui"
+import { localizedPath } from "@/lib/paths"
+import { postsNewestFirst, upcomingPosts } from "@/lib/posts"
+
+interface Props {
+  locale: Locale
+}
+
+const { locale } = Astro.props
+const latest = postsNewestFirst().slice(0, 4)
+const soon = upcomingPosts()[0]
+const jsonLd = {
+  "@context": "https://schema.org",
+  "@type": "Person",
+  name: SITE.author,
+  alternateName: "Dontbyshai",
+  url: "https://shai.biz",
+  email: SITE.email,
+  description: SITE.description[locale],
+  homeLocation: "Auvergne, France",
+  sameAs: SOCIALS.filter((item) => item.href.startsWith("http")).map((item) => item.href),
+}
+---
+
+<Base
+  locale={locale}
+  title={t(locale, "homeTitle")}
+  description={SITE.description[locale]}
+  pathname="/"
+  jsonLd={jsonLd}
+>
+  <div class="wrap">
+    <header class="hero">
+      <p class="kicker">{t(locale, "homeKicker")}</p>
+      <h1>{t(locale, "homeTitle")}</h1>
+      <p class="lede">{t(locale, "homeLede")}</p>
+      <Socials />
+    </header>
+
+    <h2>{t(locale, "now")}</h2>
+    <ul class="rule-list">
+      {
+        highlights.map((item) => (
+          <li>
+            <a class="now-main" href={localizedPath(locale, `/blog/${item.blogSlug}/`)}>
+              {item.image ? (
+                <img class="thumb" src={item.image.src} alt="" width="64" height="64" />
+              ) : (
+                <span class="monogram" aria-hidden="true">
+                  {item.monogram}
+                </span>
+              )}
+              <span>
+                <span class="now-name">{item.name}</span>
+                <span class="now-text">{item.text[locale]}</span>
+              </span>
+            </a>
+            {item.link && (
+              <p class="work-links">
+                <a href={item.link.href}>{item.link.label}</a>
+              </p>
+            )}
+          </li>
+        ))
+      }
+    </ul>
+
+    {
+      soon && (
+        <aside class="soon">
+          <p class="kicker">{t(locale, "soon")}</p>
+          <a href={localizedPath(locale, `/blog/${soon.slug}/`)}>{soon.title[locale]}</a>
+          <p>{t(locale, "soonText")}</p>
+        </aside>
+      )
+    }
+
+    <h2>{t(locale, "journal")}</h2>
+    <PostList locale={locale} posts={latest} />
+    <p><a href={localizedPath(locale, "/blog/")}>{t(locale, "allPosts")}</a></p>
+  </div>
+</Base>

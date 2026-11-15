@@ -1,14 +1,11 @@
-import { defineConfig } from "astro/config"
 import sitemap from "@astrojs/sitemap"
-import { satteri } from "@astrojs/markdown-satteri"
-import { hastPlugins, mdastPlugins } from "./src/lib/markdown"
+import { defineConfig } from "astro/config"
 
 export default defineConfig({
   site: "https://shai.biz",
   server: { port: 4321 },
   compressHTML: true,
-  prefetch: { prefetchAll: true },
-  vite: { resolve: { tsconfigPaths: true } },
+  trailingSlash: "always",
   i18n: {
     defaultLocale: "fr",
     locales: ["fr", "en"],
@@ -18,21 +15,21 @@ export default defineConfig({
   },
   integrations: [
     sitemap({
-      filter: (page) =>
-        !/\/blog\/[^/]+\/[^/]+\/?$/.test(page) &&
-        !/\/authors\/[^/]+\/?$/.test(page) &&
-        !page.includes("/tags/") &&
-        !page.includes("/fixtures/") &&
-        !/\/music\/?$/.test(page) &&
-        !/\.(md|txt|xml)\/?$/.test(page),
+      i18n: {
+        defaultLocale: "fr",
+        locales: {
+          fr: "fr-FR",
+          en: "en-US",
+        },
+      },
     }),
   ],
-  markdown: {
-    syntaxHighlight: false,
-    processor: satteri({
-      features: { directive: true, math: true, smartPunctuation: true },
-      mdastPlugins,
-      hastPlugins,
-    }),
+  redirects: {
+    "/music": "/",
+  },
+  vite: {
+    resolve: {
+      tsconfigPaths: true,
+    },
   },
 })

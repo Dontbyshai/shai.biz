@@ -1,0 +1,24 @@
+---
+import Base from "@/layouts/Base.astro"
+import Socials from "@/components/Socials.astro"
+import { aboutParagraphs } from "@/data/about"
+import type { Locale } from "@/data/types"
+import { t } from "@/i18n/ui"
+import { renderParagraphs } from "@/lib/text"
+
+interface Props {
+  locale: Locale
+}
+
+const { locale } = Astro.props
+const html = renderParagraphs(aboutParagraphs[locale], locale)
+---
+
+<Base locale={locale} title={t(locale, "aboutTitle")} description={t(locale, "homeLede")} pathname="/about/">
+  <div class="wrap">
+    <h1>{t(locale, "aboutTitle")}</h1>
+    <div class="prose" set:html={html} />
+    <h2>{t(locale, "elsewhere")}</h2>
+    <Socials />
+  </div>
+</Base>

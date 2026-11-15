@@ -1,17 +1,16 @@
-<div align="center">
-
 # shai.biz
 
-</div>
+Site personnel de Shaï Chomette-Dugat. Astro, pages statiques, prêt pour Cloudflare.
 
-Welcome to the source code for my personal website.
+```bash
+bun install
+bun run dev
+```
 
-This project is a customized version based on the excellent work by Jason (jktrn). It utilizes the [astro-erudite](https://github.com/jktrn/astro-erudite) black and white theme, originally designed for enscribe.dev.
+Le build de production :
 
-### Features
-- Built with [Astro](https://astro.build/)
-- Beautiful and minimalistic black and white aesthetic
-- Advanced typography and layout engine
+```bash
+bun run build
+```
 
-### Acknowledgments
-All credits for the original visual design, Knuth–Plass line-breaking algorithm implementation, and bento grid layout go to [jktrn](https://github.com/jktrn/enscribe.dev). This repository serves as a personal fork stripped down to the basic necessities for my own use.
+Le résultat est dans `dist/`. Le fichier `wrangler.jsonc` décrit un déploiement statique, sans stockage distant.

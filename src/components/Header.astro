@@ -1,0 +1,83 @@
+---
+import type { Locale } from "@/data/types"
+import { t } from "@/i18n/ui"
+import { isCurrent, localizedPath, otherLocale } from "@/lib/paths"
+
+interface Props {
+  locale: Locale
+  pathname: string
+}
+
+const { locale, pathname } = Astro.props
+const other = otherLocale(locale)
+const links = [
+  { href: localizedPath(locale, "/blog/"), key: "blog" as const },
+  { href: localizedPath(locale, "/work/"), key: "work" as const },
+  { href: localizedPath(locale, "/about/"), key: "about" as const },
+]
+const current = Astro.url.pathname
+---
+
+<header class="site-header">
+  <div class="wrap header-inner">
+    <a class="wordmark" href={localizedPath(locale, "/")}>Shaï</a>
+    <nav class="nav" aria-label={t(locale, "navLabel")}>
+      {
+        links.map((link) => (
+          <a href={link.href} aria-current={isCurrent(current, link.href) ? "page" : undefined}>
+            {t(locale, link.key)}
+          </a>
+        ))
+      }
+    </nav>
+    <div class="header-tools">
+      <a class="tool-link" href={localizedPath(other, pathname)} hreflang={other} lang={other}>
+        <span class="visually-hidden">{t(locale, "langOtherName")}</span>
+        <span aria-hidden="true">{t(locale, "langOther")}</span>
+      </a>
+      <button
+        class="theme-toggle"
+        type="button"
+        data-theme-toggle
+        aria-pressed="false"
+        aria-label={t(locale, "themeLabel")}
+      >
+        <span class="when-light">{t(locale, "themeToDark")}</span>
+        <span class="when-dark">{t(locale, "themeToLight")}</span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<style>
+  .visually-hidden {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    padding: 0;
+    margin: -1px;
+    overflow: hidden;
+    clip: rect(0, 0, 0, 0);
+    white-space: nowrap;
+    border: 0;
+  }
+</style>
+
+<script>
+  const button = document.querySelector<HTMLButtonElement>("[data-theme-toggle]")
+  const meta = document.querySelector('meta[name="theme-color"]')
+  const apply = (theme: "light" | "dark") => {
+    document.documentElement.dataset.theme = theme
+    localStorage.setItem("theme", theme)
+    if (button) button.setAttribute("aria-pressed", theme === "dark" ? "true" : "false")
+    if (meta) meta.setAttribute("content", theme === "dark" ? "#f3eadf" : "#1d4538")
+  }
+  if (button) {
+    const currentTheme = document.documentElement.dataset.theme === "dark" ? "dark" : "light"
+    button.setAttribute("aria-pressed", currentTheme === "dark" ? "true" : "false")
+    button.addEventListener("click", () => {
+      const dark = document.documentElement.dataset.theme === "dark"
+      apply(dark ? "light" : "dark")
+    })
+  }
+</script>

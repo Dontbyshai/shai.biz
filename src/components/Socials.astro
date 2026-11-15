@@ -1,0 +1,13 @@
+---
+import { SOCIALS } from "@/data/site"
+---
+
+<ul class="socials">
+  {
+    SOCIALS.map((item) => (
+      <li>
+        <a href={item.href} rel="me">{item.label}</a>
+      </li>
+    ))
+  }
+</ul>

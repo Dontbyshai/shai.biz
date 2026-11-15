@@ -1,0 +1,56 @@
+---
+import Base from "@/layouts/Base.astro"
+import type { Locale } from "@/data/types"
+import { t } from "@/i18n/ui"
+import { formatDay } from "@/lib/dates"
+import { localizedPath } from "@/lib/paths"
+import { postsByYear, upcomingPosts } from "@/lib/posts"
+
+interface Props {
+  locale: Locale
+}
+
+const { locale } = Astro.props
+const years = postsByYear()
+const upcoming = upcomingPosts()
+---
+
+<Base locale={locale} title={t(locale, "blogTitle")} description={t(locale, "blogLede")} pathname="/blog/">
+  <div class="wrap">
+    <h1>{t(locale, "blogTitle")}</h1>
+    <p class="lede">{t(locale, "blogLede")}</p>
+
+    {
+      upcoming.map((post) => (
+        <aside class="soon">
+          <p class="kicker">{t(locale, "soon")}</p>
+          <a href={localizedPath(locale, `/blog/${post.slug}/`)}>{post.title[locale]}</a>
+          <p>{post.description[locale]}</p>
+        </aside>
+      ))
+    }
+
+    {
+      years.map((group) => (
+        <section>
+          <h2 class="year">{group.year}</h2>
+          <ul class="rule-list">
+            {group.posts.map((post) => (
+              <li>
+                <a class="post-link" href={localizedPath(locale, `/blog/${post.slug}/`)}>
+                  <time class="post-date" datetime={post.date}>
+                    {formatDay(post.date, locale)}
+                  </time>
+                  <span>
+                    <span class="post-title">{post.title[locale]}</span>
+                    <span class="post-desc">{post.description[locale]}</span>
+                  </span>
+                </a>
+              </li>
+            ))}
+          </ul>
+        </section>
+      ))
+    }
+  </div>
+</Base>

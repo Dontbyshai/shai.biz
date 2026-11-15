@@ -1,12 +1,15 @@
 ---
-import MetaPage from "@/components/MetaPage.astro"
-import Layout from "@/layouts/Layout.astro"
+import Base from "@/layouts/Base.astro"
+import { t } from "@/i18n/ui"
 ---
 
-<Layout crumbs={[{ label: "404", href: "/404" }]}>
-  <MetaPage slot="head" title="404" />
-  <prose-content data-linebreak-root>
-    <h1>404</h1>
-    <p>This page does not exist.</p>
-  </prose-content>
-</Layout>
+<Base locale="fr" title={t("fr", "notFoundTitle")} description={t("fr", "notFoundText")} pathname="/404/">
+  <div class="wrap">
+    <h1>{t("fr", "notFoundTitle")}</h1>
+    <p class="lede">{t("fr", "notFoundText")}</p>
+    <p><a href="/">{t("fr", "notFoundHome")}</a></p>
+    <p lang="en">
+      {t("en", "notFoundText")} <a href="/en/">{t("en", "notFoundHome")}</a>
+    </p>
+  </div>
+</Base>

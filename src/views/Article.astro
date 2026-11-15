@@ -1,0 +1,95 @@
+---
+import Base from "@/layouts/Base.astro"
+import type { Locale, Post } from "@/data/types"
+import { t } from "@/i18n/ui"
+import { formatDay } from "@/lib/dates"
+import { localizedPath } from "@/lib/paths"
+import { neighbors } from "@/lib/posts"
+import { renderParagraphs } from "@/lib/text"
+
+interface Props {
+  locale: Locale
+  post: Post
+}
+
+const { locale, post } = Astro.props
+const html = renderParagraphs(post.paragraphs[locale], locale)
+const nearby = post.date ? neighbors(post.slug) : { older: null, newer: null }
+const pathname = `/blog/${post.slug}/`
+---
+
+<Base
+  locale={locale}
+  title={post.title[locale]}
+  description={post.description[locale]}
+  pathname={pathname}
+  image={post.image?.src}
+  published={post.date}
+>
+  <div class="wrap">
+    <article>
+      <header class="article-head">
+        <p class="kicker">
+          <a href={localizedPath(locale, "/blog/")}>{t(locale, "blogTitle")}</a>
+          {" · "}
+          {
+            post.date ? (
+              <time datetime={post.date}>{formatDay(post.date, locale)}</time>
+            ) : (
+              <span>{t(locale, "undated")}</span>
+            )
+          }
+        </p>
+        <h1>{post.title[locale]}</h1>
+        <p class="lede">{post.description[locale]}</p>
+      </header>
+      {
+        post.image && (
+          <figure class="figure">
+            <img
+              class={post.image.wide ? "wide" : undefined}
+              src={post.image.src}
+              width={post.image.width}
+              height={post.image.height}
+              alt={post.image.alt[locale]}
+            />
+            <figcaption>{post.image.caption[locale]}</figcaption>
+          </figure>
+        )
+      }
+      <div class="prose" set:html={html} />
+      {
+        post.links && post.links.length > 0 && (
+          <>
+            <h2>{t(locale, "links")}</h2>
+            <ul class="outlinks">
+              {post.links.map((link) => (
+                <li>
+                  <a href={link.href}>{link.label[locale]}</a>
+                </li>
+              ))}
+            </ul>
+          </>
+        )
+      }
+      <nav class="pager" aria-label={t(locale, "blogTitle")}>
+        {
+          nearby.older && (
+            <a href={localizedPath(locale, `/blog/${nearby.older.slug}/`)}>
+              <small>{t(locale, "older")}</small>
+              <span>{nearby.older.title[locale]}</span>
+            </a>
+          )
+        }
+        {
+          nearby.newer && (
+            <a href={localizedPath(locale, `/blog/${nearby.newer.slug}/`)}>
+              <small>{t(locale, "newer")}</small>
+              <span>{nearby.newer.title[locale]}</span>
+            </a>
+          )
+        }
+      </nav>
+    </article>
+  </div>
+</Base>
