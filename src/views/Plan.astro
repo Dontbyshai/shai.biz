@@ -62,20 +62,56 @@ const companySummary = (c: Company) => `${c.country[locale]} · ${c.owners[local
           </button>
         </div>
         <div class="world" data-world>
-          <div class="head">
+          <div class="me-slot">
             <button
               type="button"
-              class="node root"
-              data-node="group"
+              class="node me"
+              data-node="me"
               aria-pressed="false"
               aria-controls="plan-panel"
             >
-              <span class="root-mark" aria-hidden="true"><Logo size={26} /></span>
+              <span class="me-mark" aria-hidden="true"><Logo size={26} /></span>
               <span class="root-txt">
-                <span class="n-name">{groupName}</span>
-                <span class="n-sub">{founder} · {t(locale, "planGroupRole")}</span>
+                <span class="n-name">{founder}</span>
+                <span class="n-sub">@Dontbyshai</span>
               </span>
             </button>
+            <div class="me-fork" aria-hidden="true">
+              <span class="spine wire" data-path="group ltd llc fr oss"></span>
+              <span class="bus me-bus">
+                <span class="bus-seg wire" data-path="group ltd llc fr"></span>
+                <span class="bus-seg wire wire-dash" data-path="oss"></span>
+              </span>
+            </div>
+          </div>
+
+          <div class="group-col" data-branch="group">
+            <div class="group-stem wire" data-path="group ltd llc fr" aria-hidden="true"></div>
+            <div class="group-card">
+              <button
+                type="button"
+                class="node root"
+                data-node="group"
+                aria-pressed="false"
+                aria-controls="plan-panel"
+              >
+                <img
+                  class="group-logo"
+                  src="/images/shai-company-logo.png"
+                  alt=""
+                  width="40"
+                  height="27"
+                />
+                <span class="root-txt">
+                  <span class="n-name">{groupName}</span>
+                  <span class="n-sub">{t(locale, "planGroupSub")}</span>
+                </span>
+              </button>
+              <a class="n-site mono" href="https://shaiscompany.com" rel="noopener">
+                <Icon name="globe" size={13} />
+                shaiscompany.com
+              </a>
+            </div>
             <div class="fork" aria-hidden="true">
               <span class="spine wire" data-path="ltd llc fr"></span>
               <span class="bus">
@@ -83,7 +119,6 @@ const companySummary = (c: Company) => `${c.country[locale]} · ${c.owners[local
                 <span class="bus-seg wire" data-path="llc fr"></span>
               </span>
             </div>
-          </div>
 
           <div class="row">
             {
@@ -142,8 +177,10 @@ const companySummary = (c: Company) => `${c.country[locale]} · ${c.owners[local
               ))
             }
           </div>
+          </div>
 
           <aside class="oss-col" data-branch="oss">
+            <div class="oss-stem wire wire-dash" data-path="oss" aria-hidden="true"></div>
             <p class="oss-kicker mono">{t(locale, "planOssKicker")}</p>
             <div class="oss-wrap">
               <button
@@ -207,12 +244,21 @@ const companySummary = (c: Company) => `${c.country[locale]} · ${c.owners[local
     }
   </p>
 
+  <template data-for="me">
+    <div class="p-main">
+      <p class="p-kicker mono">@Dontbyshai</p>
+      <h3 class="p-title">{founder}</h3>
+      <p class="p-lead">{t(locale, "planMeLead")}</p>
+    </div>
+  </template>
+
   <template data-for="group">
     <div class="p-main">
-      <p class="p-kicker mono">{groupName}</p>
-      <h3 class="p-title">{founder}</h3>
-      <p class="p-lead">{t(locale, "planGroupRole")}</p>
-      <p class="p-aside">{t(locale, "planOssSub")}.</p>
+      <p class="p-kicker mono">{t(locale, "planGroupSub")}</p>
+      <h3 class="p-title">{groupName}</h3>
+      <a class="p-work mono" href="https://shaiscompany.com" rel="noopener">
+        shaiscompany.com
+      </a>
     </div>
     <ul class="p-list">
       {
@@ -328,7 +374,7 @@ const companySummary = (c: Company) => `${c.country[locale]} · ${c.owners[local
 </Base>
 
 <script>
-  const MIN = 0.45
+  const MIN = 0.2
   const MAX = 2.2
   const STEP = 1.18
 
@@ -380,11 +426,13 @@ const companySummary = (c: Company) => `${c.country[locale]} · ${c.owners[local
       }
       for (const el of stage.querySelectorAll<HTMLElement>("[data-branch]")) {
         const on =
-          el.dataset.branch === branch || (branch === "group" && el.dataset.branch !== "oss")
+          el.dataset.branch === branch ||
+          branch === "me" ||
+          (branch === "group" && el.dataset.branch !== "oss")
         el.classList.toggle("is-hot", on)
       }
       if (id) show(id)
-      else show("group")
+      else show("me")
     }
 
     const apply = (animate = false) => {
@@ -404,14 +452,7 @@ const companySummary = (c: Company) => `${c.country[locale]} · ${c.owners[local
     }
 
     const fit = (animate = false) => {
-      if (compact.matches) {
-        scale = 1
-        x = 0
-        y = 0
-        apply(false)
-        return
-      }
-      const pad = 20
+      const pad = compact.matches ? 12 : 20
       const vw = viewport.clientWidth - pad * 2
       const vh = viewport.clientHeight - pad * 2
       const ww = world.offsetWidth
@@ -438,8 +479,9 @@ const companySummary = (c: Company) => `${c.country[locale]} · ${c.owners[local
       return branch.dataset.branch === "oss" ? "oss" : `co-${branch.dataset.branch}`
     }
 
+    const canHover = window.matchMedia("(hover: hover) and (pointer: fine)")
     stage.addEventListener("pointerenter", (e) => {
-      if (pinned || compact.matches) return
+      if (pinned || !canHover.matches) return
       const id = targetOf(e.target)
       if (id) setHot(id, false)
     }, true)
@@ -479,7 +521,6 @@ const companySummary = (c: Company) => `${c.country[locale]} · ${c.owners[local
         setHot(null, false)
         return
       }
-      if (compact.matches) return
       const inView = viewport.contains(e.target as Node) || e.target === viewport
       if (!inView) return
       const cx = viewport.clientWidth / 2
@@ -529,7 +570,6 @@ const companySummary = (c: Company) => `${c.country[locale]} · ${c.owners[local
     viewport.addEventListener(
       "wheel",
       (e) => {
-        if (compact.matches) return
         e.preventDefault()
         const rect = viewport.getBoundingClientRect()
         const factor = Math.exp(-e.deltaY * (e.deltaMode === 1 ? 0.05 : 0.0018))
@@ -539,7 +579,6 @@ const companySummary = (c: Company) => `${c.country[locale]} · ${c.owners[local
     )
 
     const onDown = (e: PointerEvent) => {
-      if (compact.matches) return
       if ((e.target as HTMLElement).closest("a, button.z-btn")) return
       pointers.set(e.pointerId, { x: e.clientX, y: e.clientY })
       if (pointers.size === 2) {
@@ -615,7 +654,7 @@ const companySummary = (c: Company) => `${c.country[locale]} · ${c.owners[local
     ro.observe(viewport)
     compact.addEventListener("change", () => fit(false))
     document.fonts?.ready.then(() => fit(false))
-    show("group")
+    show("me")
     fit(false)
     requestAnimationFrame(() => fit(false))
   }
@@ -728,8 +767,8 @@ const companySummary = (c: Company) => `${c.country[locale]} · ${c.owners[local
   .viewport {
     position: relative;
     min-width: 0;
-    height: min(62vh, 600px);
-    min-height: 500px;
+    height: min(70vh, 700px);
+    min-height: 560px;
     overflow: hidden;
     cursor: grab;
     touch-action: none;
@@ -745,16 +784,17 @@ const companySummary = (c: Company) => `${c.country[locale]} · ${c.owners[local
 
   .world {
     --col-gap: 20px;
+    --oss-w: 228px;
     width: 100%;
-    max-width: 100%;
+    min-width: 1100px;
     box-sizing: border-box;
     transform-origin: 0 0;
     padding: 28px 28px 40px;
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 228px;
+    grid-template-columns: minmax(0, 1fr) var(--oss-w);
     grid-template-areas:
-      "head ."
-      "row oss";
+      "me me"
+      "group oss";
     column-gap: 28px;
     row-gap: 0;
     align-items: start;
@@ -763,13 +803,20 @@ const companySummary = (c: Company) => `${c.country[locale]} · ${c.owners[local
     transition: transform 0.28s var(--ease);
   }
 
-  .head {
-    grid-area: head;
+  .me-slot {
+    grid-area: me;
     display: grid;
     justify-items: center;
   }
+  .group-col {
+    grid-area: group;
+    display: grid;
+    justify-items: center;
+    min-width: 0;
+    width: 100%;
+  }
   .row {
-    grid-area: row;
+    width: 100%;
     display: grid;
     grid-template-columns: repeat(3, minmax(200px, 1fr));
     gap: 18px var(--col-gap);
@@ -778,13 +825,39 @@ const companySummary = (c: Company) => `${c.country[locale]} · ${c.owners[local
   .oss-col {
     grid-area: oss;
     min-width: 0;
-    padding-top: 2px;
+    display: grid;
+    justify-items: stretch;
+  }
+  .fork {
+    width: 100%;
   }
 
-  .fork {
+  .fork,
+  .me-fork {
     position: relative;
     width: 100%;
     height: 44px;
+  }
+  .group-stem,
+  .oss-stem {
+    width: var(--wire-w);
+    height: 36px;
+    margin: 0 auto;
+    background: var(--wire);
+  }
+  .wire-dash.oss-stem,
+  .stem.part {
+    background: repeating-linear-gradient(
+      to bottom,
+      var(--wire) 0 5px,
+      transparent 5px 9px
+    );
+  }
+  .wire-dash.bus-seg {
+    background: none;
+    height: 0;
+    align-self: center;
+    border-top: var(--wire-w) dashed var(--wire);
   }
   .spine {
     position: absolute;
@@ -803,6 +876,10 @@ const companySummary = (c: Company) => `${c.country[locale]} · ${c.owners[local
     height: var(--wire-w);
     display: grid;
     grid-template-columns: 1fr 1fr;
+  }
+  .bus.me-bus {
+    left: calc((100% - 28px - var(--oss-w)) / 2);
+    right: calc(var(--oss-w) / 2);
   }
   .bus-seg {
     height: var(--wire-w);
@@ -832,10 +909,12 @@ const companySummary = (c: Company) => `${c.country[locale]} · ${c.owners[local
   .stage[data-hot] .wire {
     opacity: 0.35;
   }
-  .stage[data-hot="group"] .wire,
+  .stage[data-hot="me"] .wire,
+  .stage[data-hot="group"] [data-path~="group"],
   .stage[data-hot="ltd"] [data-path~="ltd"],
   .stage[data-hot="llc"] [data-path~="llc"],
-  .stage[data-hot="fr"] [data-path~="fr"] {
+  .stage[data-hot="fr"] [data-path~="fr"],
+  .stage[data-hot="oss"] [data-path~="oss"] {
     opacity: 1;
     background: var(--wire-hot);
   }
@@ -843,25 +922,36 @@ const companySummary = (c: Company) => `${c.country[locale]} · ${c.owners[local
   .stage[data-hot="llc"] .stem[data-path="llc"].part,
   .stage[data-hot="fr"] .stem[data-path="fr"].part,
   .stage[data-hot="group"] .stem.part,
-  .stage[data-hot="fr"] .stem.part {
+  .stage[data-hot="me"] .stem.part,
+  .stage[data-hot="fr"] .stem.part,
+  .stage[data-hot="me"] .wire-dash.oss-stem,
+  .stage[data-hot="oss"] .wire-dash.oss-stem {
     background: repeating-linear-gradient(
       to bottom,
       var(--wire-hot) 0 5px,
       transparent 5px 9px
     );
   }
+  .stage[data-hot="me"] .wire-dash.bus-seg,
+  .stage[data-hot="oss"] .wire-dash.bus-seg {
+    background: none;
+    border-top-color: var(--wire-hot);
+  }
   .stage[data-hot] .branch,
-  .stage[data-hot] .oss-col {
+  .stage[data-hot] .oss-col,
+  .stage[data-hot] .group-col {
     opacity: 0.42;
     transition: opacity 0.25s var(--ease);
   }
+  .stage[data-hot="me"] .branch,
+  .stage[data-hot="me"] .group-col,
+  .stage[data-hot="me"] .oss-col,
   .stage[data-hot="group"] .branch,
+  .stage[data-hot="group"] .group-col,
   .stage[data-hot] .branch.is-hot,
-  .stage[data-hot] .oss-col.is-hot {
+  .stage[data-hot] .oss-col.is-hot,
+  .stage[data-hot] .group-col.is-hot {
     opacity: 1;
-  }
-  .stage[data-hot="oss"] .wire {
-    opacity: 0.28;
   }
 
   .node {
@@ -888,6 +978,7 @@ const companySummary = (c: Company) => `${c.country[locale]} · ${c.owners[local
     box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 35%, transparent);
   }
 
+  .me,
   .root {
     width: max-content;
     max-width: 100%;
@@ -896,7 +987,7 @@ const companySummary = (c: Company) => `${c.country[locale]} · ${c.owners[local
     gap: 12px;
     padding: 12px 20px 12px 14px;
   }
-  .root-mark {
+  .me-mark {
     width: 36px;
     height: 36px;
     border-radius: 9px;
@@ -904,6 +995,44 @@ const companySummary = (c: Company) => `${c.country[locale]} · ${c.owners[local
     place-items: center;
     background: var(--tile-2);
     border: 1px solid var(--line);
+    flex: none;
+  }
+  .group-card {
+    width: max-content;
+    max-width: 100%;
+    justify-self: center;
+    display: grid;
+  }
+  .group-card .root {
+    width: 100%;
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    box-shadow: none;
+  }
+  .group-logo {
+    width: 42px;
+    height: 32px;
+    object-fit: contain;
+    background: #0b0b0d;
+    border-radius: 8px;
+    padding: 3px 4px;
+    border: 1px solid var(--line);
+    flex: none;
+  }
+  .n-site {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 7px 14px 9px;
+    border: 1px solid var(--line);
+    border-top: 0;
+    border-radius: 0 0 var(--radius) var(--radius);
+    background: var(--tile);
+    color: var(--ink-2);
+    font-size: 11.5px;
+  }
+  .n-site:hover {
+    color: var(--accent-ink);
   }
   .n-name {
     font-family: var(--font-serif);
@@ -913,6 +1042,7 @@ const companySummary = (c: Company) => `${c.country[locale]} · ${c.owners[local
     letter-spacing: -0.01em;
     color: var(--ink);
   }
+  .me .n-name,
   .root .n-name {
     font-size: 20px;
   }
@@ -1250,8 +1380,8 @@ const companySummary = (c: Company) => `${c.country[locale]} · ${c.owners[local
       grid-template-columns: 1fr;
     }
     .viewport {
-      height: min(64vh, 620px);
-      min-height: 520px;
+      height: min(72vh, 720px);
+      min-height: 600px;
     }
     .panel {
       border-left: 0;
@@ -1285,10 +1415,9 @@ const companySummary = (c: Company) => `${c.country[locale]} · ${c.owners[local
     }
   }
 
-  /* Mobile : arbre vertical, sans canvas à déplacer */
+  /* Mobile : le même organigramme, dézoomé pour tenir en largeur */
   @media (max-width: 900px) {
-    .toolbar,
-    .zoom {
+    .hint {
       display: none;
     }
     .board {
@@ -1296,103 +1425,18 @@ const companySummary = (c: Company) => `${c.country[locale]} · ${c.owners[local
       min-height: 0;
     }
     .viewport {
-      overflow: visible;
-      cursor: auto;
-      touch-action: auto;
-      height: auto;
-      min-height: 0;
-      background: none;
+      height: min(72vh, 560px);
+      min-height: 420px;
+      overflow: hidden;
+      cursor: grab;
+      touch-action: none;
     }
-    .world {
-      min-width: 0;
-      width: auto;
-      padding: 16px 12px 8px 28px;
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-      transform: none !important;
+    .zoom {
+      display: inline-flex;
     }
-    .head,
-    .row,
-    .oss-col {
-      display: contents;
-    }
-    .root {
-      width: 100%;
-    }
-    .fork {
-      display: none;
-    }
-    .branch,
-    .oss-col,
-    .stage[data-hot] .branch,
-    .stage[data-hot] .oss-col {
-      opacity: 1;
-    }
-    .stem {
-      display: flex;
-      justify-content: flex-end;
-      width: auto;
-      height: auto;
-      margin: 0 0 8px;
-      background: none !important;
-    }
-    .share {
-      position: static;
-      translate: none;
-      margin: 0;
-      box-shadow: 0 0 0 3px var(--bg);
-    }
-    .branch {
-      position: relative;
-    }
-    .viewport {
-      position: relative;
-    }
-    .world {
-      position: relative;
-    }
-    .world::before {
-      content: "";
-      position: absolute;
-      left: 10px;
-      top: 28px;
-      bottom: 16px;
-      width: 2px;
-      border-radius: 2px;
-      background: color-mix(in srgb, var(--accent) 45%, var(--line-strong));
-    }
-    .root,
-    .branch,
-    .oss-wrap {
-      position: relative;
-    }
-    .root::before,
-    .branch::before,
-    .oss-wrap::before {
-      content: "";
-      position: absolute;
-      left: -19px;
-      top: 22px;
-      width: 19px;
-      height: 2px;
-      background: color-mix(in srgb, var(--accent) 45%, var(--line-strong));
-    }
-    .root::after,
-    .branch::after,
-    .oss-wrap::after {
-      content: "";
-      position: absolute;
-      left: -23px;
-      top: 18px;
-      width: 6px;
-      height: 6px;
-      border-radius: 99px;
-      background: var(--bg);
-      border: 2px solid var(--accent);
-    }
-    .oss-kicker {
-      margin-left: 0;
+    .z-btn {
+      width: 36px;
+      height: 32px;
     }
     .panel {
       border-left: 0;
