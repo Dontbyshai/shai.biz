@@ -937,20 +937,21 @@ const companySummary = (c: Company) => `${c.country[locale]} · ${c.owners[local
     background: none;
     border-top-color: var(--wire-hot);
   }
+  /* On n'atténue pas .group-col : les sociétés sont dedans,
+     et opacity sur le parent grise aussi la branche active. */
   .stage[data-hot] .branch,
   .stage[data-hot] .oss-col,
-  .stage[data-hot] .group-col {
-    opacity: 0.42;
+  .stage[data-hot="oss"] .group-card,
+  .stage[data-hot="oss"] .fork,
+  .stage[data-hot="oss"] .group-stem {
+    opacity: 0.58;
     transition: opacity 0.25s var(--ease);
   }
   .stage[data-hot="me"] .branch,
-  .stage[data-hot="me"] .group-col,
   .stage[data-hot="me"] .oss-col,
   .stage[data-hot="group"] .branch,
-  .stage[data-hot="group"] .group-col,
   .stage[data-hot] .branch.is-hot,
-  .stage[data-hot] .oss-col.is-hot,
-  .stage[data-hot] .group-col.is-hot {
+  .stage[data-hot] .oss-col.is-hot {
     opacity: 1;
   }
 
