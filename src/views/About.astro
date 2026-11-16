@@ -1,5 +1,6 @@
 ---
 import Icon from "@/components/Icon.astro"
+import Logo from "@/components/Logo.astro"
 import Scene from "@/components/Scene.astro"
 import Base from "@/layouts/Base.astro"
 import { aboutParagraphs } from "@/data/about"
@@ -35,7 +36,6 @@ const socials = [
   { href: "https://twitter.com/Dontbyshai", label: "X", icon: "x" },
   { href: "https://www.linkedin.com/in/shai-chomette-dugat-276a542a0/", label: "LinkedIn", icon: "linkedin" },
   { href: "https://www.instagram.com/dontbyshai/", label: "Instagram", icon: "instagram" },
-  { href: "https://open.spotify.com/intl-fr/artist/47Nz6g4SrrfU7kFEjpxP6k", label: "Spotify", icon: "spotify" },
 ] as const
 ---
 
@@ -55,7 +55,7 @@ const socials = [
     <aside class="side rise" style="--i:3">
       <div class="tile card">
         <div class="who">
-          <div class="avatar" aria-hidden="true">S</div>
+          <div class="avatar" aria-hidden="true"><Logo size={30} /></div>
           <div>
             <p class="nm">Shaï Chomette-Dugat</p>
             <p class="mono hd">@Dontbyshai</p>
@@ -111,14 +111,14 @@ const socials = [
 
 <style>
   .banner {
-    height: 210px;
+    height: clamp(210px, 18vw, 320px);
     padding: 0;
     margin-bottom: 40px;
   }
   .cols {
     display: grid;
-    grid-template-columns: minmax(0, 1fr) 290px;
-    gap: 48px;
+    grid-template-columns: minmax(0, 720px) minmax(280px, 340px);
+    gap: clamp(48px, 7vw, 140px);
     align-items: start;
   }
   .prose {
@@ -154,12 +154,13 @@ const socials = [
     border-radius: 999px;
     display: grid;
     place-items: center;
-    background: var(--accent);
-    color: #fff;
-    font-family: var(--font-serif);
-    font-style: italic;
-    font-size: 27px;
-    box-shadow: inset 0 -6px 12px rgb(0 0 0 / 0.15);
+    --ink: var(--bg);
+    background: #221e19;
+    box-shadow: inset 0 -6px 14px rgb(0 0 0 / 0.25);
+  }
+  :global([data-theme="dark"]) .avatar {
+    background: #efe8dc;
+    --ink: #12110f;
   }
   .nm {
     font-weight: 600;
@@ -235,7 +236,7 @@ const socials = [
     margin: 18px 0 0;
     padding: 0;
     display: grid;
-    grid-template-columns: repeat(4, minmax(0, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(max(180px, calc(25% - 24px)), 1fr));
     gap: 0;
   }
   .ms li {

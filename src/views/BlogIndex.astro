@@ -2,6 +2,7 @@
 import Icon from "@/components/Icon.astro"
 import Base from "@/layouts/Base.astro"
 import type { Locale } from "@/data/types"
+import { postIcon } from "@/data/icons"
 import { t } from "@/i18n/ui"
 import { localizedPath } from "@/lib/paths"
 import { postsByYear, postsNewestFirst, readingMinutes, upcomingPosts } from "@/lib/posts"
@@ -75,7 +76,11 @@ let i = 0
                     {readingMinutes(post, locale)} {t(locale, "readTime")}
                   </span>
                 </span>
-                {post.image ? (
+                {postIcon[post.slug] ? (
+                  <span class:list={["thumb", { dark: postIcon[post.slug]?.dark }]}>
+                    <img class:list={{ pixel: postIcon[post.slug]?.pixel }} src={postIcon[post.slug]?.src} alt="" loading="lazy" width="64" height="64" />
+                  </span>
+                ) : post.image ? (
                   <span class:list={["thumb", { cover: post.image.wide }]}>
                     <img src={post.image.src} alt="" loading="lazy" width="64" height="64" />
                   </span>
@@ -97,7 +102,7 @@ let i = 0
 <style>
   .year {
     display: grid;
-    grid-template-columns: 150px minmax(0, 1fr);
+    grid-template-columns: clamp(130px, 12vw, 200px) minmax(0, 1fr);
     gap: 24px;
     padding: 6px 0 26px;
   }
@@ -133,7 +138,8 @@ let i = 0
     margin: 0;
     padding: 0;
     display: grid;
-    gap: 2px;
+    gap: 2px clamp(28px, 3vw, 56px);
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 560px), 1fr));
   }
   .row {
     position: relative;
@@ -200,6 +206,17 @@ let i = 0
   }
   .thumb.cover img {
     object-fit: cover;
+  }
+  .thumb.dark {
+    background: #0b0b0d;
+  }
+  .thumb img:not(.pixel) {
+    object-fit: cover;
+  }
+  .thumb img.pixel {
+    image-rendering: pixelated;
+    object-fit: contain;
+    padding: 8px;
   }
   .letter {
     background: var(--tile-2);

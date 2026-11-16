@@ -11,7 +11,8 @@
     "build": "bun scripts/check-content.ts && astro check && astro build",
     "preview": "astro preview",
     "deploy:cloudflare": "bun run build && wrangler deploy",
-    "astro": "astro"
+    "astro": "astro",
+    "contributions:update": "bun scripts/update-contributions.ts"
   },
   "dependencies": {
     "@astrojs/rss": "^4.0.19",

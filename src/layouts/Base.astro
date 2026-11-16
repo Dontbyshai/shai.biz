@@ -28,7 +28,7 @@ const alternates = (["fr", "en"] as const).map((l) => ({
   locale: l,
   href: new URL(localizedPath(l, path), Astro.site).href,
 }))
-const ogImage = new URL(image ?? "/images/shai-company-mark.webp", Astro.site).href
+const ogImage = new URL(image ?? "/apple-touch-icon.png", Astro.site).href
 ---
 
 <!doctype html>
@@ -41,6 +41,7 @@ const ogImage = new URL(image ?? "/images/shai-company-mark.webp", Astro.site).h
     <link rel="canonical" href={canonical.href} />
     {alternates.map((a) => <link rel="alternate" hreflang={a.locale} href={a.href} />)}
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="apple-touch-icon" href="/apple-touch-icon.png" />
     <link rel="alternate" type="application/rss+xml" title="shai.biz" href={locale === "fr" ? "/rss.xml" : "/en/rss.xml"} />
     <meta property="og:title" content={fullTitle} />
     <meta property="og:description" content={desc} />
@@ -89,7 +90,7 @@ const ogImage = new URL(image ?? "/images/shai-company-mark.webp", Astro.site).h
   .frame {
     display: grid;
     grid-template-columns: var(--side) minmax(0, 1fr);
-    max-width: 1320px;
+    max-width: 1880px;
     margin: 0 auto;
     min-height: 100vh;
     min-height: 100dvh;
@@ -98,12 +99,13 @@ const ogImage = new URL(image ?? "/images/shai-company-mark.webp", Astro.site).h
     display: flex;
     flex-direction: column;
     min-width: 0;
-    padding: 36px 40px 28px 8px;
+    padding: 36px clamp(24px, 3vw, 56px) 28px 4px;
   }
   .main {
     flex: 1;
     width: 100%;
-    max-width: 1040px;
+    container-type: inline-size;
+    container-name: main;
   }
   @media (max-width: 860px) {
     .frame {

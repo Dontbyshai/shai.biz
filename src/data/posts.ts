@@ -34,8 +34,8 @@ const loveMapIcon: PostImage = {
   width: 512,
   height: 512,
   alt: {
-    fr: "Icône Love Map : une flamme rose et violette.",
-    en: "Love Map icon: a pink and purple flame.",
+    fr: "Icône Love Map : un cœur rose et violet en forme de repère de carte.",
+    en: "Love Map icon: a pink and purple heart shaped like a map pin.",
   },
   caption: { fr: "Icône de Love Map.", en: "Love Map icon." },
 }
@@ -96,6 +96,17 @@ const shaiscompanySite: PostImage = {
     en: "Top of the shaiscompany.com home page.",
   },
   caption: { fr: "L'accueil de shaiscompany.com.", en: "The shaiscompany.com home page." },
+}
+
+const shaicraftIcon: PostImage = {
+  src: "/images/shaicraft-icon.webp",
+  width: 256,
+  height: 256,
+  alt: {
+    fr: "Icône ShaiCraft Economy : une pièce dorée en pixel art.",
+    en: "ShaiCraft Economy icon: a gold pixel-art coin.",
+  },
+  caption: { fr: "Icône du mod, tirée du dépôt.", en: "The mod icon, from the repo." },
 }
 
 export const posts: Post[] = [
@@ -298,12 +309,12 @@ export const posts: Post[] = [
     paragraphs: {
       fr: [
         "Shaï Company est l'entreprise sous laquelle je range mes produits. Le dépôt public Shai-Company-Ltd/Shai-company-website est créé le 1er février 2026. Le premier commit, « Initial clean commit », est du 3 août 2026. Sept commits en tout, le dernier le 13 novembre 2026.",
-        "Le site [shaiscompany.com](https://shaiscompany.com) présente les divisions : Applications (NotiaNote, Left To Live), IA (NotiaNote IA), Web3 (un wallet annoncé), Shai Music, le label, et Investissement & Trading, avec du copy trading.",
+        "Le site [shaiscompany.com](https://shaiscompany.com) présente les divisions : Applications (NotiaNote, Left To Live), IA (NotiaNote IA), Web3 (un wallet annoncé) et Investissement & Trading, avec du copy trading.",
         "La stack du site : React 19, TypeScript, Vite, Framer Motion, ShaderGradient, React Three Fiber. Les mentions légales récentes situent la société aux Bahamas et au Nouveau-Mexique, aux États-Unis.",
       ],
       en: [
         "Shaï Company is the business I keep my products under. The public repo Shai-Company-Ltd/Shai-company-website was created on 1 February 2026. The first commit, “Initial clean commit”, is from 3 August 2026. Seven commits in total, the last on 13 November 2026.",
-        "The site [shaiscompany.com](https://shaiscompany.com) presents the divisions: Applications (NotiaNote, Left To Live), AI (NotiaNote IA), Web3 (a wallet announced), Shai Music, the label, and Investment & Trading, including copy trading.",
+        "The site [shaiscompany.com](https://shaiscompany.com) presents the divisions: Applications (NotiaNote, Left To Live), AI (NotiaNote IA), Web3 (a wallet announced) and Investment & Trading, including copy trading.",
         "The site stack: React 19, TypeScript, Vite, Framer Motion, ShaderGradient, React Three Fiber. Recent legal notices place the company in the Bahamas and in New Mexico, United States.",
       ],
     },
@@ -475,12 +486,12 @@ export const posts: Post[] = [
     },
     image: {
       src: "/images/solarscan-logo.webp",
-      width: 512,
-      height: 341,
+      width: 640,
+      height: 427,
       wide: true,
       alt: {
-        fr: "Logo SolarScan : un soleil jaune sur fond noir, le mot SOLAR en jaune et SCAN en gris.",
-        en: "SolarScan logo: a yellow sun on black, SOLAR in yellow and SCAN in grey.",
+        fr: "Logo SolarScan : un soleil jaune, le mot SOLAR en jaune et SCAN en noir.",
+        en: "SolarScan logo: a yellow sun, SOLAR in yellow and SCAN in black.",
       },
       caption: { fr: "Logo de SolarScan.", en: "SolarScan logo." },
     },
@@ -517,10 +528,11 @@ export const posts: Post[] = [
         label: { fr: "Dépôt GitHub", en: "GitHub repo" },
       },
     ],
+    image: shaicraftIcon,
     paragraphs: {
       fr: [
         "Le dépôt public Dontbyshai/shaicraft-economy est créé le 12 août 2026. Un seul commit, le 13 août. Projet en cours. Licence non précisée.",
-        "C'est un mod pour Minecraft 1.21.1, sous Fabric. Deux morceaux : une économie de survie, et un simulateur de trading crypto relié à l'API Binance. Les prix arrivent toutes les 5 secondes. On peut prendre une position long ou short, avec levier, liquidations, suivi des gains et des pertes, et des portefeuilles. Cobblemon ajoute un hôtel des ventes pour les Pokémon.",
+        "C'est un mod pour Minecraft 1.21.1, sous Fabric. Deux parties : une économie de survie, et un simulateur de trading crypto relié à l'API Binance. Les prix arrivent toutes les 5 secondes. On peut prendre une position long ou short, avec levier, liquidations, suivi des gains et des pertes, et des portefeuilles. Cobblemon ajoute un hôtel des ventes pour les Pokémon.",
         "Les commandes sont `/balance`, `/pay`, `/shop`, `/trading`, `/hdv` et `/trade`.",
         "Stack : Java 21, Fabric Loader 0.16 ou plus, Fabric API, Fabric Language Kotlin, Cobblemon, Gradle, journaux SLF4J.",
       ],
@@ -859,12 +871,12 @@ export const posts: Post[] = [
     paragraphs: {
       fr: [
         "Shai-Company-Ltd/shaiscompany est créé le 2 novembre 2026. Dernier commit le 9 novembre. Usage interne, dépôt privé.",
-        "Le code source React du site n'est pas dans ce dépôt. Un script `patch.py` applique des changements au bundle déjà compilé : retrait de la page Musique, ajustements de contenu autour de Love Map, de Bitixe présenté en Web3 & Crypto, de Fuel Tracker, et des correctifs. Le dossier `dist/` est ce qui part en production. La config Nginx porte des redirections 301.",
+        "Le code source React du site n'est pas dans ce dépôt. Un script `patch.py` applique des changements au bundle déjà compilé : ajustements de contenu autour de Love Map, de Bitixe présenté en Web3 & Crypto, de Fuel Tracker, et des correctifs. Le dossier `dist/` est ce qui part en production. La config Nginx porte des redirections 301.",
         "Le site public reste [shaiscompany.com](https://shaiscompany.com). L'histoire du site vitrine est dans l'article du [[shai-company|1er février]].",
       ],
       en: [
         "Shai-Company-Ltd/shaiscompany was created on 2 November 2026. Last commit on 9 November. Internal use, private repo.",
-        "The React source of the site is not in this repo. A `patch.py` script applies changes to the already compiled bundle: removing the Music page, content adjustments around Love Map, Bitixe presented as Web3 & Crypto, Fuel Tracker, and fixes. The `dist/` folder is what goes to production. The Nginx config carries 301 redirects.",
+        "The React source of the site is not in this repo. A `patch.py` script applies changes to the already compiled bundle: content adjustments around Love Map, Bitixe presented as Web3 & Crypto, Fuel Tracker, and fixes. The `dist/` folder is what goes to production. The Nginx config carries 301 redirects.",
         "The public site remains [shaiscompany.com](https://shaiscompany.com). The story of the showcase site is in the [[shai-company|1 February]] post.",
       ],
     },

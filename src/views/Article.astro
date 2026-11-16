@@ -2,6 +2,7 @@
 import Icon from "@/components/Icon.astro"
 import Base from "@/layouts/Base.astro"
 import type { Locale, Post } from "@/data/types"
+import { postIcon } from "@/data/icons"
 import { t } from "@/i18n/ui"
 import { formatDay } from "@/lib/dates"
 import { localizedPath } from "@/lib/paths"
@@ -18,6 +19,8 @@ const { older, newer } = neighbors(post.slug)
 const img = post.image
 const kind = !img ? null : img.wide ? "wide" : img.height > img.width * 1.3 ? "phone" : "icon"
 const html = renderParagraphs(post.paragraphs[locale], locale)
+const fallback = postIcon[post.slug]
+const icon = kind === "icon" && img ? { src: img.src, alt: img.alt[locale], pixel: false, dark: false } : fallback ? { src: fallback.src, alt: "", pixel: !!fallback.pixel, dark: !!fallback.dark } : null
 ---
 
 <Base
@@ -36,8 +39,8 @@ const html = renderParagraphs(post.paragraphs[locale], locale)
         <span class="sep">/</span>
         <span>{readingMinutes(post, locale)} {t(locale, "readTime")}</span>
       </div>
-      <div class:list={["title-row", { "has-icon": kind === "icon" }]}>
-        {kind === "icon" && img && <img class="app-icon" src={img.src} alt={img.alt[locale]} width="88" height="88" />}
+      <div class:list={["title-row", { "has-icon": icon }]}>
+        {icon && <img class:list={["app-icon", { pixel: icon.pixel, dark: icon.dark }]} src={icon.src} alt={icon.alt} width="88" height="88" />}
         <h1 class="display">{post.title[locale]}</h1>
       </div>
       <p class="lede">{post.description[locale]}</p>
@@ -114,7 +117,7 @@ const html = renderParagraphs(post.paragraphs[locale], locale)
 
 <style>
   .article {
-    max-width: 900px;
+    max-width: 1180px;
   }
   .back {
     display: inline-flex;
@@ -163,10 +166,19 @@ const html = renderParagraphs(post.paragraphs[locale], locale)
     background: #fff;
     flex: none;
     box-shadow: var(--shadow);
+    object-fit: cover;
+  }
+  .app-icon.pixel {
+    image-rendering: pixelated;
     object-fit: contain;
+    padding: 12px;
+  }
+  .app-icon.dark {
+    background: #0b0b0d;
   }
   h1 {
-    font-size: clamp(38px, 6vw, 62px);
+    font-size: clamp(38px, 5.4vw, 76px);
+    max-width: 18ch;
     text-wrap: balance;
   }
   .lede {
@@ -180,7 +192,7 @@ const html = renderParagraphs(post.paragraphs[locale], locale)
     text-wrap: pretty;
   }
   .hero {
-    margin: 0 0 40px;
+    margin: 0 0 48px;
   }
   .frame {
     border-radius: var(--radius);
@@ -200,8 +212,8 @@ const html = renderParagraphs(post.paragraphs[locale], locale)
   }
   .layout {
     display: grid;
-    grid-template-columns: minmax(0, 660px) 200px;
-    gap: 40px;
+    grid-template-columns: minmax(0, 700px) minmax(220px, 280px);
+    gap: clamp(40px, 6vw, 120px);
     justify-content: space-between;
     align-items: start;
   }

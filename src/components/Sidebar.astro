@@ -23,7 +23,7 @@ const other = otherLocale(locale)
   <div class="side-inner">
     <a class="brand" href={localizedPath(locale, "/")} aria-label="shai.biz">
       <Logo />
-      <span>shai.biz</span>
+      <span class="wm">shai<span>.biz</span></span>
     </a>
     <nav aria-label={t(locale, "nav")}>
       <ul>
@@ -71,6 +71,10 @@ const other = otherLocale(locale)
     font-size: 15px;
     letter-spacing: -0.01em;
     width: fit-content;
+  }
+  .wm span {
+    color: var(--muted);
+    font-weight: 400;
   }
   nav ul {
     list-style: none;
@@ -171,7 +175,7 @@ const other = otherLocale(locale)
       gap: 6px;
       padding: 10px 16px;
     }
-    .brand span {
+    .brand .wm {
       display: none;
     }
     nav {

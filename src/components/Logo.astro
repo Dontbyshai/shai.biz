@@ -2,32 +2,35 @@
 interface Props {
   size?: number
 }
-const { size = 26 } = Astro.props
+const { size = 30 } = Astro.props
 ---
 
-<svg class="logo" width={size} height={size} viewBox="0 0 32 32" aria-hidden="true">
-  <rect width="32" height="32" rx="8" class="logo-bg"></rect>
-  <path class="logo-puy" d="M4.5 24.5 12 12.2c.6-1 1.6-1.1 2.4-.4l1.6 1.4 1.6-1.4c.8-.7 1.8-.6 2.4.4l7.5 12.3z"></path>
-  <circle class="logo-sun" cx="23.5" cy="8.5" r="2"></circle>
+<svg class="logo" width={size} height={size} viewBox="6 5 28 28" aria-hidden="true">
+  <path class="logo-sw" transform="skewX(-10) translate(3.5 0)" d="M18.6 13.4A4.4 4.4 0 1 0 14.6 19.6C17.4 19.6 19.2 21.4 19.2 24C19.2 27 16.8 28.6 14.4 28.6C12.6 28.6 11 27.6 10.4 26.2M25.5 16V26.4Q25.5 28.6 27.7 28.6"></path>
+  <circle class="logo-dot d1" cx="24.9" cy="10.8" r="1.75"></circle>
+  <circle class="logo-dot d2" cx="29.3" cy="10.8" r="1.75"></circle>
 </svg>
 
 <style>
-  .logo-bg {
-    fill: var(--ink);
+  .logo {
+    overflow: visible;
   }
-  .logo-puy {
+  .logo-sw {
+    fill: none;
+    stroke: var(--ink);
+    stroke-width: 2.9;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+  }
+  .logo-dot {
     fill: var(--accent);
-    transform-origin: 16px 24px;
-    transition: transform 0.5s var(--ease);
+    transition: transform 0.45s var(--ease);
   }
-  .logo-sun {
-    fill: var(--bg);
-    transition: transform 0.6s var(--ease);
+  :global(a:hover) .d1 {
+    transform: translateY(-1.6px);
   }
-  :global(a:hover) .logo-puy {
-    transform: scaleY(1.08);
-  }
-  :global(a:hover) .logo-sun {
-    transform: translate(-3px, 2px);
+  :global(a:hover) .d2 {
+    transform: translateY(-1.6px);
+    transition-delay: 0.06s;
   }
 </style>

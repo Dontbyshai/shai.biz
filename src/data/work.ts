@@ -57,7 +57,7 @@ export const repos: Repo[] = [
     license: "MIT",
     created: "2026-08-12",
     blogSlug: "solarscan",
-    image: "/images/solarscan-logo.webp",
+    image: "/images/solarscan-icon.webp",
   },
   {
     name: "ShaiCraft Economy",
@@ -72,14 +72,15 @@ export const repos: Repo[] = [
     license: "MIT",
     created: "2026-08-12",
     blogSlug: "shaicraft-economy",
+    image: "/images/shaicraft-icon.webp",
   },
   {
     name: "Shaï Company",
     repo: "Shai-Company-Ltd/Shai-company-website",
     status: "active",
     summary: {
-      fr: "Le site de l'entreprise : applications, IA, Web3, Shai Music, investissement et trading.",
-      en: "The company site: apps, AI, Web3, Shai Music, investment and trading.",
+      fr: "Le site de l'entreprise : applications, IA, Web3, investissement et trading.",
+      en: "The company site: apps, AI, Web3, investment and trading.",
     },
     stack: ["React 19", "TypeScript", "Vite"],
     language: "TypeScript",
@@ -101,6 +102,7 @@ export const repos: Repo[] = [
     created: "2026-08-17",
     site: "https://shai.biz",
     blogSlug: "shai-biz",
+    image: "/apple-touch-icon.png",
   },
   {
     name: "Serpentix",
@@ -127,6 +129,7 @@ export const repos: Repo[] = [
     language: "TypeScript",
     created: "2026-09-23",
     blogSlug: "notianote-uca",
+    image: "/images/notianote-icon.webp",
   },
   {
     name: "ObsidianRAT",

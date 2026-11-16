@@ -69,11 +69,9 @@ const year = (iso: string) => iso.slice(0, 4)
         </article>
       ))
     }
-  </div>
-
-  <section class="others rise" style="--i:12">
-    <h2 class="eyebrow">{t(locale, "otherRepos")}</h2>
-    <ul>
+    <section class="tile others rise" style="--i:12">
+      <h2 class="eyebrow">{t(locale, "otherRepos")}</h2>
+      <ul>
       {
         otherRepos.map((o) => (
           <li>
@@ -85,15 +83,19 @@ const year = (iso: string) => iso.slice(0, 4)
           </li>
         ))
       }
-    </ul>
-  </section>
+      </ul>
+      <a class="all-gh mono" href="https://github.com/Dontbyshai?tab=repositories" rel="noopener">
+        <Icon name="github" size={15} /> github.com/Dontbyshai <Icon name="arrow" size={12} />
+      </a>
+    </section>
+  </div>
 </Base>
 
 <style>
   .grid {
     display: grid;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    gap: 12px;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 320px), 1fr));
+    gap: var(--gap);
   }
   .card {
     padding: 20px;
@@ -229,23 +231,40 @@ const year = (iso: string) => iso.slice(0, 4)
     color: var(--bg);
   }
   .others {
-    margin-top: 44px;
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    background: var(--tile-2);
+    border-style: dashed;
   }
   .others ul {
     list-style: none;
     padding: 0;
-    margin: 12px 0 0;
-    border-top: 1px solid var(--line);
+    margin: 16px 0 0;
   }
-  .others a {
+  .others li a {
     display: grid;
-    grid-template-columns: 240px 1fr auto;
-    gap: 16px;
+    grid-template-columns: 1fr auto;
+    gap: 2px 12px;
     align-items: center;
     padding: 12px 0;
-    border-bottom: 1px solid var(--line);
+    border-bottom: 1px dashed var(--line-strong);
     color: var(--ink-2);
     transition: color 0.2s;
+  }
+  .others li a .o-text {
+    grid-column: 1;
+  }
+  .all-gh {
+    margin-top: auto;
+    padding-top: 18px;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    color: var(--ink-2);
+  }
+  .all-gh:hover {
+    color: var(--accent-ink);
   }
   .others a:hover {
     color: var(--accent-ink);
@@ -254,15 +273,7 @@ const year = (iso: string) => iso.slice(0, 4)
     color: var(--muted);
     font-size: 14px;
   }
-  @media (max-width: 1000px) {
-    .grid {
-      grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
-  }
   @media (max-width: 620px) {
-    .grid {
-      grid-template-columns: 1fr;
-    }
     .grid > .feat:first-child {
       grid-column: auto;
     }

@@ -18,9 +18,5 @@ export const SOCIALS = [
     label: "LinkedIn",
   },
   { href: "https://www.instagram.com/dontbyshai/", label: "Instagram" },
-  {
-    href: "https://open.spotify.com/intl-fr/artist/47Nz6g4SrrfU7kFEjpxP6k",
-    label: "Spotify",
-  },
   { href: "mailto:dontbyshai@gmail.com", label: "E-mail" },
 ] as const
