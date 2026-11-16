@@ -1,0 +1,15 @@
+---
+import Article from "@/views/Article.astro"
+import { posts } from "@/data/posts"
+import { getPost } from "@/lib/posts"
+
+export function getStaticPaths() {
+  return posts.map((post) => ({ params: { slug: post.slug } }))
+}
+
+const { slug } = Astro.params
+if (!slug) throw new Error("slug manquant")
+const post = getPost(slug)
+---
+
+<Article locale="fr" post={post} />

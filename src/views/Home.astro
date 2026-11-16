@@ -1,0 +1,1028 @@
+---
+import Contributions from "@/components/Contributions.astro"
+import Icon from "@/components/Icon.astro"
+import Logo from "@/components/Logo.astro"
+import Phone from "@/components/Phone.astro"
+import Scene from "@/components/Scene.astro"
+import Topo from "@/components/Topo.astro"
+import Base from "@/layouts/Base.astro"
+import { apps } from "@/data/apps"
+import type { Locale } from "@/data/types"
+import { languageColor, languages } from "@/data/work"
+import { t } from "@/i18n/ui"
+import { localizedPath } from "@/lib/paths"
+import { postsNewestFirst } from "@/lib/posts"
+import { renderInline } from "@/lib/text"
+
+interface Props {
+  locale: Locale
+}
+const { locale } = Astro.props
+const L = (p: string) => localizedPath(locale, p)
+const latest = postsNewestFirst().slice(0, 4)
+const tag = locale === "fr" ? "fr-FR" : "en-GB"
+const short = (iso: string) =>
+  new Intl.DateTimeFormat(tag, { day: "2-digit", month: "short" }).format(new Date(`${iso}T12:00:00Z`)).replace(".", "")
+
+const flakes = Array.from({ length: 34 }, (_, i) => ({
+  x: (i * 37) % 100,
+  d: 7 + ((i * 13) % 9),
+  delay: -((i * 7) % 13),
+  s: 2 + (i % 3),
+}))
+const status = {
+  night: t(locale, "statusNight"),
+  morning: t(locale, "statusMorning"),
+  afternoon: t(locale, "statusAfternoon"),
+  evening: t(locale, "statusEvening"),
+}
+---
+
+<Base locale={locale} path="/">
+  <h1 class="sr-only">Shaï Chomette-Dugat</h1>
+  <div class="bento">
+    <section class="tile intro rise" style="--i:0" data-scene-host>
+      <div class="intro-art"><Scene align="left" /></div>
+      <div class="bubble">
+        <p class="bubble-name">Shaï Chomette-Dugat</p>
+        <p set:html={renderInline(t(locale, "hello"), locale)} />
+        <p class="more" set:html={renderInline(t(locale, "helloMore"), locale)} />
+      </div>
+    </section>
+
+    <a class="tile nn rise" style="--i:1" href={L("/blog/notianote-app-store/")}>
+      <div class="nn-head">
+        <img src="/images/notianote-icon.webp" alt="" width="58" height="58" loading="eager" />
+        <span class="chip"><span class="dot live"></span>{t(locale, "nnAi")}</span>
+      </div>
+      <h2 class="display">NotiaNote</h2>
+      <p class="nn-text">{t(locale, "notianoteText")}</p>
+      <p class="mono nn-meta">{t(locale, "notianoteMeta")}</p>
+      <div class="phone" aria-hidden="true">
+        <Phone src="/images/notianote-accueil.webp" />
+      </div>
+      <span class="go"><Icon name="arrow" size={16} /></span>
+    </a>
+
+    <section class="tile clock rise" style="--i:2" data-clock data-status={JSON.stringify(status)}>
+      <p class="eyebrow">{t(locale, "localTime")}</p>
+      <p class="time"><span data-h>--</span><span class="colon">:</span><span data-m>--</span></p>
+      <div class="clock-foot">
+        <p class="mono">{t(locale, "city")} · <span data-off>UTC+1</span></p>
+        <p class="status"><span class="dot live"></span><span data-status-text>{status.evening}</span></p>
+      </div>
+    </section>
+
+    <section class="tile prof rise" style="--i:3">
+      <div class="avatar" aria-hidden="true"><Logo size={30} /></div>
+      <div>
+        <p class="prof-name">Shaï Chomette-Dugat</p>
+        <p class="mono prof-handle">@Dontbyshai</p>
+      </div>
+      <p class="prof-role">{t(locale, "profileRole")}</p>
+      <p class="prof-now"><span class="dot live"></span>{t(locale, "profileNow")}</p>
+    </section>
+
+    <section class="tile latest rise" style="--i:4">
+      <div class="tile-top">
+        <p class="eyebrow">{t(locale, "latest")}</p>
+        <a class="mono more-link" href={L("/blog/")}>{t(locale, "allPosts")} <Icon name="arrow" size={13} /></a>
+      </div>
+      <ol>
+        {
+          latest.map((post) => (
+            <li>
+              <a href={L(`/blog/${post.slug}/`)}>
+                <time class="mono" datetime={post.date}>{short(post.date)}</time>
+                <span class="latest-title">{post.title[locale]}</span>
+                <Icon name="arrow" size={14} class="latest-arrow" />
+              </a>
+            </li>
+          ))
+        }
+      </ol>
+    </section>
+
+    <section class="tile contrib-tile rise" style="--i:5">
+      <Contributions locale={locale} />
+      <a class="contrib-link" href="https://github.com/Dontbyshai" rel="me noopener" aria-label="GitHub @Dontbyshai"></a>
+    </section>
+
+    <section class="tile topo rise" style="--i:6">
+      <Topo />
+      <div class="topo-label">
+        <p class="mono">45.77° N · 2.96° E</p>
+        <p class="topo-name">{t(locale, "mapCaption")}</p>
+        <p class="topo-text">{t(locale, "puysText")}</p>
+      </div>
+    </section>
+
+    <section class="tile apps rise" style="--i:7">
+      <p class="eyebrow">{t(locale, "myApps")}</p>
+      <ul>
+        {
+          apps.map((a) => (
+            <li>
+              <a href={L(`/blog/${a.slug}/`)}>
+                <span class="app-ico">
+                  <img class:list={{ pixel: a.pixel }} src={a.icon} alt="" width="56" height="56" loading="lazy" />
+                </span>
+                <span class="app-name">{a.name}</span>
+                <span class="app-note mono">{a.note[locale]}</span>
+              </a>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <a class="tile ltl rise" style="--i:8" href={L("/blog/left-to-live-app-store/")}>
+      <div class="ltl-head">
+        <img src="/images/lefttolive-icon.webp" alt="" width="42" height="42" loading="lazy" />
+        <div>
+          <p class="ltl-name">Left To Live</p>
+          <p class="mono ltl-meta">{t(locale, "leftMeta")}</p>
+        </div>
+      </div>
+      <svg class="ecg" viewBox="0 0 200 50" preserveAspectRatio="none" aria-hidden="true">
+        <path class="ecg-base" d="M0 30h46l6-4 5 4h12l5-24 7 40 6-16h20l7-6 6 6h35l5-22 7 38 6-16h27"></path>
+        <path class="ecg-live" d="M0 30h46l6-4 5 4h12l5-24 7 40 6-16h20l7-6 6 6h35l5-22 7 38 6-16h27"></path>
+      </svg>
+      <p class="ltl-text">{t(locale, "leftText")}</p>
+      <span class="go"><Icon name="arrow" size={16} /></span>
+    </a>
+
+    <a class="tile gh rise" style="--i:9" href="https://github.com/Dontbyshai" rel="me noopener">
+      <Icon name="github" size={42} class="gh-logo" />
+      <div class="gh-text">
+        <p class="mono">@Dontbyshai</p>
+        <p><strong>13</strong> <span>{t(locale, "reposPublic")}</span></p>
+      </div>
+      <span class="go"><Icon name="arrow" size={16} /></span>
+    </a>
+
+    <section class="tile lang rise" style="--i:10">
+      <p class="eyebrow">{t(locale, "languages")}</p>
+      <div class="bar" aria-hidden="true">
+        {languages.map((l) => <span style={`flex:${l.share};background:${languageColor[l.name] ?? "var(--line-strong)"}`} />)}
+      </div>
+      <ul>
+        {
+          languages.slice(0, 4).map((l) => (
+            <li>
+              <span class="sw" style={`background:${languageColor[l.name]}`} />
+              <span>{l.name}</span>
+              <span class="mono pct">{l.share.toLocaleString(tag)} %</span>
+            </li>
+          ))
+        }
+      </ul>
+    </section>
+
+    <a class="tile bx rise" style="--i:11" href="https://bitixe.com" rel="noopener">
+      <div class="bx-head">
+        <img src="/images/bitixe-icon.webp" alt="" width="44" height="44" loading="lazy" />
+        <span class="chip"><span class="dot live"></span>{t(locale, "bitixeLaunch")}</span>
+      </div>
+      <svg class="spark" viewBox="0 0 120 40" preserveAspectRatio="none" aria-hidden="true">
+        <defs>
+          <linearGradient id="bxg" x1="0" y1="0" x2="0" y2="1">
+            <stop offset="0" stop-color="#1f6bff" stop-opacity="0.28"></stop>
+            <stop offset="1" stop-color="#1f6bff" stop-opacity="0"></stop>
+          </linearGradient>
+        </defs>
+        <path class="spark-fill" d="M0 32 L12 28 L22 30 L34 20 L44 24 L56 14 L66 18 L78 10 L90 15 L102 6 L120 9 V40 H0Z" fill="url(#bxg)"></path>
+        <path class="spark-line" d="M0 32 L12 28 L22 30 L34 20 L44 24 L56 14 L66 18 L78 10 L90 15 L102 6 L120 9"></path>
+      </svg>
+      <div class="bx-text">
+        <p class="bx-name">Bitixe</p>
+        <p class="mono bx-meta">bitixe.com</p>
+      </div>
+      <span class="go"><Icon name="arrow" size={16} /></span>
+    </a>
+
+    <a class="tile snow rise" style="--i:12" href="https://snowbound.fr" rel="noopener">
+      <div class="flakes" aria-hidden="true">
+        {flakes.map((f) => <i style={`left:${f.x}%;--d:${f.d}s;--delay:${f.delay}s;--s:${f.s}px`} />)}
+      </div>
+      <span class="chip snow-chip"><span class="dot live"></span>{t(locale, "snowOpen")}</span>
+      <h2 class="display snow-title">Snowbound</h2>
+      <p class="snow-text">{t(locale, "snowText")}</p>
+      <p class="mono snow-meta">{t(locale, "snowMeta")}</p>
+      <span class="go"><Icon name="arrow" size={16} /></span>
+    </a>
+
+    <section class="tile else rise" style="--i:13">
+      <p class="eyebrow">{t(locale, "elsewhere")}</p>
+      <ul>
+        <li><a href="https://twitter.com/Dontbyshai" rel="me noopener"><Icon name="x" size={15} /><span>X</span><span class="mono h">@Dontbyshai</span><Icon name="arrow" size={13} class="ea" /></a></li>
+        <li><a href="https://www.linkedin.com/in/shai-chomette-dugat-276a542a0/" rel="me noopener"><Icon name="linkedin" size={15} /><span>LinkedIn</span><span class="mono h">Shaï Chomette-Dugat</span><Icon name="arrow" size={13} class="ea" /></a></li>
+        <li><a href="https://www.instagram.com/dontbyshai/" rel="me noopener"><Icon name="instagram" size={15} /><span>Instagram</span><span class="mono h">@dontbyshai</span><Icon name="arrow" size={13} class="ea" /></a></li>
+        <li><a href="mailto:dontbyshai@gmail.com"><Icon name="mail" size={15} /><span>E-mail</span><span class="mono h">dontbyshai@gmail.com</span><Icon name="arrow" size={13} class="ea" /></a></li>
+      </ul>
+    </section>
+  </div>
+</Base>
+
+<script>
+  const el = document.querySelector<HTMLElement>("[data-clock]")
+  if (el) {
+    const status = JSON.parse(el.dataset.status ?? "{}") as Record<string, string>
+    const h = el.querySelector("[data-h]")!
+    const m = el.querySelector("[data-m]")!
+    const off = el.querySelector("[data-off]")!
+    const st = el.querySelector("[data-status-text]")!
+    const fmt = new Intl.DateTimeFormat("fr-FR", {
+      timeZone: "Europe/Paris",
+      hour: "2-digit",
+      minute: "2-digit",
+      hourCycle: "h23",
+      timeZoneName: "shortOffset",
+    })
+    const tick = () => {
+      const parts = Object.fromEntries(fmt.formatToParts(new Date()).map((p) => [p.type, p.value]))
+      h.textContent = parts.hour ?? "--"
+      m.textContent = parts.minute ?? "--"
+      off.textContent = (parts.timeZoneName ?? "UTC+1").replace("GMT", "UTC")
+      const hour = Number(parts.hour)
+      const key = hour < 7 ? "night" : hour < 12 ? "morning" : hour < 17 ? "afternoon" : hour < 23 ? "evening" : "night"
+      st.textContent = status[key] ?? ""
+    }
+    tick()
+    setInterval(tick, 10_000)
+  }
+</script>
+
+<style>
+  .sr-only {
+    position: absolute;
+    width: 1px;
+    height: 1px;
+    overflow: hidden;
+    clip: rect(0 0 0 0);
+  }
+  .bento {
+    --row: clamp(172px, 16cqw, 220px);
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    grid-auto-rows: minmax(var(--row), auto);
+    gap: var(--gap);
+    grid-template-areas:
+      "intro intro"
+      "intro intro"
+      "clock prof"
+      "nn nn"
+      "nn nn"
+      "latest latest"
+      "contrib contrib"
+      "apps apps"
+      "topo topo"
+      "topo topo"
+      "ltl gh"
+      "lang bx"
+      "snow snow"
+      "else else";
+  }
+  @container main (min-width: 760px) {
+    .bento {
+      --row: clamp(180px, 17cqw, 224px);
+      grid-template-columns: repeat(8, minmax(0, 1fr));
+      grid-template-areas:
+        "intro intro intro intro intro nn nn nn"
+        "intro intro intro intro intro nn nn nn"
+        "clock clock prof prof latest latest latest latest"
+        "contrib contrib contrib contrib contrib contrib contrib contrib"
+        "apps apps apps apps topo topo topo topo"
+        "ltl ltl gh gh topo topo topo topo"
+        "snow snow snow snow lang lang bx bx"
+        "snow snow snow snow else else else else";
+    }
+  }
+  @container main (min-width: 1240px) {
+    .bento {
+      --row: clamp(196px, 13.2cqw, 250px);
+      grid-template-columns: repeat(12, minmax(0, 1fr));
+      grid-template-areas:
+        "intro intro intro intro intro nn nn nn clock clock prof prof"
+        "intro intro intro intro intro nn nn nn latest latest latest latest"
+        "contrib contrib contrib contrib contrib contrib contrib contrib topo topo topo topo"
+        "apps apps apps apps ltl ltl gh gh topo topo topo topo"
+        "snow snow snow snow lang lang bx bx else else else else";
+    }
+  }
+  .tile {
+    padding: clamp(16px, 1.3vw, 22px);
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+  }
+  .tile-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+  }
+
+  /* Intro */
+  .intro {
+    grid-area: intro;
+    padding: 0;
+    min-height: 340px;
+    container-type: inline-size;
+    container-name: intro;
+  }
+  .intro-art {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+  }
+  .bubble {
+    /* en bas à droite du cadre : le Puy de Dôme et l'antenne restent dégagés à gauche */
+    margin: auto clamp(16px, 1.6vw, 26px) clamp(16px, 1.6vw, 26px) auto;
+    width: clamp(250px, 62cqw, 410px);
+    background: color-mix(in srgb, var(--tile) 90%, transparent);
+    backdrop-filter: blur(10px) saturate(1.2);
+    -webkit-backdrop-filter: blur(10px) saturate(1.2);
+    border: 1px solid var(--line);
+    border-radius: 4px 14px 14px 14px;
+    padding: 16px 18px;
+    font-size: 14.5px;
+    line-height: 1.55;
+    color: var(--ink-2);
+    box-shadow: var(--shadow);
+  }
+  .bubble-name {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    color: var(--ink);
+    letter-spacing: -0.01em;
+    margin-bottom: 6px;
+    font-variation-settings: "opsz" 40;
+  }
+  .bubble :global(strong) {
+    color: var(--ink);
+    font-weight: 600;
+  }
+  .bubble .more {
+    margin-top: 8px;
+    color: var(--muted);
+  }
+  .bubble :global(a) {
+    color: var(--accent-ink);
+    text-decoration: underline;
+    text-underline-offset: 2px;
+  }
+
+  /* Horloge */
+  .clock {
+    grid-area: clock;
+  }
+  .time {
+    font-family: var(--font-serif);
+    font-size: clamp(50px, 4.6vw, 70px);
+    line-height: 1;
+    letter-spacing: -0.03em;
+    margin-top: 14px;
+    font-variant-numeric: tabular-nums;
+    font-variation-settings: "opsz" 72;
+  }
+  .colon {
+    color: var(--accent);
+    animation: colon 2s steps(1) infinite;
+    padding: 0 1px;
+  }
+  @keyframes colon {
+    50% {
+      opacity: 0.2;
+    }
+  }
+  .clock-foot {
+    margin-top: auto;
+    display: grid;
+    gap: 4px;
+    color: var(--muted);
+  }
+  .status,
+  .prof-now {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 13px;
+    color: var(--ink-2);
+  }
+
+  /* NotiaNote */
+  .nn {
+    grid-area: nn;
+    background:
+      radial-gradient(120% 70% at 100% 0%, color-mix(in srgb, #6d5cff 13%, transparent), transparent 60%),
+      var(--tile);
+  }
+  .nn-head {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+  .nn-head img {
+    border-radius: 14px;
+    border: 1px solid var(--line);
+    background: #fff;
+  }
+  .nn h2 {
+    font-size: clamp(30px, 2.4vw, 38px);
+    margin-top: 16px;
+  }
+  .nn-text {
+    margin-top: 6px;
+    color: var(--ink-2);
+    font-size: 13.5px;
+  }
+  .nn-meta {
+    margin-top: 8px;
+    color: var(--muted);
+  }
+  .nn {
+    container-type: inline-size;
+    container-name: nn;
+  }
+  .phone {
+    position: absolute;
+    left: 50%;
+    top: calc(100% - clamp(190px, 46cqw, 300px));
+    width: clamp(150px, 58cqw, 250px);
+    translate: -50% 0;
+    rotate: -3deg;
+    transition:
+      translate 0.7s var(--ease),
+      rotate 0.7s var(--ease);
+    z-index: -1;
+  }
+  .nn:hover .phone {
+    translate: -50% -26px;
+    rotate: 0deg;
+  }
+  @media (prefers-reduced-motion: reduce) {
+    .phone {
+      transition: none;
+    }
+  }
+
+  /* Profil */
+  .prof {
+    grid-area: prof;
+    gap: 10px;
+  }
+  .avatar {
+    --ink: var(--bg);
+    width: 48px;
+    height: 48px;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    background: #221e19;
+    box-shadow: inset 0 -6px 14px rgb(0 0 0 / 0.25);
+  }
+  :global([data-theme="dark"]) .avatar {
+    background: #efe8dc;
+    --ink: #12110f;
+  }
+  .prof-name {
+    font-weight: 600;
+    letter-spacing: -0.01em;
+  }
+  .prof-handle,
+  .prof-role {
+    color: var(--muted);
+  }
+  .prof-role {
+    font-size: 13px;
+  }
+  .prof-now {
+    margin-top: auto;
+  }
+
+  /* Derniers articles */
+  .latest {
+    grid-area: latest;
+  }
+  .more-link {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--muted);
+    transition: color 0.2s;
+  }
+  .more-link:hover {
+    color: var(--accent-ink);
+  }
+  .latest ol {
+    list-style: none;
+    margin: auto 0 0;
+    padding: 0;
+    display: grid;
+  }
+  .latest li + li {
+    border-top: 1px dashed var(--line);
+  }
+  .latest li a {
+    display: grid;
+    grid-template-columns: 58px 1fr auto;
+    align-items: center;
+    gap: 12px;
+    padding: 7px 2px;
+  }
+  .latest time {
+    color: var(--muted);
+  }
+  .latest-title {
+    font-family: var(--font-serif);
+    font-size: 18px;
+    line-height: 1.25;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    transition: color 0.2s;
+  }
+  .latest :global(.latest-arrow) {
+    color: var(--muted);
+    opacity: 0;
+    transform: translate(-4px, 4px);
+    transition:
+      opacity 0.2s,
+      transform 0.3s var(--ease);
+  }
+  .latest li a:hover .latest-title {
+    color: var(--accent-ink);
+  }
+  .latest li a:hover :global(.latest-arrow) {
+    opacity: 1;
+    transform: none;
+    color: var(--accent);
+  }
+
+  /* Contributions */
+  .contrib-tile {
+    grid-area: contrib;
+  }
+  .contrib-link {
+    display: none;
+  }
+
+  /* Topo */
+  .topo {
+    grid-area: topo;
+    padding: 0;
+    container-type: inline-size;
+    container-name: topo;
+    min-height: 340px;
+  }
+  .topo-label {
+    position: absolute;
+    right: 14px;
+    bottom: 14px;
+    max-width: min(280px, calc(100% - 28px));
+    padding: 12px 14px;
+    background: color-mix(in srgb, var(--tile) 86%, transparent);
+    backdrop-filter: blur(8px);
+    -webkit-backdrop-filter: blur(8px);
+    border: 1px solid var(--line);
+    border-radius: 10px;
+    box-shadow: var(--shadow);
+  }
+  .topo-label .mono {
+    color: var(--muted);
+    font-size: 11px;
+  }
+  .topo-name {
+    font-family: var(--font-serif);
+    font-size: 22px;
+    line-height: 1.15;
+    margin-top: 2px;
+  }
+  .topo-text {
+    margin-top: 4px;
+    font-size: 12.5px;
+    color: var(--ink-2);
+  }
+
+  /* Projets */
+  .apps {
+    grid-area: apps;
+  }
+  .apps ul {
+    list-style: none;
+    margin: auto 0 0;
+    padding: 12px 0 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 12px 8px;
+  }
+  .apps a {
+    display: grid;
+    justify-items: center;
+    text-align: center;
+    gap: 2px;
+  }
+  .app-ico {
+    width: 54px;
+    height: 54px;
+    border-radius: 14px;
+    overflow: hidden;
+    background: #fff;
+    border: 1px solid var(--line);
+    box-shadow: 0 6px 14px -10px rgb(0 0 0 / 0.5);
+    margin-bottom: 4px;
+    transition: transform 0.35s var(--ease);
+  }
+  .app-ico img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  .app-ico img.pixel {
+    image-rendering: pixelated;
+    object-fit: contain;
+    padding: 6px;
+  }
+  .apps a:hover .app-ico {
+    transform: translateY(-4px) scale(1.04);
+  }
+  .app-name {
+    font-size: 12.5px;
+    font-weight: 500;
+    line-height: 1.2;
+    white-space: nowrap;
+  }
+  .app-note {
+    font-size: 10px;
+    color: var(--muted);
+  }
+  .apps a:hover .app-name {
+    color: var(--accent-ink);
+  }
+
+  /* Left To Live */
+  .ltl {
+    grid-area: ltl;
+  }
+  .ltl-head {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+  }
+  .ltl-head img {
+    border-radius: 11px;
+    background: #fff;
+    border: 1px solid var(--line);
+  }
+  .ltl-name {
+    font-weight: 600;
+    font-size: 14px;
+  }
+  .ltl-meta {
+    color: var(--muted);
+    font-size: 11px;
+  }
+  .ecg {
+    width: 100%;
+    height: 46px;
+    margin: auto 0 10px;
+  }
+  .ecg path {
+    fill: none;
+    stroke-width: 2;
+    stroke-linejoin: round;
+    stroke-linecap: round;
+    vector-effect: non-scaling-stroke;
+  }
+  .ecg-base {
+    stroke: color-mix(in srgb, #e0312b 18%, transparent);
+  }
+  .ecg-live {
+    stroke: #e0312b;
+    stroke-dasharray: 90 400;
+    stroke-dashoffset: 90;
+    animation: beat 2.6s linear infinite;
+  }
+  @keyframes beat {
+    to {
+      stroke-dashoffset: -400;
+    }
+  }
+  .ltl-text {
+    font-size: 13px;
+    color: var(--ink-2);
+    padding-right: 40px;
+  }
+
+  /* GitHub */
+  .gh {
+    grid-area: gh;
+    justify-content: space-between;
+  }
+  .gh :global(.gh-logo) {
+    color: var(--ink);
+    transition: transform 0.5s var(--ease);
+  }
+  .gh:hover :global(.gh-logo) {
+    transform: rotate(-8deg) scale(1.05);
+  }
+  .gh-text {
+    padding-right: 40px;
+  }
+  .gh-text .mono {
+    color: var(--muted);
+  }
+  .gh-text p:last-child {
+    font-size: 14px;
+  }
+  .gh-text strong {
+    font-family: var(--font-serif);
+    font-size: 30px;
+    font-weight: 400;
+    margin-right: 2px;
+  }
+
+  /* Langages */
+  .lang {
+    grid-area: lang;
+  }
+  .bar {
+    display: flex;
+    height: 10px;
+    gap: 2px;
+    border-radius: 99px;
+    overflow: hidden;
+    margin: 14px 0 12px;
+  }
+  .lang ul {
+    list-style: none;
+    margin: auto 0 0;
+    padding: 0;
+    display: grid;
+    gap: 5px;
+    font-size: 13px;
+  }
+  .lang li {
+    display: grid;
+    grid-template-columns: 10px 1fr auto;
+    gap: 8px;
+    align-items: center;
+  }
+  .sw {
+    width: 8px;
+    height: 8px;
+    border-radius: 2px;
+  }
+  .pct {
+    color: var(--muted);
+    font-size: 11.5px;
+  }
+
+  /* Bitixe */
+  .bx {
+    grid-area: bx;
+  }
+  .bx-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .bx-head img {
+    border-radius: 11px;
+    border: 1px solid var(--line);
+  }
+  .spark {
+    width: calc(100% + 2 * clamp(16px, 1.3vw, 22px));
+    margin: auto calc(-1 * clamp(16px, 1.3vw, 22px)) 8px;
+    height: 44px;
+  }
+  .spark-line {
+    fill: none;
+    stroke: #1f6bff;
+    stroke-width: 1.8;
+    vector-effect: non-scaling-stroke;
+  }
+  .bx-text {
+    padding-right: 40px;
+  }
+  .bx-name {
+    font-weight: 600;
+  }
+  .bx-meta {
+    color: var(--muted);
+  }
+
+  /* Snowbound */
+  .snow {
+    grid-area: snow;
+    justify-content: flex-end;
+    background: linear-gradient(180deg, #1c2a3a, #2b4057 70%, #3b5672);
+    border-color: #2b3e52;
+    color: #eef3f8;
+  }
+  :global([data-theme="dark"]) .snow {
+    background: linear-gradient(180deg, #0f1823, #17273a 70%, #203550);
+    border-color: #213246;
+  }
+  .flakes {
+    position: absolute;
+    inset: 0;
+    z-index: -1;
+    overflow: hidden;
+  }
+  .flakes i {
+    position: absolute;
+    top: -10px;
+    width: var(--s);
+    height: var(--s);
+    border-radius: 99px;
+    background: #fff;
+    opacity: 0.75;
+    animation: fall var(--d) linear infinite;
+    animation-delay: var(--delay);
+  }
+  @keyframes fall {
+    to {
+      transform: translate(24px, 280px);
+    }
+  }
+  .snow-chip {
+    position: absolute;
+    top: 18px;
+    left: 18px;
+    background: rgb(255 255 255 / 0.1);
+    border-color: rgb(255 255 255 / 0.2);
+    color: #eef3f8;
+  }
+  .snow-chip .dot {
+    background: #9fd3ff;
+  }
+  .snow-title {
+    font-size: clamp(38px, 3.4vw, 52px);
+    font-style: italic;
+  }
+  .snow-text {
+    color: rgb(238 243 248 / 0.75);
+    font-size: 14px;
+    margin-top: 4px;
+    padding-right: 44px;
+  }
+  .snow-meta {
+    margin-top: 10px;
+    font-size: 11px;
+    letter-spacing: 0.04em;
+    color: rgb(238 243 248 / 0.62);
+  }
+  .snow .go {
+    background: rgb(255 255 255 / 0.1);
+    border-color: rgb(255 255 255 / 0.2);
+    color: #fff;
+  }
+
+  /* Ailleurs */
+  .else {
+    grid-area: else;
+  }
+  .else ul {
+    list-style: none;
+    padding: 0;
+    margin: auto 0 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+    column-gap: 28px;
+  }
+  .else a {
+    display: grid;
+    grid-template-columns: 18px auto 1fr 14px;
+    align-items: center;
+    gap: 10px;
+    padding: 7px 0;
+    font-size: 14px;
+    color: var(--ink-2);
+    border-bottom: 1px dashed var(--line);
+    transition: color 0.2s;
+  }
+  .else li:last-child a {
+    border-bottom-color: transparent;
+  }
+  .else .h {
+    color: var(--muted);
+    font-size: 11.5px;
+    text-align: right;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .else :global(.ea) {
+    color: var(--muted);
+    transition: transform 0.3s var(--ease);
+  }
+  .else a:hover {
+    color: var(--accent-ink);
+  }
+  .else a:hover :global(.ea) {
+    transform: rotate(45deg);
+    color: var(--accent);
+  }
+
+  @container main (max-width: 759px) {
+    .intro {
+      min-height: 420px;
+    }
+    .bubble {
+      position: absolute;
+      left: 12px;
+      right: 12px;
+      bottom: 12px;
+      width: auto;
+      margin: 0;
+      border-radius: 4px 14px 14px 14px;
+      padding: 14px 16px;
+      font-size: 14px;
+    }
+    .bubble-name {
+      font-size: 20px;
+    }
+    .nn {
+      min-height: 340px;
+    }
+    .phone {
+      left: auto;
+      right: 18px;
+      width: 40%;
+      top: 46%;
+      translate: 0 0;
+    }
+    .nn:hover .phone {
+      translate: 0 -16px;
+    }
+    .nn-text,
+    .nn-meta {
+      max-width: 54%;
+    }
+    .time {
+      font-size: 44px;
+      margin-top: 10px;
+    }
+    .clock-foot {
+      margin-top: 12px;
+    }
+    .clock-foot .mono {
+      font-size: 11px;
+    }
+    .status,
+    .prof-now {
+      font-size: 12.5px;
+      align-items: flex-start;
+    }
+    .status .dot,
+    .prof-now .dot {
+      margin-top: 6px;
+    }
+    .prof-name {
+      font-size: 14px;
+      line-height: 1.3;
+    }
+    .prof-role {
+      display: none;
+    }
+    .latest-title {
+      font-size: 16.5px;
+    }
+    .latest li a {
+      grid-template-columns: 50px 1fr;
+    }
+    .latest :global(.latest-arrow) {
+      display: none;
+    }
+    .topo {
+      min-height: 400px;
+    }
+    .topo-text {
+      display: none;
+    }
+    .app-name {
+      font-size: 11.5px;
+      white-space: normal;
+    }
+    .ltl-text {
+      display: none;
+    }
+    .gh-text,
+    .bx-text {
+      padding-right: 0;
+      margin-bottom: 42px;
+    }
+    .gh-text p:last-child span {
+      display: block;
+      font-size: 13px;
+    }
+    .else .h {
+      display: none;
+    }
+    .else a {
+      grid-template-columns: 18px 1fr 14px;
+    }
+  }
+</style>

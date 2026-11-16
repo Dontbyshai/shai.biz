@@ -1,0 +1,376 @@
+---
+import Icon from "@/components/Icon.astro"
+import Logo from "@/components/Logo.astro"
+import Scene from "@/components/Scene.astro"
+import Base from "@/layouts/Base.astro"
+import { aboutParagraphs } from "@/data/about"
+import { postIcon } from "@/data/icons"
+import type { Locale } from "@/data/types"
+import { t } from "@/i18n/ui"
+import { localizedPath } from "@/lib/paths"
+import { getPost } from "@/lib/posts"
+import { renderParagraphs } from "@/lib/text"
+
+interface Props {
+  locale: Locale
+}
+const { locale } = Astro.props
+const L = (p: string) => localizedPath(locale, p)
+const html = renderParagraphs(aboutParagraphs[locale], locale)
+const milestoneSlugs = [
+  "kali-linux",
+  "qcm-interactif",
+  "notianote-v1",
+  "shai-company",
+  "notianote-app-store",
+  "left-to-live-app-store",
+  "bitixe",
+  "serpentix",
+]
+const milestones = milestoneSlugs.map(getPost)
+const monthYear = (iso: string) =>
+  new Intl.DateTimeFormat(locale === "fr" ? "fr-FR" : "en-GB", { month: "short", year: "numeric" })
+    .format(new Date(`${iso}T12:00:00Z`))
+    .replace(".", "")
+const socials = [
+  { href: "https://github.com/Dontbyshai", label: "GitHub", icon: "github" },
+  { href: "https://twitter.com/Dontbyshai", label: "X", icon: "x" },
+  { href: "https://www.linkedin.com/in/shai-chomette-dugat-276a542a0/", label: "LinkedIn", icon: "linkedin" },
+  { href: "https://www.instagram.com/dontbyshai/", label: "Instagram", icon: "instagram" },
+] as const
+---
+
+<Base locale={locale} path="/about/" title={t(locale, "aboutTitle")}>
+  <header class="page-head rise" style="--i:0">
+    <p class="eyebrow">shai.biz / {locale === "fr" ? "a-propos" : "about"}</p>
+    <h1 class="display">{t(locale, "aboutTitle")}</h1>
+  </header>
+
+  <div class="banner tile rise" style="--i:1" aria-hidden="true" data-scene-host>
+    <Scene align="middle" />
+  </div>
+
+  <div class="cols">
+    <div class="prose rise" style="--i:2" set:html={html} />
+
+    <aside class="side rise" style="--i:3">
+      <div class="tile card">
+        <div class="who">
+          <div class="avatar" aria-hidden="true"><Logo size={30} /></div>
+          <div>
+            <p class="nm">Shaï Chomette-Dugat</p>
+            <p class="mono hd">@Dontbyshai</p>
+          </div>
+        </div>
+        <p class="eyebrow">{t(locale, "facts")}</p>
+        <dl>
+          <dt>{t(locale, "factBase")}</dt>
+          <dd>{t(locale, "factBaseV")}</dd>
+          <dt>{t(locale, "factSchool")}</dt>
+          <dd>{t(locale, "factSchoolV")}</dd>
+          <dt>{t(locale, "factCompany")}</dt>
+          <dd><a class="link" href="https://shaiscompany.com" rel="noopener">Shaï Company</a></dd>
+          <dt>{t(locale, "factGoal")}</dt>
+          <dd>{t(locale, "factGoalV")}</dd>
+        </dl>
+        <ul class="soc">
+          {
+            socials.map((s) => (
+              <li>
+                <a href={s.href} rel="me noopener" aria-label={s.label} title={s.label}>
+                  <Icon name={s.icon} size={16} />
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+        <a class="mail" href="mailto:dontbyshai@gmail.com">
+          <Icon name="mail" size={16} />
+          {t(locale, "contact")}
+        </a>
+      </div>
+    </aside>
+  </div>
+
+  <section class="ms">
+    <div class="ms-head">
+      <h2 class="ms-title">{t(locale, "milestones")}</h2>
+      <p class="ms-sub">{locale === "fr" ? "Les étapes qui comptent, dans l'ordre." : "The steps that matter, in order."}</p>
+    </div>
+    <ol>
+      {
+        milestones.map((p, i) => {
+          const ic = postIcon[p.slug]
+          return (
+            <li class="rise" style={`--i:${i + 4}`}>
+              <a class="tile ms-card" href={L(`/blog/${p.slug}/`)}>
+                <span class="ms-top">
+                  <span class="mono when">{p.date && monthYear(p.date)}</span>
+                  {ic ? (
+                    <img class:list={["ms-ic", { pixel: ic.pixel, dark: ic.dark }]} src={ic.src} alt="" width="30" height="30" loading="lazy" />
+                  ) : (
+                    <span class="ms-ic ms-mono" aria-hidden="true">{p.title[locale].slice(0, 1)}</span>
+                  )}
+                </span>
+                <span class="what">{p.title[locale]}</span>
+                <span class="ms-n mono" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
+              </a>
+            </li>
+          )
+        })
+      }
+    </ol>
+  </section>
+</Base>
+
+<style>
+  .banner {
+    height: clamp(210px, 18vw, 320px);
+    padding: 0;
+    margin-bottom: 40px;
+  }
+  .cols {
+    display: grid;
+    grid-template-columns: minmax(0, 720px) minmax(280px, 340px);
+    gap: clamp(48px, 7vw, 140px);
+    align-items: start;
+  }
+  .prose {
+    max-width: 660px;
+  }
+  .prose :global(p:first-child::first-letter) {
+    float: left;
+    font-size: 3.6em;
+    line-height: 0.85;
+    padding: 6px 10px 0 0;
+    color: var(--accent);
+    font-variation-settings: "opsz" 72;
+  }
+  .side {
+    position: sticky;
+    top: 30px;
+  }
+  .card {
+    padding: 20px;
+    display: grid;
+    gap: 14px;
+  }
+  .who {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--line);
+  }
+  .avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    --ink: var(--bg);
+    background: #221e19;
+    box-shadow: inset 0 -6px 14px rgb(0 0 0 / 0.25);
+  }
+  :global([data-theme="dark"]) .avatar {
+    background: #efe8dc;
+    --ink: #12110f;
+  }
+  .nm {
+    font-weight: 600;
+  }
+  .hd {
+    color: var(--muted);
+  }
+  dl {
+    margin: 0;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 8px 14px;
+    font-size: 14px;
+  }
+  dt {
+    color: var(--muted);
+  }
+  dd {
+    margin: 0;
+    text-align: right;
+    color: var(--ink);
+  }
+  .soc {
+    list-style: none;
+    margin: 4px 0 0;
+    padding: 0;
+    display: flex;
+    gap: 4px;
+  }
+  .soc a {
+    width: 36px;
+    height: 36px;
+    display: grid;
+    place-items: center;
+    border-radius: 9px;
+    border: 1px solid var(--line);
+    color: var(--ink-2);
+    transition:
+      color 0.2s,
+      border-color 0.2s,
+      transform 0.3s var(--ease);
+  }
+  .soc a:hover {
+    color: var(--accent-ink);
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+  .mail {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px;
+    border-radius: 10px;
+    background: var(--ink);
+    color: var(--bg);
+    font-weight: 500;
+    font-size: 14px;
+    transition:
+      background 0.2s,
+      transform 0.3s var(--ease);
+  }
+  .mail:hover {
+    background: var(--accent);
+    color: #fff;
+    transform: translateY(-1px);
+  }
+  .ms {
+    margin-top: 72px;
+  }
+  .ms-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--line-strong);
+  }
+  .ms-title {
+    font-family: var(--font-serif);
+    font-size: clamp(26px, 2.2vw, 34px);
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+  }
+  .ms-sub {
+    color: var(--ink-2);
+    font-size: 14.5px;
+  }
+  .ms ol {
+    list-style: none;
+    margin: 18px 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(max(200px, calc(25% - 12px)), 1fr));
+    gap: var(--gap);
+  }
+  .ms-card {
+    position: relative;
+    height: 100%;
+    display: grid;
+    align-content: start;
+    gap: 14px;
+    padding: 16px 18px 18px;
+    transition:
+      border-color 0.2s,
+      transform 0.3s var(--ease);
+  }
+  .ms-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+  .ms-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+  }
+  .when {
+    display: inline-flex;
+    align-items: center;
+    height: 26px;
+    padding: 0 10px;
+    border-radius: 99px;
+    background: color-mix(in srgb, var(--accent) 13%, var(--tile));
+    border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
+    color: var(--accent-ink);
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  .ms-ic {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    background: #fff;
+    object-fit: cover;
+  }
+  .ms-ic.dark {
+    background: #0b0b0d;
+  }
+  .ms-ic.pixel {
+    image-rendering: pixelated;
+    object-fit: contain;
+    padding: 3px;
+  }
+  .ms-mono {
+    display: grid;
+    place-items: center;
+    background: var(--tile-2);
+    color: var(--ink-2);
+    font-family: var(--font-serif);
+    font-size: 16px;
+  }
+  .what {
+    font-family: var(--font-serif);
+    font-size: 20px;
+    line-height: 1.25;
+    color: var(--ink);
+    padding-right: 26px;
+    transition: color 0.2s;
+  }
+  .ms-card:hover .what {
+    color: var(--accent-ink);
+  }
+  .ms-n {
+    position: absolute;
+    right: 16px;
+    bottom: 16px;
+    font-size: 11.5px;
+    color: var(--muted);
+  }
+  @media (max-width: 960px) {
+    .cols {
+      grid-template-columns: 1fr;
+    }
+    .side {
+      position: static;
+      max-width: 420px;
+    }
+    .ms ol {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 560px) {
+    .banner {
+      height: 150px;
+      margin-bottom: 28px;
+    }
+    .prose {
+      font-size: 18.5px;
+    }
+    .ms ol {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

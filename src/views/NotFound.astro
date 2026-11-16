@@ -1,0 +1,53 @@
+---
+import Scene from "@/components/Scene.astro"
+import Base from "@/layouts/Base.astro"
+import type { Locale } from "@/data/types"
+import { t } from "@/i18n/ui"
+import { localizedPath } from "@/lib/paths"
+
+interface Props {
+  locale: Locale
+}
+const { locale } = Astro.props
+---
+
+<Base locale={locale} path="/404/" title="404">
+  <section class="nf">
+    <div class="tile art" aria-hidden="true"><Scene /></div>
+    <p class="mono code">404</p>
+    <h1 class="display">{t(locale, "notFoundTitle")}</h1>
+    <p class="txt">{t(locale, "notFoundText")}</p>
+    <a class="home" href={localizedPath(locale, "/")}>{t(locale, "notFoundHome")}</a>
+  </section>
+</Base>
+
+<style>
+  .art {
+    height: 220px;
+    margin-bottom: 30px;
+  }
+  .code {
+    color: var(--accent-ink);
+  }
+  h1 {
+    font-size: clamp(42px, 7vw, 70px);
+    margin-top: 8px;
+  }
+  .txt {
+    margin-top: 12px;
+    color: var(--ink-2);
+  }
+  .home {
+    display: inline-block;
+    margin-top: 22px;
+    padding: 10px 16px;
+    border-radius: 10px;
+    background: var(--ink);
+    color: var(--bg);
+    transition: background 0.2s;
+  }
+  .home:hover {
+    background: var(--accent);
+    color: #fff;
+  }
+</style>

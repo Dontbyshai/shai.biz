@@ -1,0 +1,266 @@
+---
+import type { Locale } from "@/data/types"
+import { getContributions } from "@/lib/contributions"
+
+interface Props {
+  locale: Locale
+}
+const { locale } = Astro.props
+const data = await getContributions()
+const days = data.days
+const tag = locale === "fr" ? "fr-FR" : "en-GB"
+
+// Colonnes = semaines (dimanche en haut), comme sur GitHub.
+type Cell = { date: string; level: number; count: number } | null
+const weeks: Cell[][] = []
+if (days.length > 0) {
+  const first = new Date(`${days[0]!.date}T12:00:00Z`)
+  let week: Cell[] = Array.from({ length: first.getUTCDay() }, () => null)
+  for (const d of days) {
+    week.push(d)
+    if (week.length === 7) {
+      weeks.push(week)
+      week = []
+    }
+  }
+  if (week.length > 0) weeks.push([...week, ...Array.from({ length: 7 - week.length }, () => null)])
+}
+const monthFmt = new Intl.DateTimeFormat(tag, { month: "short", timeZone: "UTC" })
+const months: { col: number; label: string }[] = []
+weeks.forEach((w, i) => {
+  const firstDay = w.find((c) => c !== null)
+  if (!firstDay) return
+  const dt = new Date(`${firstDay.date}T12:00:00Z`)
+  const prev = i > 0 ? weeks[i - 1]?.find((c) => c !== null) : null
+  if (!prev || new Date(`${prev.date}T12:00:00Z`).getUTCMonth() !== dt.getUTCMonth()) {
+    if (i < weeks.length - 1) months.push({ col: i + 1, label: monthFmt.format(dt).replace(".", "") })
+  }
+})
+const dayFmt = new Intl.DateTimeFormat(tag, { day: "numeric", month: "short", year: "numeric", timeZone: "UTC" })
+const label = (c: NonNullable<Cell>) => {
+  const when = dayFmt.format(new Date(`${c.date}T12:00:00Z`))
+  if (locale === "fr") return `${c.count === 0 ? "Aucune" : c.count} contribution${c.count > 1 ? "s" : ""} · ${when}`
+  return `${c.count === 0 ? "No" : c.count} contribution${c.count === 1 ? "" : "s"} · ${when}`
+}
+const dayNames = locale === "fr" ? ["", "lun", "", "mer", "", "ven", ""] : ["", "Mon", "", "Wed", "", "Fri", ""]
+const totalText =
+  locale === "fr"
+    ? `${data.total.toLocaleString(tag)} contributions sur les 12 derniers mois`
+    : `${data.total.toLocaleString(tag)} contributions in the last year`
+const activeDays = days.filter((d) => d.count > 0).length
+let streak = 0
+let best = 0
+for (const d of days) {
+  streak = d.count > 0 ? streak + 1 : 0
+  best = Math.max(best, streak)
+}
+---
+
+<div class="contrib" data-contrib>
+  <div class="c-head">
+    <p class="eyebrow">GitHub · @{data.user}</p>
+    <p class="c-readout mono" data-readout data-default={totalText} aria-live="polite">{totalText}</p>
+  </div>
+  {
+    weeks.length > 0 ? (
+      <div class="c-body" style={`--weeks:${weeks.length}`}>
+        <div class="c-days mono" aria-hidden="true">
+          {dayNames.map((d) => (
+            <span>{d}</span>
+          ))}
+        </div>
+        <div class="c-clip">
+          <div class="c-grid" role="img" aria-label={totalText}>
+            {months.map((m) => (
+              <span class="c-month mono" style={`grid-column:${m.col}`}>
+                {m.label}
+              </span>
+            ))}
+            {weeks.map((w, wi) =>
+              w.map((c, di) =>
+                c ? (
+                  <span
+                    class={`c-cell l${c.level}`}
+                    style={`grid-column:${wi + 1};grid-row:${di + 2}`}
+                    data-tip={label(c)}
+                  />
+                ) : (
+                  <span class="c-cell empty" style={`grid-column:${wi + 1};grid-row:${di + 2}`} />
+                ),
+              ),
+            )}
+          </div>
+        </div>
+      </div>
+    ) : (
+      <p class="c-empty">{locale === "fr" ? "Calendrier indisponible pour le moment." : "Calendar unavailable right now."}</p>
+    )
+  }
+  <div class="c-foot mono">
+    <span>
+      {activeDays} {locale === "fr" ? "jours actifs" : "active days"} · {locale === "fr" ? "série max." : "best streak"} {best}
+      {locale === "fr" ? "j" : "d"}
+    </span>
+    <span class="c-legend" aria-hidden="true">
+      {locale === "fr" ? "Moins" : "Less"}
+      <i class="c-cell l0" />
+      <i class="c-cell l1" />
+      <i class="c-cell l2" />
+      <i class="c-cell l3" />
+      <i class="c-cell l4" />
+      {locale === "fr" ? "Plus" : "More"}
+    </span>
+  </div>
+</div>
+
+<script>
+  document.querySelectorAll<HTMLElement>("[data-contrib]").forEach((root) => {
+    const out = root.querySelector<HTMLElement>("[data-readout]")
+    if (!out) return
+    const reset = () => {
+      out.textContent = out.dataset.default ?? ""
+      out.classList.remove("on")
+    }
+    root.addEventListener("pointerover", (e) => {
+      const cell = (e.target as HTMLElement).closest<HTMLElement>("[data-tip]")
+      if (!cell) return
+      out.textContent = cell.dataset.tip ?? ""
+      out.classList.add("on")
+    })
+    root.querySelector(".c-grid")?.addEventListener("pointerleave", reset)
+  })
+</script>
+
+<style>
+  .contrib {
+    display: flex;
+    flex-direction: column;
+    height: 100%;
+    gap: 12px;
+  }
+  .c-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .c-readout {
+    color: var(--muted);
+    transition: color 0.2s;
+  }
+  .c-readout.on {
+    color: var(--accent-ink);
+  }
+  .c-body {
+    --gap: 3px;
+    --cell: clamp(9px, calc((100cqw - 34px - (var(--weeks) - 1) * var(--gap)) / var(--weeks)), 17px);
+    container-type: inline-size;
+    display: flex;
+    gap: 8px;
+    margin-top: auto;
+    min-width: 0;
+  }
+  .c-clip {
+    flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    display: flex;
+    justify-content: flex-end;
+  }
+  @container (max-width: 680px) {
+    .c-clip {
+      -webkit-mask: linear-gradient(90deg, transparent, #000 32px);
+      mask: linear-gradient(90deg, transparent, #000 32px);
+    }
+  }
+  .c-grid {
+    display: grid;
+    grid-template-columns: repeat(var(--weeks), var(--cell));
+    grid-template-rows: 16px repeat(7, var(--cell));
+    gap: var(--gap);
+    flex: none;
+  }
+  .c-days {
+    display: grid;
+    grid-template-rows: 16px repeat(7, var(--cell));
+    gap: var(--gap);
+    width: 26px;
+    flex: none;
+    font-size: 10px;
+    color: var(--muted);
+    padding-top: 0;
+  }
+  .c-days span:first-child {
+    visibility: hidden;
+  }
+  .c-days span {
+    line-height: 1;
+    display: flex;
+    align-items: center;
+  }
+  .c-days::before {
+    content: "";
+  }
+  .c-month {
+    grid-row: 1;
+    font-size: 10px;
+    color: var(--muted);
+    white-space: nowrap;
+    align-self: end;
+    text-transform: lowercase;
+  }
+  .c-cell {
+    display: block;
+    width: 100%;
+    aspect-ratio: 1;
+    border-radius: 3px;
+    background: var(--tile-2);
+    box-shadow: inset 0 0 0 1px color-mix(in srgb, var(--ink) 6%, transparent);
+    transition:
+      transform 0.15s var(--ease),
+      box-shadow 0.15s;
+  }
+  .c-cell.empty {
+    visibility: hidden;
+  }
+  .c-cell.l1 {
+    background: color-mix(in srgb, var(--accent) 30%, var(--tile-2));
+  }
+  .c-cell.l2 {
+    background: color-mix(in srgb, var(--accent) 55%, var(--tile-2));
+  }
+  .c-cell.l3 {
+    background: color-mix(in srgb, var(--accent) 78%, var(--tile-2));
+  }
+  .c-cell.l4 {
+    background: var(--accent);
+  }
+  .c-cell[data-tip]:hover {
+    transform: scale(1.35);
+    box-shadow: 0 0 0 1.5px var(--ink);
+    position: relative;
+    z-index: 1;
+  }
+  .c-foot {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+    flex-wrap: wrap;
+    color: var(--muted);
+    font-size: 11px;
+  }
+  .c-legend {
+    display: inline-flex;
+    align-items: center;
+    gap: 3px;
+  }
+  .c-legend .c-cell {
+    width: 10px;
+    height: 10px;
+  }
+  .c-empty {
+    margin: auto 0;
+    color: var(--muted);
+  }
+</style>
