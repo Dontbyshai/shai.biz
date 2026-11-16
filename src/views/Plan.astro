@@ -3,7 +3,7 @@ import Flag from "@/components/Flag.astro"
 import Icon from "@/components/Icon.astro"
 import Logo from "@/components/Logo.astro"
 import Base from "@/layouts/Base.astro"
-import { companies, personalProjects, type GroupProject } from "@/data/group"
+import { companies, personalProjects, type Company, type GroupProject } from "@/data/group"
 import type { Locale } from "@/data/types"
 import { t } from "@/i18n/ui"
 import { localizedPath } from "@/lib/paths"
@@ -17,6 +17,11 @@ const fr = locale === "fr"
 const companyProjects = companies.reduce((n, c) => n + c.projects.length, 0)
 const host = (href: string) => new URL(href).hostname.replace(/^www\./, "")
 const projectHref = (p: GroupProject) => (p.slug ? L(`/blog/${p.slug}/`) : (p.href ?? "#"))
+
+const groupName = "Shai Company Group"
+const founder = "Shaï Chomette-Dugat"
+
+const companySummary = (c: Company) => `${c.country[locale]} · ${c.owners[locale]}`
 ---
 
 <Base locale={locale} path="/plan/" title={t(locale, "planTitle")} description={t(locale, "planLede")}>
@@ -32,186 +37,587 @@ const projectHref = (p: GroupProject) => (p.slug ? L(`/blog/${p.slug}/`) : (p.hr
     <li><strong>{personalProjects.length}</strong> {fr ? "projets open source perso" : "personal open-source projects"}</li>
   </ul>
 
-  <div class="chart" data-chart>
-    <svg class="wires" data-wires aria-hidden="true"></svg>
+  <div class="stage rise" style="--i:2" data-stage>
+    <div class="toolbar">
+      <p class="hint mono">{t(locale, "planHint")}</p>
+    </div>
 
-    <section class="col col-oss">
-      <article class="tile node oss rise" style="--i:3" data-node="oss">
-        <header class="n-head">
-          <span class="n-badge oss-badge" aria-hidden="true"><Icon name="github" size={16} /></span>
-          <div>
-            <h2 class="n-name">{fr ? "Projets open source perso" : "Personal open source"}</h2>
-            <p class="n-sub">{fr ? "Sans lien avec mes sociétés" : "Not tied to my companies"}</p>
-          </div>
-        </header>
-        <ul class="pjs">
-          {
-            personalProjects.map((p) => (
-              <li class="pj">
-                <a class="pj-main" href={projectHref(p)}>
-                  {p.icon ? (
-                    <img class:list={["pj-ic", { pixel: p.pixel, dark: p.dark }]} src={p.icon} alt="" width="34" height="34" loading="lazy" />
-                  ) : (
-                    <span class="pj-ic pj-mono" aria-hidden="true">{p.name.slice(0, 2)}</span>
-                  )}
-                  <span class="pj-txt">
-                    <span class="pj-name">{p.name}</span>
-                    <span class="pj-note">{p.note[locale]}</span>
-                  </span>
-                  <Icon name="arrow" size={13} class="pj-go" />
-                </a>
-              </li>
-            ))
-          }
-        </ul>
-        <a class="n-foot mono" href={L("/work/")}>{fr ? "Tout voir dans Work" : "See all in Work"} <Icon name="arrow" size={12} /></a>
-      </article>
-    </section>
-
-    <section class="col col-me">
-      <div class="me rise" style="--i:2" data-node="me">
-        <div class="me-ring" aria-hidden="true"></div>
-        <div class="me-av" aria-hidden="true"><Logo size={46} /></div>
-        <p class="me-name">Shaï Chomette-Dugat</p>
-        <p class="mono me-handle">@Dontbyshai</p>
-        <p class="me-role">{fr ? "Fondateur" : "Founder"} · Shai's Company</p>
-      </div>
-    </section>
-
-    <section class="col col-co">
-      {
-        companies.map((c, i) => (
-          <article class={`tile node co co-${c.id} rise`} style={`--i:${4 + i}`} data-node={`co-${c.id}`} data-share={c.share}>
-            <header class="n-head">
-              <span class:list={["share mono", { part: c.share < 100 }]} title={c.owners[locale]}>{c.share}&nbsp;%</span>
-              <span class="n-badge" aria-hidden="true">
-                <Flag code={c.flag} size={22} />
+    <div class="board">
+      <div
+        class="viewport"
+        data-viewport
+        tabindex="0"
+        role="group"
+        aria-label={t(locale, "planChart")}
+      >
+        <div class="zoom" role="group" aria-label={fr ? "Zoom de l'organigramme" : "Chart zoom"}>
+          <button type="button" class="z-btn" data-zoom-out aria-label={t(locale, "planZoomOut")}>
+            <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M3 8h10" /></svg>
+          </button>
+          <button type="button" class="z-btn z-reset" data-zoom-reset aria-label={t(locale, "planZoomReset")}>
+            <span data-zoom-label>100%</span>
+          </button>
+          <button type="button" class="z-btn" data-zoom-in aria-label={t(locale, "planZoomIn")}>
+            <svg viewBox="0 0 16 16" width="14" height="14" aria-hidden="true"><path d="M8 3v10M3 8h10" /></svg>
+          </button>
+        </div>
+        <div class="world" data-world>
+          <div class="head">
+            <button
+              type="button"
+              class="node root"
+              data-node="group"
+              aria-pressed="false"
+              aria-controls="plan-panel"
+            >
+              <span class="root-mark" aria-hidden="true"><Logo size={26} /></span>
+              <span class="root-txt">
+                <span class="n-name">{groupName}</span>
+                <span class="n-sub">{founder} · {t(locale, "planGroupRole")}</span>
               </span>
-              <div>
-                <h2 class="n-name">{c.name}</h2>
-                <p class="n-sub">{c.role[locale]}</p>
-              </div>
-            </header>
-            <dl class="n-facts">
-              <dt>{fr ? "Pays" : "Country"}</dt>
-              <dd>{c.country[locale]}</dd>
-              {c.kind && (
-                <>
-                  <dt>{fr ? "Structure" : "Entity"}</dt>
-                  <dd>{c.kind[locale]}</dd>
-                </>
-              )}
-              <dt>{fr ? "Détention" : "Ownership"}</dt>
-              <dd>{c.owners[locale]}</dd>
-            </dl>
-            <ul class="pjs">
-              {c.projects.map((p) => (
-                <li class="pj">
-                  <a class="pj-main" href={projectHref(p)}>
-                    {p.icon ? (
-                      <img class:list={["pj-ic", { pixel: p.pixel, dark: p.dark }]} src={p.icon} alt="" width="34" height="34" loading="lazy" />
-                    ) : (
-                      <span class="pj-ic pj-snow" aria-hidden="true">
-                        <svg viewBox="0 0 24 24" width="18" height="18">
-                          <path d="M12 2v20M3.3 7l17.4 10M3.3 17L20.7 7M12 2l-2.2 2.2M12 2l2.2 2.2M12 22l-2.2-2.2M12 22l2.2-2.2" />
-                        </svg>
-                      </span>
-                    )}
-                    <span class="pj-txt">
-                      <span class="pj-name">{p.name}</span>
-                      <span class="pj-note">{p.note[locale]}</span>
+            </button>
+            <div class="fork" aria-hidden="true">
+              <span class="spine wire" data-path="ltd llc fr"></span>
+              <span class="bus">
+                <span class="bus-seg wire" data-path="ltd llc"></span>
+                <span class="bus-seg wire" data-path="llc fr"></span>
+              </span>
+            </div>
+          </div>
+
+          <div class="row">
+            {
+              companies.map((c) => (
+                <div class="branch" data-branch={c.id}>
+                  <div class:list={["stem", "wire", { part: c.share < 100 }]} data-path={c.id} aria-hidden="true">
+                    <span class:list={["share", "mono", { part: c.share < 100 }]} title={c.owners[locale]}>
+                      {c.share}&nbsp;%
                     </span>
-                    <Icon name="arrow" size={13} class="pj-go" />
-                  </a>
-                  {p.href && (
-                    <a class="pj-site mono" href={p.href} rel="noopener" title={host(p.href)}>
-                      <Icon name="globe" size={13} />
-                      <span>{host(p.href)}</span>
-                    </a>
-                  )}
-                </li>
-              ))}
-            </ul>
-          </article>
-        ))
-      }
-    </section>
+                  </div>
+                  <button
+                    type="button"
+                    class="node co"
+                    data-node={`co-${c.id}`}
+                    aria-pressed="false"
+                    aria-controls="plan-panel"
+                  >
+                    <span class="n-head">
+                      <span class="n-badge" aria-hidden="true">
+                        <Flag code={c.flag} size={20} />
+                      </span>
+                      <span class="n-txt">
+                        <span class="n-name">{c.name}</span>
+                        <span class="n-sub">{c.role[locale]}</span>
+                      </span>
+                    </span>
+                    <span class="n-meta">{companySummary(c)}</span>
+                  </button>
+                  <ul class="pjs">
+                    {c.projects.map((p) => (
+                      <li class="pj">
+                        <a class="pj-main" href={projectHref(p)}>
+                          {p.icon ? (
+                            <img
+                              class:list={["pj-ic", { pixel: p.pixel, dark: p.dark }]}
+                              src={p.icon}
+                              alt=""
+                              width="26"
+                              height="26"
+                              loading="lazy"
+                            />
+                          ) : (
+                            <span class="pj-ic pj-snow" aria-hidden="true">
+                              <svg viewBox="0 0 24 24" width="14" height="14">
+                                <path d="M12 2v20M3.3 7l17.4 10M3.3 17L20.7 7M12 2l-2.2 2.2M12 2l2.2 2.2M12 22l-2.2-2.2M12 22l2.2-2.2" />
+                              </svg>
+                            </span>
+                          )}
+                          <span class="pj-name">{p.name}</span>
+                          <Icon name="arrow" size={12} class="pj-go" />
+                        </a>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              ))
+            }
+          </div>
+
+          <aside class="oss-col" data-branch="oss">
+            <p class="oss-kicker mono">{t(locale, "planOssKicker")}</p>
+            <div class="oss-wrap">
+              <button
+                type="button"
+                class="node oss-head"
+                data-node="oss"
+                aria-pressed="false"
+                aria-controls="plan-panel"
+              >
+                <span class="n-badge oss-badge" aria-hidden="true"><Icon name="github" size={15} /></span>
+                <span class="n-txt">
+                  <span class="n-name">{t(locale, "planOssTitle")}</span>
+                  <span class="n-sub">{t(locale, "planOssSub")}</span>
+                </span>
+              </button>
+              <ul class="pjs">
+                {
+                  personalProjects.map((p) => (
+                    <li class="pj">
+                      <a class="pj-main" href={projectHref(p)}>
+                        {p.icon ? (
+                          <img
+                            class:list={["pj-ic", { pixel: p.pixel, dark: p.dark }]}
+                            src={p.icon}
+                            alt=""
+                            width="26"
+                            height="26"
+                            loading="lazy"
+                          />
+                        ) : (
+                          <span class="pj-ic pj-mono" aria-hidden="true">
+                            {p.name.slice(0, 2)}
+                          </span>
+                        )}
+                        <span class="pj-name">{p.name}</span>
+                        <Icon name="arrow" size={12} class="pj-go" />
+                      </a>
+                    </li>
+                  ))
+                }
+              </ul>
+              <a class="n-foot mono" href={L("/work/")}>
+                {t(locale, "planSeeWork")} <Icon name="arrow" size={12} />
+              </a>
+            </div>
+          </aside>
+        </div>
+      </div>
+
+      <aside class="panel" id="plan-panel" data-panel aria-live="polite">
+        <div class="panel-body" data-panel-body></div>
+      </aside>
+    </div>
   </div>
 
-  <p class="note rise" style="--i:8">
+  <p class="note rise" style="--i:3">
     {
       fr
         ? "Ce plan montre qui porte quel projet et la part que je détiens dans chaque société. Les autres infos légales ne sont pas publiées ici."
         : "This map shows which entity runs which project and the share I own in each company. Other legal details are not published here."
     }
   </p>
+
+  <template data-for="group">
+    <div class="p-main">
+      <p class="p-kicker mono">{groupName}</p>
+      <h3 class="p-title">{founder}</h3>
+      <p class="p-lead">{t(locale, "planGroupRole")}</p>
+      <p class="p-aside">{t(locale, "planOssSub")}.</p>
+    </div>
+    <ul class="p-list">
+      {
+        companies.map((c) => (
+          <li>
+            <strong>{c.name}</strong>
+            <span>
+              {c.country[locale]} · {c.owners[locale]}
+            </span>
+          </li>
+        ))
+      }
+    </ul>
+  </template>
+
+  {
+    companies.map((c) => (
+      <template data-for={`co-${c.id}`}>
+        <div class="p-main">
+          <p class="p-kicker mono">{c.role[locale]}</p>
+          <h3 class="p-title">{c.name}</h3>
+          <dl class="p-facts">
+            <dt>{t(locale, "planCountry")}</dt>
+            <dd>{c.country[locale]}</dd>
+            {c.kind && (
+              <>
+                <dt>{t(locale, "planKind")}</dt>
+                <dd>{c.kind[locale]}</dd>
+              </>
+            )}
+            <dt>{t(locale, "planOwners")}</dt>
+            <dd>{c.owners[locale]}</dd>
+          </dl>
+        </div>
+        <div class="p-side">
+        <p class="p-kicker mono p-proj-k">{t(locale, "planProjects")}</p>
+        <ul class="p-pjs">
+          {c.projects.map((p) => (
+            <li>
+              <a href={projectHref(p)}>
+                {p.icon ? (
+                  <img
+                    class:list={["pj-ic", { pixel: p.pixel, dark: p.dark }]}
+                    src={p.icon}
+                    alt=""
+                    width="26"
+                    height="26"
+                    loading="lazy"
+                  />
+                ) : (
+                  <span class="pj-ic pj-snow" aria-hidden="true">
+                    <svg viewBox="0 0 24 24" width="14" height="14">
+                      <path d="M12 2v20M3.3 7l17.4 10M3.3 17L20.7 7M12 2l-2.2 2.2M12 2l2.2 2.2M12 22l-2.2-2.2M12 22l2.2-2.2" />
+                    </svg>
+                  </span>
+                )}
+                <span>
+                  <strong>{p.name}</strong>
+                  <span class="p-note">{p.note[locale]}</span>
+                </span>
+              </a>
+              {p.href && (
+                <a class="p-site mono" href={p.href} rel="noopener">
+                  {host(p.href)}
+                </a>
+              )}
+            </li>
+          ))}
+        </ul>
+        </div>
+      </template>
+    ))
+  }
+
+  <template data-for="oss">
+    <div class="p-main">
+      <p class="p-kicker mono">{t(locale, "planOssKicker")}</p>
+      <h3 class="p-title">{t(locale, "planOssTitle")}</h3>
+      <p class="p-lead">{t(locale, "planOssSub")}</p>
+      <a class="p-work mono" href={L("/work/")}>
+        {t(locale, "planSeeWork")} <Icon name="arrow" size={12} />
+      </a>
+    </div>
+    <ul class="p-pjs">
+      {
+        personalProjects.map((p) => (
+          <li>
+            <a href={projectHref(p)}>
+              {p.icon ? (
+                <img
+                  class:list={["pj-ic", { pixel: p.pixel, dark: p.dark }]}
+                  src={p.icon}
+                  alt=""
+                  width="26"
+                  height="26"
+                  loading="lazy"
+                />
+              ) : (
+                <span class="pj-ic pj-mono" aria-hidden="true">
+                  {p.name.slice(0, 2)}
+                </span>
+              )}
+              <span>
+                <strong>{p.name}</strong>
+                <span class="p-note">{p.note[locale]}</span>
+              </span>
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </template>
 </Base>
 
 <script>
-  const R = 14
-  function draw(chart: HTMLElement) {
-    const svg = chart.querySelector<SVGSVGElement>("[data-wires]")
-    const me = chart.querySelector<HTMLElement>('[data-node="me"]')
-    if (!svg || !me) return
-    const box = chart.getBoundingClientRect()
-    svg.setAttribute("viewBox", `0 0 ${box.width} ${box.height}`)
-    svg.setAttribute("width", String(box.width))
-    svg.setAttribute("height", String(box.height))
-    if (getComputedStyle(svg).display === "none") return
-    const m = me.getBoundingClientRect()
-    const my = m.top - box.top + m.height / 2
-    const paths: string[] = []
-    const dots: string[] = []
-    const link = (fromX: number, toX: number, toY: number, part = false) => {
-      const dir = toX > fromX ? 1 : -1
-      const midX = fromX + (toX - fromX) * 0.34
-      const dy = toY - my
-      const r = Math.min(R, Math.abs(dy) / 2, Math.abs(toX - fromX) / 4)
-      if (Math.abs(dy) < 1) {
-        paths.push(`${part ? "~" : ""}M${fromX} ${my}H${toX}`)
-      } else {
-        const sy = Math.sign(dy)
-        paths.push(
-          `${part ? "~" : ""}M${fromX} ${my}H${midX - dir * r}Q${midX} ${my} ${midX} ${my + sy * r}V${toY - sy * r}Q${midX} ${toY} ${midX + dir * r} ${toY}H${toX}`,
-        )
-      }
-      dots.push(`<circle class="w-dot" cx="${toX}" cy="${toY}" r="3.5"/>`)
-    }
-    const right = m.right - box.left
-    const left = m.left - box.left
-    for (const n of chart.querySelectorAll<HTMLElement>('[data-node^="co-"]')) {
-      const r = n.getBoundingClientRect()
-      const head = n.querySelector<HTMLElement>(".n-head")?.getBoundingClientRect()
-      const y = head ? head.top - box.top + head.height / 2 : r.top - box.top + 30
-      link(right, r.left - box.left, y, Number(n.dataset.share) < 100)
-    }
-    const oss = chart.querySelector<HTMLElement>('[data-node="oss"]')
-    if (oss) {
-      const r = oss.getBoundingClientRect()
-      const head = oss.querySelector<HTMLElement>(".n-head")?.getBoundingClientRect()
-      const y = head ? head.top - box.top + head.height / 2 : r.top - box.top + 30
-      link(left, r.right - box.left, y)
-    }
-    svg.innerHTML =
-      paths
-        .map((d, i) => `<path class="w-line${d.startsWith("~") ? " w-part" : ""}" style="--n:${i}" d="${d.replace("~", "")}"/>`)
-        .join("") +
-      dots.join("") +
-      `<circle class="w-hub" cx="${right}" cy="${my}" r="4"/><circle class="w-hub" cx="${left}" cy="${my}" r="4"/>`
-    for (const path of svg.querySelectorAll<SVGPathElement>(".w-line")) {
-      path.style.setProperty("--len", `${Math.ceil(path.getTotalLength())}`)
-    }
-    const first = Number(chart.dataset.drawn || 0)
-    if (!first) chart.dataset.drawn = String(performance.now())
-    else if (performance.now() - first > 1600) svg.classList.add("static")
+  const MIN = 0.45
+  const MAX = 2.2
+  const STEP = 1.18
+
+  const reduced = window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  const compact = window.matchMedia("(max-width: 900px)")
+
+  function clamp(n: number, a: number, b: number) {
+    return Math.min(b, Math.max(a, n))
   }
-  for (const chart of document.querySelectorAll<HTMLElement>("[data-chart]")) {
-    const run = () => requestAnimationFrame(() => draw(chart))
-    new ResizeObserver(run).observe(chart)
-    window.addEventListener("load", run)
-    document.fonts?.ready.then(run)
-    run()
-    setTimeout(run, 1800)
+
+  for (const stage of document.querySelectorAll<HTMLElement>("[data-stage]")) {
+    const viewport = stage.querySelector<HTMLElement>("[data-viewport]")
+    const world = stage.querySelector<HTMLElement>("[data-world]")
+    const panelBody = stage.querySelector<HTMLElement>("[data-panel-body]")
+    const label = stage.querySelector<HTMLElement>("[data-zoom-label]")
+    if (!viewport || !world || !panelBody) continue
+
+    let scale = 1
+    let x = 0
+    let y = 0
+    let pinned: string | null = null
+    let dragging = false
+    let moved = false
+    let px = 0
+    let py = 0
+    let pointers = new Map<number, { x: number; y: number }>()
+    let pinch = 0
+    let pinchScale = 1
+
+    const templates = new Map<string, HTMLTemplateElement>()
+    for (const tpl of document.querySelectorAll<HTMLTemplateElement>("template[data-for]")) {
+      templates.set(tpl.dataset.for ?? "", tpl)
+    }
+
+    const show = (id: string) => {
+      const tpl = templates.get(id)
+      if (!tpl) return
+      panelBody.replaceChildren(tpl.content.cloneNode(true))
+    }
+
+    const setHot = (id: string | null, press: boolean) => {
+      const branch = id?.startsWith("co-") ? id.slice(3) : id
+      stage.dataset.hot = branch ?? ""
+      if (!branch) delete stage.dataset.hot
+      for (const btn of stage.querySelectorAll<HTMLElement>("[data-node]")) {
+        const on = btn.dataset.node === id
+        btn.classList.toggle("is-hot", on)
+        if (btn.hasAttribute("aria-pressed")) btn.setAttribute("aria-pressed", String(press && on))
+      }
+      for (const el of stage.querySelectorAll<HTMLElement>("[data-branch]")) {
+        const on =
+          el.dataset.branch === branch || (branch === "group" && el.dataset.branch !== "oss")
+        el.classList.toggle("is-hot", on)
+      }
+      if (id) show(id)
+      else show("group")
+    }
+
+    const apply = (animate = false) => {
+      world.classList.toggle("is-anim", Boolean(animate) && !reduced)
+      world.style.transform = `translate(${x}px, ${y}px) scale(${scale})`
+      if (label) label.textContent = `${Math.round(scale * 100)}%`
+    }
+
+    const zoomTo = (next: number, cx: number, cy: number, animate = false) => {
+      const s = clamp(next, MIN, MAX)
+      const wx = (cx - x) / scale
+      const wy = (cy - y) / scale
+      scale = s
+      x = cx - wx * scale
+      y = cy - wy * scale
+      apply(animate)
+    }
+
+    const fit = (animate = false) => {
+      if (compact.matches) {
+        scale = 1
+        x = 0
+        y = 0
+        apply(false)
+        return
+      }
+      const pad = 20
+      const vw = viewport.clientWidth - pad * 2
+      const vh = viewport.clientHeight - pad * 2
+      const ww = world.offsetWidth
+      const wh = world.offsetHeight
+      if (vw <= 0 || vh <= 0 || ww <= 0 || wh <= 0) return
+      const needsShrink = ww > viewport.clientWidth + 0.5 || wh > viewport.clientHeight + 0.5
+      if (needsShrink) {
+        scale = clamp(Math.min(vw / ww, vh / wh, 1), MIN, 1)
+        x = (viewport.clientWidth - ww * scale) / 2
+        y = (viewport.clientHeight - wh * scale) / 2
+      } else {
+        scale = 1
+        x = 0
+        y = Math.max(pad / 2, (viewport.clientHeight - wh) / 2)
+      }
+      apply(animate)
+    }
+
+    const targetOf = (el: EventTarget | null) => {
+      const node = (el as HTMLElement | null)?.closest?.<HTMLElement>("[data-node]")
+      if (node?.dataset.node) return node.dataset.node
+      const branch = (el as HTMLElement | null)?.closest?.<HTMLElement>("[data-branch]")
+      if (!branch?.dataset.branch) return null
+      return branch.dataset.branch === "oss" ? "oss" : `co-${branch.dataset.branch}`
+    }
+
+    stage.addEventListener("pointerenter", (e) => {
+      if (pinned || compact.matches) return
+      const id = targetOf(e.target)
+      if (id) setHot(id, false)
+    }, true)
+
+    stage.addEventListener("pointerleave", (e) => {
+      if (pinned) return
+      const next = targetOf(e.relatedTarget)
+      if (!next) setHot(null, false)
+    }, true)
+
+    stage.addEventListener("click", (e) => {
+      const el = e.target as HTMLElement | null
+      if (el?.closest?.("a, .zoom")) return
+      const id = targetOf(e.target)
+      if (!id) {
+        pinned = null
+        setHot(null, false)
+        return
+      }
+      if (pinned === id) {
+        pinned = null
+        setHot(null, false)
+      } else {
+        pinned = id
+        setHot(id, true)
+      }
+    })
+
+    stage.addEventListener("focusin", (e) => {
+      const id = targetOf(e.target)
+      if (id && !pinned) setHot(id, false)
+    })
+
+    stage.addEventListener("keydown", (e) => {
+      if (e.key === "Escape") {
+        pinned = null
+        setHot(null, false)
+        return
+      }
+      if (compact.matches) return
+      const inView = viewport.contains(e.target as Node) || e.target === viewport
+      if (!inView) return
+      const cx = viewport.clientWidth / 2
+      const cy = viewport.clientHeight / 2
+      const pan = 48
+      if (e.key === "+" || e.key === "=") {
+        e.preventDefault()
+        zoomTo(scale * STEP, cx, cy, true)
+      } else if (e.key === "-" || e.key === "_") {
+        e.preventDefault()
+        zoomTo(scale / STEP, cx, cy, true)
+      } else if (e.key === "0") {
+        e.preventDefault()
+        fit(true)
+      } else if (e.key === "ArrowLeft" && e.target === viewport) {
+        e.preventDefault()
+        x += pan
+        apply(true)
+      } else if (e.key === "ArrowRight" && e.target === viewport) {
+        e.preventDefault()
+        x -= pan
+        apply(true)
+      } else if (e.key === "ArrowUp" && e.target === viewport) {
+        e.preventDefault()
+        y += pan
+        apply(true)
+      } else if (e.key === "ArrowDown" && e.target === viewport) {
+        e.preventDefault()
+        y -= pan
+        apply(true)
+      }
+    })
+
+    stage.querySelector("[data-zoom-in]")?.addEventListener("click", (e) => {
+      e.stopPropagation()
+      zoomTo(scale * STEP, viewport.clientWidth / 2, viewport.clientHeight / 2, true)
+    })
+    stage.querySelector("[data-zoom-out]")?.addEventListener("click", (e) => {
+      e.stopPropagation()
+      zoomTo(scale / STEP, viewport.clientWidth / 2, viewport.clientHeight / 2, true)
+    })
+    stage.querySelector("[data-zoom-reset]")?.addEventListener("click", (e) => {
+      e.stopPropagation()
+      fit(true)
+    })
+
+    viewport.addEventListener(
+      "wheel",
+      (e) => {
+        if (compact.matches) return
+        e.preventDefault()
+        const rect = viewport.getBoundingClientRect()
+        const factor = Math.exp(-e.deltaY * (e.deltaMode === 1 ? 0.05 : 0.0018))
+        zoomTo(scale * factor, e.clientX - rect.left, e.clientY - rect.top)
+      },
+      { passive: false },
+    )
+
+    const onDown = (e: PointerEvent) => {
+      if (compact.matches) return
+      if ((e.target as HTMLElement).closest("a, button.z-btn")) return
+      pointers.set(e.pointerId, { x: e.clientX, y: e.clientY })
+      if (pointers.size === 2) {
+        const [a, b] = [...pointers.values()]
+        pinch = Math.hypot(a.x - b.x, a.y - b.y)
+        pinchScale = scale
+        dragging = false
+        return
+      }
+      dragging = true
+      moved = false
+      px = e.clientX
+      py = e.clientY
+      viewport.setPointerCapture(e.pointerId)
+      viewport.classList.add("is-grabbing")
+    }
+
+    const onMove = (e: PointerEvent) => {
+      if (pointers.has(e.pointerId)) pointers.set(e.pointerId, { x: e.clientX, y: e.clientY })
+      if (pointers.size === 2 && pinch) {
+        const [a, b] = [...pointers.values()]
+        const d = Math.hypot(a.x - b.x, a.y - b.y)
+        const rect = viewport.getBoundingClientRect()
+        zoomTo(pinchScale * (d / pinch), (a.x + b.x) / 2 - rect.left, (a.y + b.y) / 2 - rect.top)
+        return
+      }
+      if (!dragging) return
+      const dx = e.clientX - px
+      const dy = e.clientY - py
+      if (!moved && Math.hypot(dx, dy) < 4) return
+      moved = true
+      x += dx
+      y += dy
+      px = e.clientX
+      py = e.clientY
+      apply(false)
+    }
+
+    const onUp = (e: PointerEvent) => {
+      pointers.delete(e.pointerId)
+      if (pointers.size < 2) pinch = 0
+      if (!dragging) return
+      dragging = false
+      viewport.classList.remove("is-grabbing")
+      if (moved) e.preventDefault()
+    }
+
+    viewport.addEventListener("pointerdown", onDown)
+    viewport.addEventListener("pointermove", onMove)
+    viewport.addEventListener("pointerup", onUp)
+    viewport.addEventListener("pointercancel", onUp)
+    viewport.addEventListener(
+      "lostpointercapture",
+      () => {
+        dragging = false
+        viewport.classList.remove("is-grabbing")
+      },
+    )
+
+    // Un clic-glisser ne doit pas pin une carte
+    viewport.addEventListener(
+      "click",
+      (e) => {
+        if (moved) {
+          e.stopPropagation()
+          moved = false
+        }
+      },
+      true,
+    )
+
+    const ro = new ResizeObserver(() => fit(false))
+    ro.observe(viewport)
+    compact.addEventListener("change", () => fit(false))
+    document.fonts?.ready.then(() => fit(false))
+    show("group")
+    fit(false)
+    requestAnimationFrame(() => fit(false))
   }
 </script>
 
@@ -225,7 +631,7 @@ const projectHref = (p: GroupProject) => (p.slug ? L(`/blog/${p.slug}/`) : (p.hr
   .stats {
     list-style: none;
     padding: 0;
-    margin: 0 0 28px;
+    margin: 0 0 22px;
     display: flex;
     flex-wrap: wrap;
     gap: 8px;
@@ -244,164 +650,298 @@ const projectHref = (p: GroupProject) => (p.slug ? L(`/blog/${p.slug}/`) : (p.hr
     margin-right: 2px;
   }
 
-  .chart {
-    --cg: clamp(64px, 7vw, 130px);
-    position: relative;
+  .stage {
+    --wire: color-mix(in srgb, var(--accent) 48%, var(--line-strong));
+    --wire-hot: var(--accent);
+    --wire-w: 2px;
     display: grid;
-    grid-template-columns: minmax(280px, 1fr) minmax(220px, 250px) minmax(320px, 1.2fr);
-    column-gap: var(--cg);
+    gap: 0;
+  }
+
+  .toolbar {
+    display: flex;
     align-items: center;
-    padding: 28px 0 12px;
-    background-image: radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--ink) 9%, transparent) 1px, transparent 0);
-    background-size: 22px 22px;
-    border-radius: var(--radius);
+    justify-content: space-between;
+    gap: 12px;
+    padding: 0 2px 10px;
   }
-  .wires {
+  .hint {
+    color: var(--muted);
+    font-size: 11.5px;
+  }
+  .zoom {
     position: absolute;
-    inset: 0;
-    pointer-events: none;
-    overflow: visible;
-    z-index: 0;
+    left: 12px;
+    bottom: 12px;
+    z-index: 4;
+    display: inline-flex;
+    align-items: stretch;
+    border: 1px solid var(--line);
+    border-radius: 8px;
+    overflow: hidden;
+    background: color-mix(in srgb, var(--tile) 92%, transparent);
+    box-shadow: var(--shadow);
   }
-  .wires :global(.w-line) {
+  .z-btn {
+    width: 32px;
+    height: 28px;
+    display: grid;
+    place-items: center;
+    color: var(--ink-2);
+    border-right: 1px solid var(--line);
+  }
+  .z-btn:last-child {
+    border-right: 0;
+  }
+  .z-btn:hover {
+    background: var(--tile-2);
+    color: var(--ink);
+  }
+  .z-btn:focus-visible {
+    outline-offset: -2px;
+  }
+  .z-btn svg {
+    stroke: currentColor;
     fill: none;
-    stroke: color-mix(in srgb, var(--accent) 55%, var(--line-strong));
     stroke-width: 1.6;
     stroke-linecap: round;
   }
-  .wires:global(.static) :global(.w-part),
-  .wires :global(.w-part) {
-    stroke-dasharray: 5 5;
-  }
-  .wires :global(.w-dot) {
-    fill: var(--bg);
-    stroke: var(--accent);
-    stroke-width: 2;
-  }
-  .wires :global(.w-hub) {
-    fill: var(--accent);
-  }
-  @media (prefers-reduced-motion: no-preference) {
-    .wires :global(.w-line) {
-      stroke-dasharray: calc(var(--len, 2000) * 1px);
-      stroke-dashoffset: calc(var(--len, 2000) * 1px);
-      animation: wire 1.1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-      animation-delay: calc(0.35s + var(--n) * 0.12s);
-    }
-  }
-  .wires:global(.static) :global(.w-line) {
-    animation: none;
-    stroke-dashoffset: 0;
-  }
-  @keyframes wire {
-    to {
-      stroke-dashoffset: 0;
-    }
-  }
-  .col {
-    position: relative;
-    z-index: 1;
-    min-width: 0;
-  }
-  .col-co {
-    display: grid;
-    gap: calc(var(--gap) * 1.6);
+  .z-reset {
+    width: auto;
+    padding: 0 9px;
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.02em;
+    color: var(--ink-2);
   }
 
-  /* Shaï */
-  .me {
+  .board {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(228px, 272px);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    background: var(--tile);
+    overflow: hidden;
+    min-height: 0;
+  }
+
+  .viewport {
     position: relative;
+    min-width: 0;
+    height: min(62vh, 600px);
+    min-height: 500px;
+    overflow: hidden;
+    cursor: grab;
+    touch-action: none;
+    background-image: radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--ink) 9%, transparent) 1px, transparent 0);
+    background-size: 22px 22px;
+  }
+  .viewport:focus-visible {
+    outline-offset: -3px;
+  }
+  .viewport.is-grabbing {
+    cursor: grabbing;
+  }
+
+  .world {
+    --col-gap: 20px;
+    width: 100%;
+    max-width: 100%;
+    box-sizing: border-box;
+    transform-origin: 0 0;
+    padding: 28px 28px 40px;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 228px;
+    grid-template-areas:
+      "head ."
+      "row oss";
+    column-gap: 28px;
+    row-gap: 0;
+    align-items: start;
+  }
+  .world.is-anim {
+    transition: transform 0.28s var(--ease);
+  }
+
+  .head {
+    grid-area: head;
     display: grid;
     justify-items: center;
-    text-align: center;
-    padding: 26px 18px 22px;
-    background: var(--tile);
-    border: 1px solid var(--line-strong);
-    border-radius: 20px;
-    box-shadow: var(--shadow);
   }
-  .me-ring {
+  .row {
+    grid-area: row;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(200px, 1fr));
+    gap: 18px var(--col-gap);
+    position: relative;
+  }
+  .oss-col {
+    grid-area: oss;
+    min-width: 0;
+    padding-top: 2px;
+  }
+
+  .fork {
+    position: relative;
+    width: 100%;
+    height: 44px;
+  }
+  .spine {
     position: absolute;
-    inset: -8px;
-    border-radius: 26px;
-    border: 1px dashed color-mix(in srgb, var(--accent) 45%, transparent);
-    pointer-events: none;
+    left: 50%;
+    top: 0;
+    bottom: 0;
+    width: var(--wire-w);
+    translate: -50% 0;
+    background: var(--wire);
   }
-  .me-av {
-    --ink: var(--bg);
-    width: 84px;
-    height: 84px;
-    border-radius: 999px;
+  .bus {
+    position: absolute;
+    left: calc((100% - 2 * var(--col-gap)) / 6);
+    right: calc((100% - 2 * var(--col-gap)) / 6);
+    bottom: 0;
+    height: var(--wire-w);
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
+  .bus-seg {
+    height: var(--wire-w);
+    background: var(--wire);
+  }
+  .stem {
+    width: var(--wire-w);
+    height: 36px;
+    margin: 0 auto;
+    background: var(--wire);
+    position: relative;
+  }
+  .stem.part {
+    background: repeating-linear-gradient(
+      to bottom,
+      var(--wire) 0 5px,
+      transparent 5px 9px
+    );
+  }
+  .wire {
+    transition:
+      background 0.25s var(--ease),
+      opacity 0.25s var(--ease);
+  }
+
+  /* Survol / sélection : on éclaire la branche, on atténue le reste */
+  .stage[data-hot] .wire {
+    opacity: 0.35;
+  }
+  .stage[data-hot="group"] .wire,
+  .stage[data-hot="ltd"] [data-path~="ltd"],
+  .stage[data-hot="llc"] [data-path~="llc"],
+  .stage[data-hot="fr"] [data-path~="fr"] {
+    opacity: 1;
+    background: var(--wire-hot);
+  }
+  .stage[data-hot="ltd"] .stem[data-path="ltd"].part,
+  .stage[data-hot="llc"] .stem[data-path="llc"].part,
+  .stage[data-hot="fr"] .stem[data-path="fr"].part,
+  .stage[data-hot="group"] .stem.part,
+  .stage[data-hot="fr"] .stem.part {
+    background: repeating-linear-gradient(
+      to bottom,
+      var(--wire-hot) 0 5px,
+      transparent 5px 9px
+    );
+  }
+  .stage[data-hot] .branch,
+  .stage[data-hot] .oss-col {
+    opacity: 0.42;
+    transition: opacity 0.25s var(--ease);
+  }
+  .stage[data-hot="group"] .branch,
+  .stage[data-hot] .branch.is-hot,
+  .stage[data-hot] .oss-col.is-hot {
+    opacity: 1;
+  }
+  .stage[data-hot="oss"] .wire {
+    opacity: 0.28;
+  }
+
+  .node {
+    display: grid;
+    width: 100%;
+    text-align: left;
+    padding: 11px 12px 10px;
+    background: var(--tile);
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    box-shadow: var(--shadow);
+    color: inherit;
+    cursor: pointer;
+    transition:
+      border-color 0.25s var(--ease),
+      box-shadow 0.25s var(--ease);
+  }
+  .node:hover,
+  .node.is-hot {
+    border-color: var(--line-strong);
+  }
+  .node.is-hot {
+    border-color: color-mix(in srgb, var(--accent) 55%, var(--line-strong));
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--accent) 35%, transparent);
+  }
+
+  .root {
+    width: max-content;
+    max-width: 100%;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 12px;
+    padding: 12px 20px 12px 14px;
+  }
+  .root-mark {
+    width: 36px;
+    height: 36px;
+    border-radius: 9px;
     display: grid;
     place-items: center;
-    background: #221e19;
-    box-shadow:
-      0 0 0 6px color-mix(in srgb, var(--accent) 14%, transparent),
-      inset 0 -8px 18px rgb(0 0 0 / 0.3);
+    background: var(--tile-2);
+    border: 1px solid var(--line);
   }
-  :global([data-theme="dark"]) .me-av {
-    background: #efe8dc;
-    --ink: #12110f;
-  }
-  .me-name {
-    margin-top: 16px;
+  .n-name {
     font-family: var(--font-serif);
-    font-size: 24px;
-    line-height: 1.1;
+    font-weight: 400;
+    font-size: 17px;
+    line-height: 1.2;
     letter-spacing: -0.01em;
     color: var(--ink);
   }
-  .me-handle {
-    margin-top: 6px;
+  .root .n-name {
+    font-size: 20px;
+  }
+  .n-sub,
+  .n-meta {
+    display: block;
+    margin-top: 2px;
+    font-size: 12px;
+    color: var(--ink-2);
+    line-height: 1.35;
+  }
+  .n-meta {
+    margin-top: 7px;
+    padding-top: 7px;
+    border-top: 1px solid var(--line);
+    font-size: 11.5px;
     color: var(--muted);
-  }
-  .me-role {
-    margin-top: 12px;
-    padding: 5px 11px;
-    border-radius: 99px;
-    background: color-mix(in srgb, var(--accent) 12%, var(--tile));
-    color: var(--accent-ink);
-    font-size: 12.5px;
-    font-weight: 600;
-  }
-
-  /* Cartes */
-  .node {
-    padding: 16px 16px 12px;
-    overflow: visible;
+    white-space: normal;
   }
   .n-head {
-    position: relative;
     display: flex;
     align-items: center;
-    gap: 12px;
-  }
-  /* part détenue, posée sur la liaison (façon société.com) */
-  .share {
-    position: absolute;
-    top: 50%;
-    left: calc(-16px - var(--cg) * 0.31);
-    translate: -50% -50%;
-    padding: 3px 8px;
-    border-radius: 99px;
-    background: var(--accent);
-    color: #fff;
-    font-size: 11.5px;
-    font-weight: 600;
-    white-space: nowrap;
-    box-shadow: 0 0 0 3px var(--bg);
-    z-index: 2;
-  }
-  .share.part {
-    background: var(--tile);
-    color: var(--accent-ink);
-    border: 1.5px dashed var(--accent);
+    gap: 10px;
   }
   .n-badge {
-    width: 40px;
-    height: 40px;
+    width: 32px;
+    height: 32px;
     flex: none;
-    border-radius: 10px;
+    border-radius: 8px;
     display: grid;
     place-items: center;
     background: var(--tile-2);
@@ -410,66 +950,77 @@ const projectHref = (p: GroupProject) => (p.slug ? L(`/blog/${p.slug}/`) : (p.hr
   .oss-badge {
     color: var(--ink);
   }
-  .n-name {
-    font-family: var(--font-serif);
-    font-weight: 400;
-    font-size: 21px;
-    line-height: 1.15;
-    letter-spacing: -0.01em;
-    color: var(--ink);
-  }
-  .n-sub {
-    margin-top: 2px;
-    font-size: 13px;
-    color: var(--ink-2);
-  }
-  .n-role {
-    margin-left: auto;
-    flex: none;
-  }
-  .n-facts {
-    margin: 12px 0 0;
-    padding: 10px 12px;
+  .n-txt {
     display: grid;
-    grid-template-columns: auto 1fr;
-    gap: 5px 14px;
-    border-radius: 8px;
-    background: var(--tile-2);
-    font-size: 13px;
+    min-width: 0;
   }
-  .n-facts dt {
-    color: var(--muted);
+
+  .share {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    translate: -50% -50%;
+    padding: 2px 7px;
+    border-radius: 99px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 10.5px;
+    font-weight: 600;
+    white-space: nowrap;
+    box-shadow: 0 0 0 3px var(--tile);
+    z-index: 2;
   }
-  .n-facts dd {
-    margin: 0;
-    color: var(--ink);
+  .share.part {
+    background: var(--tile);
+    color: var(--accent-ink);
+    border: 1.5px dashed var(--accent);
+  }
+
+  .branch,
+  .oss-col,
+  .n-txt {
+    min-width: 0;
+  }
+  .branch {
+    display: flex;
+    flex-direction: column;
+    transition: opacity 0.25s var(--ease);
   }
   .pjs {
     list-style: none;
     padding: 0;
-    margin: 10px 0 0;
+    margin: 0;
     display: grid;
+    background: var(--tile);
+    border: 1px solid var(--line);
+    border-top: 0;
+    border-radius: 0 0 var(--radius) var(--radius);
   }
-  .co .pjs {
-    grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr));
-    column-gap: 14px;
+  .branch .pjs,
+  .oss-wrap .pjs {
+    border-color: var(--line);
   }
-  .pj {
+  .co {
+    border-bottom-left-radius: 0;
+    border-bottom-right-radius: 0;
+    box-shadow: none;
+  }
+  .pj-main,
+  .p-pjs a {
     display: grid;
-    border-top: 1px solid var(--line);
-  }
-  .pj-main {
-    display: grid;
-    grid-template-columns: 34px 1fr auto;
+    grid-template-columns: 26px 1fr auto;
     align-items: center;
-    gap: 12px;
-    padding: 9px 2px;
+    gap: 8px;
+    padding: 6px 10px;
     color: var(--ink);
   }
+  .pj + .pj .pj-main {
+    border-top: 1px solid var(--line);
+  }
   .pj-ic {
-    width: 34px;
-    height: 34px;
-    border-radius: 9px;
+    width: 26px;
+    height: 26px;
+    border-radius: 6px;
     border: 1px solid var(--line);
     background: #fff;
     object-fit: cover;
@@ -480,7 +1031,7 @@ const projectHref = (p: GroupProject) => (p.slug ? L(`/blog/${p.slug}/`) : (p.hr
   .pj-ic.pixel {
     image-rendering: pixelated;
     object-fit: contain;
-    padding: 4px;
+    padding: 3px;
   }
   .pj-mono {
     display: grid;
@@ -488,7 +1039,7 @@ const projectHref = (p: GroupProject) => (p.slug ? L(`/blog/${p.slug}/`) : (p.hr
     background: var(--tile-2);
     color: var(--ink-2);
     font-family: var(--font-mono);
-    font-size: 11.5px;
+    font-size: 9.5px;
     font-weight: 600;
   }
   .pj-snow {
@@ -503,148 +1054,352 @@ const projectHref = (p: GroupProject) => (p.slug ? L(`/blog/${p.slug}/`) : (p.hr
     stroke-width: 1.6;
     stroke-linecap: round;
   }
-  .pj-txt {
-    display: grid;
-    min-width: 0;
-  }
   .pj-name {
     font-weight: 500;
-    font-size: 14.5px;
+    font-size: 13px;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
   }
-  .pj-note {
-    font-size: 12.5px;
-    color: var(--ink-2);
-  }
-  .pj :global(.pj-go) {
+  .pj :global(.pj-go),
+  .n-foot :global(svg),
+  .p-work :global(svg) {
     color: var(--muted);
     transition:
       transform 0.3s var(--ease),
       color 0.2s;
   }
-  .pj-main:hover .pj-name {
+  .pj-main:hover .pj-name,
+  .p-pjs a:hover strong {
     color: var(--accent-ink);
   }
   .pj-main:hover :global(.pj-go) {
     color: var(--accent);
     transform: rotate(45deg);
   }
-  .pj-site {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    margin: -4px 0 9px 48px;
-    width: fit-content;
-    color: var(--ink-2);
-    font-size: 11.5px;
+
+  .oss-kicker {
+    margin: 0 0 8px;
+    color: var(--muted);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
   }
-  .pj-site:hover {
-    color: var(--accent-ink);
+  .oss-wrap {
+    border: 1px dashed var(--line-strong);
+    border-radius: var(--radius);
+    background: var(--tile);
+    overflow: hidden;
+  }
+  .oss-head {
+    border: 0;
+    border-bottom: 1px solid var(--line);
+    border-radius: 0;
+    box-shadow: none;
+    background: transparent;
+    grid-template-columns: auto 1fr;
+    align-items: center;
+    gap: 10px;
+  }
+  .oss-wrap .pjs {
+    border: 0;
+    border-radius: 0;
   }
   .n-foot {
     display: inline-flex;
     align-items: center;
     gap: 6px;
-    margin-top: 6px;
-    padding-top: 10px;
-    border-top: 1px solid var(--line);
+    padding: 8px 10px 10px;
     width: 100%;
     color: var(--ink-2);
+    border-top: 1px solid var(--line);
   }
   .n-foot:hover {
     color: var(--accent-ink);
   }
+
+  .panel {
+    border-left: 1px solid var(--line);
+    background: var(--bg);
+    padding: 16px 16px 18px;
+    min-width: 0;
+    overflow: auto;
+  }
+  .p-kicker {
+    color: var(--muted);
+    font-size: 11px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+  }
+  .p-title {
+    margin: 6px 0 0;
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: 22px;
+    line-height: 1.15;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+  }
+  .p-lead {
+    margin-top: 6px;
+    font-size: 13px;
+    color: var(--ink-2);
+  }
+  .p-facts {
+    margin: 12px 0 0;
+    padding: 8px 10px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 4px 12px;
+    border-radius: 8px;
+    background: var(--tile);
+    border: 1px solid var(--line);
+    font-size: 12.5px;
+  }
+  .p-facts dt {
+    color: var(--muted);
+  }
+  .p-facts dd {
+    margin: 0;
+    color: var(--ink);
+  }
+  .p-list {
+    list-style: none;
+    padding: 0;
+    margin: 14px 0 0;
+    display: grid;
+    gap: 8px;
+  }
+  .p-list li {
+    display: grid;
+    gap: 1px;
+    font-size: 12.5px;
+    color: var(--ink-2);
+  }
+  .p-list strong {
+    font-weight: 500;
+    color: var(--ink);
+    font-size: 13px;
+  }
+  .p-aside {
+    margin-top: 14px;
+    font-size: 12.5px;
+    color: var(--muted);
+  }
+  .p-proj-k {
+    margin-top: 16px;
+  }
+  .p-pjs {
+    list-style: none;
+    padding: 0;
+    margin: 8px 0 0;
+    display: grid;
+  }
+  .p-pjs li {
+    display: grid;
+    border-top: 1px solid var(--line);
+  }
+  .p-pjs li:first-child {
+    border-top: 0;
+  }
+  .p-pjs a {
+    padding: 7px 0;
+  }
+  .p-pjs a span {
+    display: grid;
+    min-width: 0;
+  }
+  .p-pjs strong {
+    font-weight: 500;
+    font-size: 13.5px;
+  }
+  .p-note {
+    font-size: 12px;
+    color: var(--ink-2);
+  }
+  .p-site {
+    margin: -4px 0 8px 34px;
+    width: fit-content;
+    color: var(--ink-2);
+    font-size: 11.5px;
+  }
+  .p-site:hover {
+    color: var(--accent-ink);
+  }
+  .p-work {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 10px;
+    color: var(--ink-2);
+  }
+  .p-work:hover {
+    color: var(--accent-ink);
+  }
+
   .note {
-    margin-top: 26px;
+    margin-top: 22px;
     font-size: 13px;
     color: var(--ink-2);
   }
 
-  /* Tablette et mobile : tout s'empile, avec un tronc vertical */
-  @media (max-width: 1180px) {
-    .chart {
+  /* À 1440 le panneau latéral coincé trop les cartes : on le passe en dessous */
+  @container main (max-width: 1200px) {
+    .board {
       grid-template-columns: 1fr;
-      row-gap: 18px;
-      padding: 0 0 0 26px;
+    }
+    .viewport {
+      height: min(64vh, 620px);
+      min-height: 520px;
+    }
+    .panel {
+      border-left: 0;
+      border-top: 1px solid var(--line);
+    }
+    .panel-body {
+      display: grid;
+      grid-template-columns: minmax(200px, 280px) minmax(0, 1fr);
+      gap: 8px 36px;
+      align-items: start;
+    }
+    .p-proj-k {
+      margin-top: 0;
+    }
+    .p-list {
+      margin-top: 0;
+    }
+    .p-pjs li:first-child {
+      border-top: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .wire,
+    .branch,
+    .oss-col,
+    .world.is-anim,
+    .node,
+    .pj :global(.pj-go) {
+      transition: none;
+    }
+  }
+
+  /* Mobile : arbre vertical, sans canvas à déplacer */
+  @media (max-width: 900px) {
+    .toolbar,
+    .zoom {
+      display: none;
+    }
+    .board {
+      grid-template-columns: 1fr;
+      min-height: 0;
+    }
+    .viewport {
+      overflow: visible;
+      cursor: auto;
+      touch-action: auto;
+      height: auto;
+      min-height: 0;
       background: none;
     }
-    .chart::before {
+    .world {
+      min-width: 0;
+      width: auto;
+      padding: 16px 12px 8px 28px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      transform: none !important;
+    }
+    .head,
+    .row,
+    .oss-col {
+      display: contents;
+    }
+    .root {
+      width: 100%;
+    }
+    .fork {
+      display: none;
+    }
+    .branch,
+    .oss-col,
+    .stage[data-hot] .branch,
+    .stage[data-hot] .oss-col {
+      opacity: 1;
+    }
+    .stem {
+      display: flex;
+      justify-content: flex-end;
+      width: auto;
+      height: auto;
+      margin: 0 0 8px;
+      background: none !important;
+    }
+    .share {
+      position: static;
+      translate: none;
+      margin: 0;
+      box-shadow: 0 0 0 3px var(--bg);
+    }
+    .branch {
+      position: relative;
+    }
+    .viewport {
+      position: relative;
+    }
+    .world {
+      position: relative;
+    }
+    .world::before {
       content: "";
       position: absolute;
-      left: 8px;
-      top: 40px;
-      bottom: 40px;
+      left: 10px;
+      top: 28px;
+      bottom: 16px;
       width: 2px;
       border-radius: 2px;
       background: color-mix(in srgb, var(--accent) 45%, var(--line-strong));
     }
-    .wires {
-      display: none;
+    .root,
+    .branch,
+    .oss-wrap {
+      position: relative;
     }
-    .col-me {
-      order: -1;
-    }
-    .col-oss {
-      order: 2;
-    }
-    .me {
-      justify-items: start;
-      text-align: left;
-      grid-template-columns: auto 1fr;
-      column-gap: 16px;
-      align-items: center;
-      padding: 18px;
-    }
-    .me-av {
-      grid-row: span 3;
-      width: 64px;
-      height: 64px;
-    }
-    .me-name {
-      margin-top: 0;
-      font-size: 21px;
-    }
-    .me-handle {
-      margin-top: 2px;
-    }
-    .me-role {
-      margin-top: 8px;
-      justify-self: start;
-    }
-    .node::before,
-    .me::before {
+    .root::before,
+    .branch::before,
+    .oss-wrap::before {
       content: "";
       position: absolute;
       left: -19px;
-      top: 34px;
+      top: 22px;
       width: 19px;
       height: 2px;
       background: color-mix(in srgb, var(--accent) 45%, var(--line-strong));
     }
-    .node,
-    .me {
-      overflow: visible;
-    }
-    .node::after,
-    .me::after {
+    .root::after,
+    .branch::after,
+    .oss-wrap::after {
       content: "";
       position: absolute;
       left: -23px;
-      top: 30px;
+      top: 18px;
       width: 6px;
       height: 6px;
       border-radius: 99px;
       background: var(--bg);
       border: 2px solid var(--accent);
     }
-    .me-ring {
-      display: none;
+    .oss-kicker {
+      margin-left: 0;
     }
-    .share {
-      top: -30px;
-      left: auto;
-      right: -4px;
-      translate: none;
+    .panel {
+      border-left: 0;
+      border-top: 1px solid var(--line);
+    }
+    .panel-body {
+      display: block;
     }
   }
-
 </style>
