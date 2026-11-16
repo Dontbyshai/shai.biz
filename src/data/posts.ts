@@ -37,6 +37,18 @@ const fuelIcon: PostImage = {
   caption: { fr: "Icône de Fuel Tracker.", en: "Fuel Tracker icon." },
 }
 
+const notianoteIa: PostImage = {
+  src: "/images/notianote-ia.webp",
+  width: 1920,
+  height: 1140,
+  wide: true,
+  alt: {
+    fr: "L'accueil de Notia sur ia.notianote.fr : « Salut, je suis Notia », un champ pour poser sa question et des suggestions.",
+    en: "Notia's home on ia.notianote.fr: “Salut, je suis Notia”, a field to ask a question and suggestions.",
+  },
+  caption: { fr: "Notia, sur ia.notianote.fr", en: "Notia, on ia.notianote.fr" },
+}
+
 const notianoteApp: PostImage = {
   src: "/images/notianote-accueil.webp",
   width: 720,
@@ -326,10 +338,6 @@ export const posts: Post[] = [
         label: { fr: "App Store", en: "App Store" },
       },
       {
-        href: "https://play.google.com/store/apps/details?id=com.dontbyshai.notianote",
-        label: { fr: "Play Store", en: "Play Store" },
-      },
-      {
         href: "https://notianote.fr",
         label: { fr: "notianote.fr", en: "notianote.fr" },
       },
@@ -337,14 +345,16 @@ export const posts: Post[] = [
     image: notianoteNotes,
     paragraphs: {
       fr: [
-        "Le 3 mars 2026, NotiaNote sort sur l'App Store français. Elle est gratuite, rangée dans Éducation, et tourne à partir d'iOS 15.1. Elle existe aussi sur Android, sur le Play Store.",
+        "Le 3 mars 2026, NotiaNote sort sur l'App Store français. Elle est gratuite, rangée dans Éducation, et tourne à partir d'iOS 15.1. La version Android arrive sur le Play Store début décembre 2026.",
         "Le principe ne change pas : on connecte son compte scolaire, et on retrouve au même endroit les notes, l'emploi du temps et les devoirs. L'écran d'accueil résume la journée : moyenne, devoirs, cours et messages.",
         "Depuis, l'appli continue d'avancer : la [[notianote-uca|connexion à l'UCA]] en septembre, puis la [[notianote-2-7-2|2.7.2]] en octobre. Mi-novembre 2026, elle a une note de 4,5 sur 5 sur l'App Store, avec 16 avis.",
+        "Je n'ai pas de chiffres à montrer, mais depuis la rentrée, l'appli grandit fort. Et maintenant, NotiaNote a aussi son IA : [[notianote-ia|Notia]].",
       ],
       en: [
-        "On 3 March 2026 NotiaNote went live on the French App Store. It's free, listed under Education, and runs on iOS 15.1 and later. It's also on Android, on the Play Store.",
+        "On 3 March 2026 NotiaNote went live on the French App Store. It's free, listed under Education, and runs on iOS 15.1 and later. The Android version is coming to the Play Store in early December 2026.",
         "The idea stays the same: you connect your school account and find your grades, timetable and homework in one place. The home screen sums up the day: average, homework, classes and messages.",
         "Since then the app has kept moving: the [[notianote-uca|UCA sign-in]] in September, then [[notianote-2-7-2|2.7.2]] in October. In mid-November 2026 it's rated 4.5 out of 5 on the App Store, from 16 ratings.",
+        "I don't have numbers to show, but since the start of the school year the app has been growing fast. And now NotiaNote has its own AI too: [[notianote-ia|Notia]].",
       ],
     },
   },
@@ -425,8 +435,8 @@ export const posts: Post[] = [
     date: "2026-08-10",
     title: { fr: "Love Map", en: "Love Map" },
     description: {
-      fr: "Une appli de carte pour iOS et Android, commencée le 10 août 2026. Pas encore sortie.",
-      en: "A map app for iOS and Android, started on 10 August 2026. Not out yet.",
+      fr: "Une appli pour noter mes relations et mes souvenirs sur une carte, et les partager avec mes potes. Pas encore sortie.",
+      en: "An app to put your relationships and memories on a map, and share them with your friends. Not out yet.",
     },
     links: [
       {
@@ -441,12 +451,14 @@ export const posts: Post[] = [
     image: loveMapIcon,
     paragraphs: {
       fr: [
-        "Le 10 août 2026, je pousse le premier commit de Love Map, dans un dépôt privé. C'est une appli de carte, avec une partie iOS en Swift et une partie Android en Kotlin.",
-        "Le 9 novembre, Love Map a ses pages de confidentialité et de CGU sur le site de Shaï Company. L'appli n'est pas encore sur les stores.",
+        "Love Map, c'est une carte où tu notes tes relations et tes souvenirs, et que tu peux partager avec tes potes. Une sorte de réseau social : tu ajoutes tes amis, ta copine ou ton copain, et tu vois ce qu'ils vivent côté cœur. L'idée, c'est de partager ta vie amoureuse et ta vie entre amis.",
+        "Le 10 août 2026, je pousse le premier commit, dans un dépôt privé. Il y a une partie iOS en Swift et une partie Android en Kotlin.",
+        "Le 9 novembre, Love Map a ses pages de confidentialité et de CGU sur le site de Shaï Company. L'appli n'est pas encore sur les stores, et je n'ai pas encore fixé de date de sortie.",
       ],
       en: [
-        "On 10 August 2026 I pushed the first commit of Love Map, in a private repo. It's a map app, with an iOS side in Swift and an Android side in Kotlin.",
-        "On 9 November Love Map got its privacy and terms pages on the Shaï Company site. The app isn't on the stores yet.",
+        "Love Map is a map where you note your relationships and your memories, and that you can share with your friends. A kind of social network: you add your friends, your girlfriend or boyfriend, and you see what's going on in their love lives. The idea is to share your love life and your life with friends.",
+        "On 10 August 2026 I pushed the first commit, in a private repo. There's an iOS side in Swift and an Android side in Kotlin.",
+        "On 9 November Love Map got its privacy and terms pages on the Shaï Company site. The app isn't in the stores yet, and I haven't set a release date.",
       ],
     },
   },
@@ -552,8 +564,8 @@ export const posts: Post[] = [
     date: "2026-08-18",
     title: { fr: "shai.biz, ce site", en: "shai.biz, this site" },
     description: {
-      fr: "Mon site perso et mon blog, en Astro. Lancé en août 2026, réécrit de zéro en novembre.",
-      en: "My personal site and blog, in Astro. Started in August 2026, rewritten from scratch in November.",
+      fr: "Mon site perso et mon blog, en Astro. Lancé en août 2026, refonte en cours depuis novembre.",
+      en: "My personal site and blog, in Astro. Started in August 2026, redesign in progress since November.",
     },
     links: [
       {
@@ -564,11 +576,11 @@ export const posts: Post[] = [
     paragraphs: {
       fr: [
         "Le dépôt shai.biz est créé le 17 août 2026, et la première version arrive le lendemain : accueil, blog, projets et page à propos.",
-        "En novembre 2026, je le réécris entièrement. C'est toujours de l'Astro en TypeScript, mais tout le reste est neuf : l'accueil en tuiles, la carte de la Chaîne des Puys, le calendrier de contributions GitHub récupéré au moment du build, le thème clair et sombre, la version anglaise, et la page [Plan](/plan/).",
+        "En novembre 2026, je commence à le réécrire entièrement. Cette refonte est encore en développement, elle n'est pas en ligne. C'est toujours de l'Astro en TypeScript, et tout le reste est neuf : l'accueil en tuiles, la carte de la Chaîne des Puys, le calendrier de contributions GitHub récupéré au moment du build, le thème clair et sombre, la version anglaise, et la page [Plan](/plan/).",
       ],
       en: [
         "The shai.biz repo was created on 17 August 2026, and the first version landed the next day: home, blog, projects and an about page.",
-        "In November 2026 I rewrote it completely. It's still Astro in TypeScript, but everything else is new: the tiled home page, the Chaîne des Puys map, the GitHub contributions calendar fetched at build time, light and dark themes, the English version, and the [Map](/plan/) page.",
+        "In November 2026 I started rewriting it completely. The redesign is still in development and isn't live. It's still Astro in TypeScript, and everything else is new: the tiled home page, the Chaîne des Puys map, the GitHub contributions calendar fetched at build time, light and dark themes, the English version, and the [Map](/plan/) page.",
       ],
     },
   },
@@ -620,10 +632,12 @@ export const posts: Post[] = [
       fr: [
         "Le 20 août 2026, Left To Live 1.0 sort sur l'App Store, dans la catégorie Santé et forme. Elle est gratuite et demande iOS 26.1.",
         "Sur l'iPhone et sur l'Apple Watch, elle affiche le temps qu'il te reste en années, en jours et en battements de cœur. J'ai raconté sa construction dans l'article du [[left-to-live|3 août]].",
+        "Des mises à jour sont prévues pour la fin de l'année.",
       ],
       en: [
         "On 20 August 2026, Left To Live 1.0 went live on the App Store, under Health & Fitness. It's free and needs iOS 26.1.",
         "On iPhone and Apple Watch it shows the time you have left in years, days and heartbeats. I wrote about building it in the [[left-to-live|3 August]] post.",
+        "Updates are planned for the end of the year.",
       ],
     },
   },
@@ -696,8 +710,8 @@ export const posts: Post[] = [
     date: "2026-09-23",
     title: { fr: "Fuel Tracker", en: "Fuel Tracker" },
     description: {
-      fr: "Une appli pour trouver le carburant ou la recharge au meilleur prix, en Expo et React Native.",
-      en: "An app to find the cheapest fuel or charging, in Expo and React Native.",
+      fr: "Une appli pour trouver le carburant ou la recharge au meilleur prix, en Expo et React Native. Encore un prototype.",
+      en: "An app to find fuel or charging at the best price, in Expo and React Native. Still a prototype.",
     },
     links: [
       {
@@ -712,14 +726,14 @@ export const posts: Post[] = [
         "On peut calculer le coût d'un plein, voir l'historique des prix, garder des favoris, recevoir des alertes et signaler un prix. Les comptes passent par Apple, Google ou l'e-mail (Firebase), et l'appli existe en cinq langues. Une partie de la couche données vient du projet open source Plein (licence MIT), crédité dans l'appli.",
         "## Le chemin",
         "- 23 septembre 2026 : premier commit, avec create-expo.\n- 5 octobre : publicités AdMob et connexion Google native.\n- 2 novembre : plus de pays, préparation de la sortie Play Store.\n- 13 novembre : corrections demandées par la review d'Apple (règles 4.3 et 4.2.6) : suppression de compte dans les réglages, localisation seulement pendant l'utilisation, publicités qui respectent le suivi (ATT), manifeste de confidentialité. Et des règles de sécurité Firestore.\n- 15 novembre : tag v1.0.0-release.",
-        "C'est du TypeScript, avec Expo, Firebase et AdMob.",
+        "C'est du TypeScript, avec Expo, Firebase et AdMob. Pour l'instant, Fuel Tracker est un prototype : le dossier est soumis à Apple, mais l'appli n'est pas encore sur l'App Store.",
       ],
       en: [
         "Fuel Tracker is an iOS and Android app to find where to fill up or charge for the best price. It maps petrol stations, charging points and hydrogen stations with live prices, from official open data: France, Spain, Portugal, Andorra, Austria, Germany and the UK.",
         "You can work out the cost of a fill-up, see price history, keep favourites, get alerts and report a price. Accounts go through Apple, Google or email (Firebase), and the app comes in five languages. Part of the data layer comes from the open-source project Plein (MIT), credited in the app.",
         "## The road so far",
         "- 23 September 2026: first commit, with create-expo.\n- 5 October: AdMob ads and native Google sign-in.\n- 2 November: more countries, getting ready for the Play Store.\n- 13 November: fixes asked for by Apple's review (guidelines 4.3 and 4.2.6): account deletion in settings, location only while in use, ads that respect tracking (ATT), a privacy manifest. Plus Firestore security rules.\n- 15 November: tag v1.0.0-release.",
-        "It's TypeScript, with Expo, Firebase and AdMob.",
+        "It's TypeScript, with Expo, Firebase and AdMob. For now Fuel Tracker is a prototype: it has been submitted to Apple, but the app isn't on the App Store yet.",
       ],
     },
   },
@@ -735,10 +749,6 @@ export const posts: Post[] = [
       {
         href: "https://apps.apple.com/fr/app/notianote/id6758548199",
         label: { fr: "App Store", en: "App Store" },
-      },
-      {
-        href: "https://play.google.com/store/apps/details?id=com.dontbyshai.notianote",
-        label: { fr: "Play Store", en: "Play Store" },
       },
     ],
     image: notianoteEdt,
@@ -791,8 +801,8 @@ export const posts: Post[] = [
     date: "2026-10-29",
     title: { fr: "Bitixe, ma plateforme de trading", en: "Bitixe, my trading platform" },
     description: {
-      fr: "Commencée le 28 octobre 2026, plus de 60 versions en deux semaines. Ouverture publique le 8 décembre.",
-      en: "Started on 28 October 2026, more than 60 versions in two weeks. Public launch on 8 December.",
+      fr: "Commencée le 28 octobre 2026, plus de 60 versions en deux semaines. Ouverture le 8 décembre, prévue sur BNB Smart Chain.",
+      en: "Started on 28 October 2026, more than 60 versions in two weeks. Launching on 8 December, planned on BNB Smart Chain.",
     },
     links: [
       {
@@ -807,14 +817,14 @@ export const posts: Post[] = [
         "Le serveur est en Python (Flask, SQLite, waitress, derrière Nginx), et l'interface en JavaScript, HTML et CSS. Le compte se crée avec Google, Apple ou un e-mail, et c'est un portefeuille non custodial : les fonds restent à l'utilisateur.",
         "## Deux semaines de versions",
         "- 29 octobre, v0.9.0-beta : nouvel accueil et première bêta. Le soir même, v0.10 et v0.11 : connexion des portefeuilles (EIP-6963, WalletConnect), copy trading avec page détail, parrainage, classement, prix de liquidation estimé.\n- 30 octobre, de la v0.11.5 à la v0.12.28 : graphiques avec les positions, portefeuille complet, compte Bitixe avec portefeuille intégré, achat par carte ou virement, échanges entre réseaux, et les actions, matières premières et obligations en plus des cryptos.\n- 2 et 3 novembre : nouvelle page d'accueil, l'appli passe sur app.bitixe.com, et des tests de frais de réseau offerts sur le réseau de test.\n- 11 novembre, v0.13 : TP/SL simplifiés, gain estimé, partage d'un trade avec une carte de résultat, appli installable sur le téléphone.",
-        "Pour l'instant, le site est fermé au public : [bitixe.com](https://bitixe.com) affiche un compte à rebours jusqu'au lancement, le 8 décembre 2026. Il est né juste après [[kairo|Kairo]], mais le moteur Kairo n'est pas dedans.",
+        "Pour l'instant, le site est fermé au public : [bitixe.com](https://bitixe.com) affiche un compte à rebours jusqu'au lancement, le 8 décembre 2026. La date est confirmée, et le lancement est prévu sur BNB Smart Chain. Il est né juste après [[kairo|Kairo]], mais le moteur Kairo n'est pas dedans.",
       ],
       en: [
         "On the morning of 28 October 2026 I started a new project, first called Essaim. A little over an hour later I renamed it Bitixe. The idea: make crypto trading simple, in French.",
         "The server is Python (Flask, SQLite, waitress, behind Nginx), and the interface is JavaScript, HTML and CSS. You sign up with Google, Apple or an email, and it's a non-custodial wallet: the funds stay with the user.",
         "## Two weeks of versions",
         "- 29 October, v0.9.0-beta: a new home page and the first beta. That same evening, v0.10 and v0.11: wallet connection (EIP-6963, WalletConnect), copy trading with a detail page, referrals, a leaderboard, estimated liquidation price.\n- 30 October, v0.11.5 to v0.12.28: charts showing positions, a full portfolio, a Bitixe account with a built-in wallet, buying by card or bank transfer, cross-chain swaps, and stocks, commodities and bonds on top of crypto.\n- 2 and 3 November: a new home page, the app moves to app.bitixe.com, and tests of sponsored network fees on the testnet.\n- 11 November, v0.13: simpler TP/SL, estimated profit, sharing a trade as a result card, an app you can install on your phone.",
-        "For now the site is closed to the public: [bitixe.com](https://bitixe.com) shows a countdown to the launch, on 8 December 2026. It was born right after [[kairo|Kairo]], but the Kairo engine isn't in it.",
+        "For now the site is closed to the public: [bitixe.com](https://bitixe.com) shows a countdown to the launch, on 8 December 2026. The date is confirmed, and the launch is planned on BNB Smart Chain. It was born right after [[kairo|Kairo]], but the Kairo engine isn't in it.",
       ],
     },
   },
@@ -873,21 +883,71 @@ export const posts: Post[] = [
     },
   },
   {
+    slug: "notianote-ia",
+    date: "2026-11-15",
+    title: { fr: "Notia, l'IA de NotiaNote", en: "Notia, NotiaNote's AI" },
+    description: {
+      fr: "NotiaNote a son IA : Notia aide aux devoirs, fait des fiches et des QCM, et entraîne au brevet et au bac, sans faire à ta place.",
+      en: "NotiaNote has its own AI: Notia helps with homework, makes revision sheets and quizzes, and trains you for exams, without doing the work for you.",
+    },
+    image: notianoteIa,
+    links: [
+      {
+        href: "https://ia.notianote.fr",
+        label: { fr: "ia.notianote.fr", en: "ia.notianote.fr" },
+      },
+      {
+        href: "https://notianote.fr/ia",
+        label: { fr: "notianote.fr/ia", en: "notianote.fr/ia" },
+      },
+    ],
+    paragraphs: {
+      fr: [
+        "C'est la nouveauté dont je suis le plus fier : NotiaNote a son IA. Elle s'appelle Notia, et elle est sur [ia.notianote.fr](https://ia.notianote.fr). Mon idée de départ : une IA qui t'aide sans faire à ta place.",
+        "Par défaut, elle est en mode guide. Tu poses ta question ou tu envoies la photo de ton exercice (photo, PDF, Word ou PowerPoint). Elle te dit ce qui est demandé, te pose une question, puis te donne un indice à la fois, et elle vérifie chaque étape que tu proposes. La solution complète, c'est seulement si tu la demandes. Pour un devoir noté, elle corrige ce que tu as écrit, sans rédiger à ta place.",
+        "## Ce qu'elle sait faire",
+        "- Des fiches de révision toujours sur le même plan : l'essentiel, la méthode, un exemple corrigé, les pièges à éviter, et 5 questions pour te tester.\n- Des QCM qui expliquent chaque réponse, des flashcards, et tes erreurs qui reviennent dans « À revoir » à 1, 3, 7 puis 14 jours.\n- Un planning de révision avant un contrôle ou un examen.\n- La correction d'une copie critère par critère, avec une note indicative sur 20 : contrôles, brevet, bac de français, bac général et technologique.\n- L'entraînement à l'oral du bac de français, déroulé comme devant le jury, et au grand oral.\n- La lecture à voix haute et la dictée au micro. L'audio passe par le navigateur, il n'est pas envoyé sur nos serveurs.",
+        "## Pour qui, et combien",
+        "Notia est pensée pour l'école, du collège à la fac, dès 11 ans avec l'accord des parents. Elle marche dans le navigateur, sur le téléphone comme sur l'ordinateur : rien à installer. L'offre gratuite donne accès à Tia 2 Lite, avec 15 messages par jour et 2 fiches par semaine. Les offres NotiaNote IA (Tia 2) et Pro (Tia 2 Pro) ajoutent des messages, des fiches et un modèle plus puissant.",
+        "Fin septembre, j'avais mis un module « bientôt » sur le site de NotiaNote. Le 15 novembre, j'ai refait la page [notianote.fr/ia](https://notianote.fr/ia) qui présente Notia. L'appli [[notianote-app-store|NotiaNote]], elle, reste là pour les notes, les devoirs et l'emploi du temps.",
+      ],
+      en: [
+        "This is the update I'm proudest of: NotiaNote has its own AI. It's called Notia, and it lives at [ia.notianote.fr](https://ia.notianote.fr). My starting idea: an AI that helps you without doing the work for you.",
+        "By default it's in guide mode. You ask your question or send a photo of your exercise (photo, PDF, Word or PowerPoint). It tells you what's being asked, asks you a question, then gives you one hint at a time, and checks every step you suggest. The full solution only comes if you ask for it. For graded homework, it corrects what you wrote without writing it for you.",
+        "## What it can do",
+        "- Revision sheets that always follow the same plan: the key points, the method, a worked example, the traps to avoid, and 5 questions to test yourself.\n- Quizzes that explain every answer, flashcards, and your mistakes coming back in “To review” after 1, 3, 7 and 14 days.\n- A revision schedule before a test or an exam.\n- Marking a paper criterion by criterion, with an indicative grade out of 20: tests, the brevet, the French bac, the general and technological bac.\n- Practice for the French bac oral, run like the real jury, and for the grand oral.\n- Read-aloud and mic dictation. The audio goes through the browser and isn't sent to our servers.",
+        "## Who it's for, and the price",
+        "Notia is built for school, from middle school to university, from age 11 with parental consent. It runs in the browser, on phone or computer: nothing to install. The free plan gives access to Tia 2 Lite, with 15 messages a day and 2 revision sheets a week. The NotiaNote IA (Tia 2) and Pro (Tia 2 Pro) plans add more messages, more sheets and a more powerful model.",
+        "At the end of September I had put a “coming soon” module on the NotiaNote site. On 15 November I rebuilt the [notianote.fr/ia](https://notianote.fr/ia) page that presents Notia. The [[notianote-app-store|NotiaNote]] app itself is still where your grades, homework and timetable live.",
+      ],
+    },
+  },
+  {
     slug: "snowbound",
-    date: null,
+    date: "2026-11-12",
+    links: [
+      {
+        href: "https://snowbound.fr",
+        label: { fr: "snowbound.fr", en: "snowbound.fr" },
+      },
+    ],
     title: { fr: "Snowbound, ma boutique de Noël", en: "Snowbound, my Christmas shop" },
     description: {
-      fr: "Une boutique Shopify éphémère de produits de Noël : elle ouvre pour les fêtes, puis elle disparaît.",
-      en: "A pop-up Shopify shop for Christmas products: it opens for the holidays, then it disappears.",
+      fr: "Ma boutique Shopify éphémère est ouverte sur snowbound.fr : une guirlande lumineuse saule et des petites décos de Noël.",
+      en: "My pop-up Shopify shop is open at snowbound.fr: a willow light garland and small Christmas decorations.",
     },
     paragraphs: {
       fr: [
-        "Snowbound, c'est une boutique de Noël éphémère, faite avec Shopify. Elle vend des produits de Noël, ouvre seulement pour les fêtes, puis elle disparaît.",
-        "C'est Shai Company France qui la porte (voir le [Plan](/plan/)). J'écrirai la suite ici quand elle ouvrira.",
+        "Snowbound, c'est ma boutique de Noël éphémère, faite avec Shopify. Elle ouvre seulement pour les fêtes, puis elle disparaît. Et elle est ouverte : c'est sur [snowbound.fr](https://snowbound.fr).",
+        "Le produit phare, c'est la guirlande lumineuse saule : une branche de saule couverte de petites LED blanc chaud, à poser au mur, au-dessus d'un lit, d'une cheminée ou d'un miroir. Il y a trois tailles : 72, 96 ou 144 LED.",
+        "Autour, j'ai ajouté des petites décos à accrocher sur les branches : des mini boules dorées, des flocons en bois naturel et des mini pommes de pin.",
+        "Le premier produit est entré dans la boutique le 12 novembre 2026. C'est Shai Company France qui porte Snowbound (voir le [Plan](/plan/)).",
       ],
       en: [
-        "Snowbound is a pop-up Christmas shop built with Shopify. It sells Christmas products, opens only for the holidays, then it disappears.",
-        "It's run by Shai Company France (see the [Map](/plan/)). I'll write more here when it opens.",
+        "Snowbound is my pop-up Christmas shop, built with Shopify. It opens only for the holidays, then it disappears. And it's open: it's at [snowbound.fr](https://snowbound.fr).",
+        "The main product is the willow light garland: a willow branch covered in small warm-white LEDs, to put on a wall, above a bed, a fireplace or a mirror. It comes in three sizes: 72, 96 or 144 LEDs.",
+        "Around it, I added small decorations to hang on the branches: mini gold baubles, natural wood snowflakes and mini pine cones.",
+        "The first product went into the shop on 12 November 2026. Snowbound is run by Shai Company France (see the [Map](/plan/)).",
       ],
     },
   },

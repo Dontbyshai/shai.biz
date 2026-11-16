@@ -2,7 +2,7 @@ import type { Localized } from "./types"
 
 /**
  * Organigramme de la page Plan.
- * Uniquement les informations données par Shaï : nom, pays, type de structure et projets.
+ * Uniquement les informations données par Shaï : nom, pays, type de structure, détention et projets.
  * Aucune donnée légale (immatriculation, date de création, capital…) n'est inventée ici.
  */
 
@@ -28,6 +28,10 @@ export interface Company {
   /** type de structure, seulement s'il est connu */
   kind?: Localized
   role: Localized
+  /** part détenue par Shaï, en % (donnée par Shaï) */
+  share: number
+  /** détail de la détention */
+  owners: Localized
   projects: GroupProject[]
 }
 
@@ -39,6 +43,8 @@ export const companies: Company[] = [
     country: { fr: "Bahamas", en: "The Bahamas" },
     kind: { fr: "Ltd · société à responsabilité limitée", en: "Ltd · limited company" },
     role: { fr: "Web3 & crypto", en: "Web3 & crypto" },
+    share: 100,
+    owners: { fr: "100 % Shaï", en: "100% Shaï" },
     projects: [
       {
         name: "Bitixe",
@@ -46,7 +52,7 @@ export const companies: Company[] = [
         dark: true,
         slug: "bitixe",
         href: "https://bitixe.com",
-        note: { fr: "Lancement le 8 déc. 2026", en: "Launching 8 Dec 2026" },
+        note: { fr: "8 déc. 2026 · BNB Smart Chain", en: "8 Dec 2026 · BNB Smart Chain" },
       },
     ],
   },
@@ -57,13 +63,15 @@ export const companies: Company[] = [
     country: { fr: "Nouveau-Mexique, États-Unis", en: "New Mexico, United States" },
     kind: { fr: "LLC · Limited Liability Company", en: "LLC · Limited Liability Company" },
     role: { fr: "Applications mobiles", en: "Mobile apps" },
+    share: 100,
+    owners: { fr: "100 % Shaï", en: "100% Shaï" },
     projects: [
       {
         name: "NotiaNote",
         icon: "/images/notianote-icon.webp",
         slug: "notianote-app-store",
         href: "https://notianote.fr",
-        note: { fr: "App Store · Play Store", en: "App Store · Play Store" },
+        note: { fr: "App Store · IA Notia · Play Store en déc.", en: "App Store · Notia AI · Play Store in Dec" },
       },
       {
         name: "Left To Live",
@@ -75,13 +83,13 @@ export const companies: Company[] = [
         name: "Fuel Tracker",
         icon: "/images/fuel-tracker-icon.webp",
         slug: "fuel-tracker",
-        note: { fr: "En cours", en: "In progress" },
+        note: { fr: "Prototype, soumis à Apple", en: "Prototype, submitted to Apple" },
       },
       {
         name: "Love Map",
         icon: "/images/lovemap-icon.webp",
         slug: "love-map",
-        note: { fr: "Pas encore publiée", en: "Not released yet" },
+        note: { fr: "Pas encore de date de sortie", en: "No release date yet" },
       },
     ],
   },
@@ -90,12 +98,16 @@ export const companies: Company[] = [
     name: "Shai Company France",
     flag: "fr",
     country: { fr: "France", en: "France" },
+    kind: { fr: "SAS · société par actions simplifiée", en: "SAS · French simplified joint-stock company" },
     role: { fr: "Boutiques Shopify", en: "Shopify shops" },
+    share: 50,
+    owners: { fr: "2 associés à 50 / 50", en: "2 partners, 50 / 50" },
     projects: [
       {
         name: "Snowbound",
         slug: "snowbound",
-        note: { fr: "Boutique de Noël éphémère", en: "Pop-up Christmas shop" },
+        href: "https://snowbound.fr",
+        note: { fr: "Boutique de Noël éphémère, ouverte", en: "Pop-up Christmas shop, open" },
       },
     ],
   },

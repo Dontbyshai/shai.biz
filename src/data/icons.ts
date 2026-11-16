@@ -9,6 +9,7 @@ export const postIcon: Record<string, { src: string; pixel?: boolean; dark?: boo
   "notianote-code-ferme": { src: "/images/notianote-icon.webp" },
   "notianote-uca": { src: "/images/notianote-icon.webp" },
   "notianote-2-7-2": { src: "/images/notianote-icon.webp" },
+  "notianote-ia": { src: "/images/notianote-icon.webp" },
   "left-to-live": { src: "/images/lefttolive-icon.webp" },
   "left-to-live-app-store": { src: "/images/lefttolive-icon.webp" },
   "love-map": { src: "/images/lovemap-icon.webp" },

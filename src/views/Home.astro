@@ -53,7 +53,7 @@ const status = {
     <a class="tile nn rise" style="--i:1" href={L("/blog/notianote-app-store/")}>
       <div class="nn-head">
         <img src="/images/notianote-icon.webp" alt="" width="58" height="58" loading="eager" />
-        <span class="chip"><span class="dot"></span>{t(locale, "flagship")}</span>
+        <span class="chip"><span class="dot live"></span>{t(locale, "nnAi")}</span>
       </div>
       <h2 class="display">NotiaNote</h2>
       <p class="nn-text">{t(locale, "notianoteText")}</p>
@@ -201,11 +201,11 @@ const status = {
       <span class="go"><Icon name="arrow" size={16} /></span>
     </a>
 
-    <a class="tile snow rise" style="--i:12" href={L("/blog/snowbound/")}>
+    <a class="tile snow rise" style="--i:12" href="https://snowbound.fr" rel="noopener">
       <div class="flakes" aria-hidden="true">
         {flakes.map((f) => <i style={`left:${f.x}%;--d:${f.d}s;--delay:${f.delay}s;--s:${f.s}px`} />)}
       </div>
-      <span class="chip snow-chip"><span class="dot"></span>{t(locale, "soon")}</span>
+      <span class="chip snow-chip"><span class="dot live"></span>{t(locale, "snowOpen")}</span>
       <h2 class="display snow-title">Snowbound</h2>
       <p class="snow-text">{t(locale, "snowText")}</p>
       <p class="mono snow-meta">{t(locale, "snowMeta")}</p>

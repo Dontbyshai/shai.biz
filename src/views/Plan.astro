@@ -81,8 +81,9 @@ const projectHref = (p: GroupProject) => (p.slug ? L(`/blog/${p.slug}/`) : (p.hr
     <section class="col col-co">
       {
         companies.map((c, i) => (
-          <article class={`tile node co co-${c.id} rise`} style={`--i:${4 + i}`} data-node={`co-${c.id}`}>
+          <article class={`tile node co co-${c.id} rise`} style={`--i:${4 + i}`} data-node={`co-${c.id}`} data-share={c.share}>
             <header class="n-head">
+              <span class:list={["share mono", { part: c.share < 100 }]} title={c.owners[locale]}>{c.share}&nbsp;%</span>
               <span class="n-badge" aria-hidden="true">
                 <Flag code={c.flag} size={22} />
               </span>
@@ -100,6 +101,8 @@ const projectHref = (p: GroupProject) => (p.slug ? L(`/blog/${p.slug}/`) : (p.hr
                   <dd>{c.kind[locale]}</dd>
                 </>
               )}
+              <dt>{fr ? "Détention" : "Ownership"}</dt>
+              <dd>{c.owners[locale]}</dd>
             </dl>
             <ul class="pjs">
               {c.projects.map((p) => (
@@ -138,8 +141,8 @@ const projectHref = (p: GroupProject) => (p.slug ? L(`/blog/${p.slug}/`) : (p.hr
   <p class="note rise" style="--i:8">
     {
       fr
-        ? "Ce plan montre seulement qui porte quel projet. Les infos légales des sociétés ne sont pas publiées ici."
-        : "This map only shows which entity runs which project. Company legal details are not published here."
+        ? "Ce plan montre qui porte quel projet et la part que je détiens dans chaque société. Les autres infos légales ne sont pas publiées ici."
+        : "This map shows which entity runs which project and the share I own in each company. Other legal details are not published here."
     }
   </p>
 </Base>
@@ -159,17 +162,17 @@ const projectHref = (p: GroupProject) => (p.slug ? L(`/blog/${p.slug}/`) : (p.hr
     const my = m.top - box.top + m.height / 2
     const paths: string[] = []
     const dots: string[] = []
-    const link = (fromX: number, toX: number, toY: number) => {
+    const link = (fromX: number, toX: number, toY: number, part = false) => {
       const dir = toX > fromX ? 1 : -1
-      const midX = fromX + (toX - fromX) / 2
+      const midX = fromX + (toX - fromX) * 0.34
       const dy = toY - my
       const r = Math.min(R, Math.abs(dy) / 2, Math.abs(toX - fromX) / 4)
       if (Math.abs(dy) < 1) {
-        paths.push(`M${fromX} ${my}H${toX}`)
+        paths.push(`${part ? "~" : ""}M${fromX} ${my}H${toX}`)
       } else {
         const sy = Math.sign(dy)
         paths.push(
-          `M${fromX} ${my}H${midX - dir * r}Q${midX} ${my} ${midX} ${my + sy * r}V${toY - sy * r}Q${midX} ${toY} ${midX + dir * r} ${toY}H${toX}`,
+          `${part ? "~" : ""}M${fromX} ${my}H${midX - dir * r}Q${midX} ${my} ${midX} ${my + sy * r}V${toY - sy * r}Q${midX} ${toY} ${midX + dir * r} ${toY}H${toX}`,
         )
       }
       dots.push(`<circle class="w-dot" cx="${toX}" cy="${toY}" r="3.5"/>`)
@@ -180,7 +183,7 @@ const projectHref = (p: GroupProject) => (p.slug ? L(`/blog/${p.slug}/`) : (p.hr
       const r = n.getBoundingClientRect()
       const head = n.querySelector<HTMLElement>(".n-head")?.getBoundingClientRect()
       const y = head ? head.top - box.top + head.height / 2 : r.top - box.top + 30
-      link(right, r.left - box.left, y)
+      link(right, r.left - box.left, y, Number(n.dataset.share) < 100)
     }
     const oss = chart.querySelector<HTMLElement>('[data-node="oss"]')
     if (oss) {
@@ -190,7 +193,9 @@ const projectHref = (p: GroupProject) => (p.slug ? L(`/blog/${p.slug}/`) : (p.hr
       link(left, r.right - box.left, y)
     }
     svg.innerHTML =
-      paths.map((d, i) => `<path class="w-line" style="--n:${i}" d="${d}"/>`).join("") +
+      paths
+        .map((d, i) => `<path class="w-line${d.startsWith("~") ? " w-part" : ""}" style="--n:${i}" d="${d.replace("~", "")}"/>`)
+        .join("") +
       dots.join("") +
       `<circle class="w-hub" cx="${right}" cy="${my}" r="4"/><circle class="w-hub" cx="${left}" cy="${my}" r="4"/>`
     for (const path of svg.querySelectorAll<SVGPathElement>(".w-line")) {
@@ -206,6 +211,7 @@ const projectHref = (p: GroupProject) => (p.slug ? L(`/blog/${p.slug}/`) : (p.hr
     window.addEventListener("load", run)
     document.fonts?.ready.then(run)
     run()
+    setTimeout(run, 1800)
   }
 </script>
 
@@ -239,10 +245,11 @@ const projectHref = (p: GroupProject) => (p.slug ? L(`/blog/${p.slug}/`) : (p.hr
   }
 
   .chart {
+    --cg: clamp(64px, 7vw, 130px);
     position: relative;
     display: grid;
     grid-template-columns: minmax(280px, 1fr) minmax(220px, 250px) minmax(320px, 1.2fr);
-    column-gap: clamp(64px, 7vw, 130px);
+    column-gap: var(--cg);
     align-items: center;
     padding: 28px 0 12px;
     background-image: radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--ink) 9%, transparent) 1px, transparent 0);
@@ -261,6 +268,10 @@ const projectHref = (p: GroupProject) => (p.slug ? L(`/blog/${p.slug}/`) : (p.hr
     stroke: color-mix(in srgb, var(--accent) 55%, var(--line-strong));
     stroke-width: 1.6;
     stroke-linecap: round;
+  }
+  .wires:global(.static) :global(.w-part),
+  .wires :global(.w-part) {
+    stroke-dasharray: 5 5;
   }
   .wires :global(.w-dot) {
     fill: var(--bg);
@@ -357,11 +368,34 @@ const projectHref = (p: GroupProject) => (p.slug ? L(`/blog/${p.slug}/`) : (p.hr
   /* Cartes */
   .node {
     padding: 16px 16px 12px;
+    overflow: visible;
   }
   .n-head {
+    position: relative;
     display: flex;
     align-items: center;
     gap: 12px;
+  }
+  /* part détenue, posée sur la liaison (façon société.com) */
+  .share {
+    position: absolute;
+    top: 50%;
+    left: calc(-16px - var(--cg) * 0.31);
+    translate: -50% -50%;
+    padding: 3px 8px;
+    border-radius: 99px;
+    background: var(--accent);
+    color: #fff;
+    font-size: 11.5px;
+    font-weight: 600;
+    white-space: nowrap;
+    box-shadow: 0 0 0 3px var(--bg);
+    z-index: 2;
+  }
+  .share.part {
+    background: var(--tile);
+    color: var(--accent-ink);
+    border: 1.5px dashed var(--accent);
   }
   .n-badge {
     width: 40px;
@@ -604,6 +638,12 @@ const projectHref = (p: GroupProject) => (p.slug ? L(`/blog/${p.slug}/`) : (p.hr
     }
     .me-ring {
       display: none;
+    }
+    .share {
+      top: -30px;
+      left: auto;
+      right: -4px;
+      translate: none;
     }
   }
 
