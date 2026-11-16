@@ -1,0 +1,318 @@
+---
+import Icon from "@/components/Icon.astro"
+import Base from "@/layouts/Base.astro"
+import type { Locale, Post } from "@/data/types"
+import { t } from "@/i18n/ui"
+import { formatDay } from "@/lib/dates"
+import { localizedPath } from "@/lib/paths"
+import { neighbors, readingMinutes } from "@/lib/posts"
+import { renderParagraphs } from "@/lib/text"
+
+interface Props {
+  locale: Locale
+  post: Post
+}
+const { locale, post } = Astro.props
+const L = (p: string) => localizedPath(locale, p)
+const { older, newer } = neighbors(post.slug)
+const img = post.image
+const kind = !img ? null : img.wide ? "wide" : img.height > img.width * 1.3 ? "phone" : "icon"
+const html = renderParagraphs(post.paragraphs[locale], locale)
+---
+
+<Base
+  locale={locale}
+  path={`/blog/${post.slug}/`}
+  title={post.title[locale]}
+  description={post.description[locale]}
+  image={img?.src}
+>
+  <article class="article">
+    <a class="back mono rise" style="--i:0" href={L("/blog/")}><Icon name="arrow-left" size={14} /> {t(locale, "back")}</a>
+
+    <header class="head rise" style="--i:1">
+      <div class="meta mono">
+        {post.date ? <time datetime={post.date}>{formatDay(post.date, locale)}</time> : <span class="soon">{t(locale, "upcoming")}</span>}
+        <span class="sep">/</span>
+        <span>{readingMinutes(post, locale)} {t(locale, "readTime")}</span>
+      </div>
+      <div class:list={["title-row", { "has-icon": kind === "icon" }]}>
+        {kind === "icon" && img && <img class="app-icon" src={img.src} alt={img.alt[locale]} width="88" height="88" />}
+        <h1 class="display">{post.title[locale]}</h1>
+      </div>
+      <p class="lede">{post.description[locale]}</p>
+    </header>
+
+    {
+      kind === "wide" && img && (
+        <figure class="hero rise" style="--i:2">
+          <div class="frame">
+            <img src={img.src} alt={img.alt[locale]} width={img.width} height={img.height} />
+          </div>
+          <figcaption class="mono">{img.caption[locale]}</figcaption>
+        </figure>
+      )
+    }
+
+    <div class="layout rise" style="--i:3">
+      <div class="prose" set:html={html} />
+      <aside class="aside">
+        {
+          kind === "phone" && img && (
+            <figure class="phone-fig">
+              <div class="phone">
+                <img src={img.src} alt={img.alt[locale]} width={img.width} height={img.height} loading="lazy" />
+              </div>
+              <figcaption class="mono">{img.caption[locale]}</figcaption>
+            </figure>
+          )
+        }
+        {
+          post.links && post.links.length > 0 && (
+            <div class="links">
+              <p class="eyebrow">{t(locale, "links")}</p>
+              <ul>
+                {post.links.map((link) => (
+                  <li>
+                    <a href={link.href} rel="noopener">
+                      <span>{link.label[locale]}</span>
+                      <Icon name="arrow" size={14} />
+                    </a>
+                  </li>
+                ))}
+              </ul>
+            </div>
+          )
+        }
+      </aside>
+    </div>
+
+    <nav class="pager" aria-label="Articles">
+      {
+        older ? (
+          <a class="tile pg prev" href={L(`/blog/${older.slug}/`)}>
+            <span class="mono">← {t(locale, "older")}</span>
+            <span class="pg-title">{older.title[locale]}</span>
+          </a>
+        ) : (
+          <span />
+        )
+      }
+      {
+        newer ? (
+          <a class="tile pg next" href={L(`/blog/${newer.slug}/`)}>
+            <span class="mono">{t(locale, "newer")} →</span>
+            <span class="pg-title">{newer.title[locale]}</span>
+          </a>
+        ) : (
+          <span />
+        )
+      }
+    </nav>
+  </article>
+</Base>
+
+<style>
+  .article {
+    max-width: 900px;
+  }
+  .back {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    color: var(--muted);
+    padding: 6px 10px 6px 8px;
+    margin-left: -8px;
+    border-radius: 8px;
+    transition:
+      color 0.2s,
+      background 0.2s;
+  }
+  .back:hover {
+    color: var(--accent-ink);
+    background: var(--tile);
+  }
+  .head {
+    margin: 26px 0 30px;
+  }
+  .meta {
+    display: flex;
+    gap: 10px;
+    color: var(--muted);
+  }
+  .meta time,
+  .meta .soon {
+    color: var(--accent-ink);
+  }
+  .sep {
+    opacity: 0.5;
+  }
+  .title-row {
+    margin-top: 14px;
+  }
+  .title-row.has-icon {
+    display: flex;
+    align-items: center;
+    gap: 22px;
+  }
+  .app-icon {
+    width: 88px;
+    height: 88px;
+    border-radius: 22px;
+    border: 1px solid var(--line);
+    background: #fff;
+    flex: none;
+    box-shadow: var(--shadow);
+    object-fit: contain;
+  }
+  h1 {
+    font-size: clamp(38px, 6vw, 62px);
+    text-wrap: balance;
+  }
+  .lede {
+    margin-top: 18px;
+    max-width: 60ch;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 22px;
+    line-height: 1.45;
+    color: var(--muted);
+    text-wrap: pretty;
+  }
+  .hero {
+    margin: 0 0 40px;
+  }
+  .frame {
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: var(--tile);
+    box-shadow: var(--shadow);
+  }
+  .frame img {
+    width: 100%;
+    height: auto;
+  }
+  figcaption {
+    margin-top: 10px;
+    color: var(--muted);
+    font-size: 11.5px;
+  }
+  .layout {
+    display: grid;
+    grid-template-columns: minmax(0, 660px) 200px;
+    gap: 40px;
+    justify-content: space-between;
+    align-items: start;
+  }
+  .prose {
+    text-wrap: pretty;
+  }
+  .aside {
+    position: sticky;
+    top: 30px;
+    display: grid;
+    gap: 26px;
+  }
+  .links ul {
+    list-style: none;
+    margin: 10px 0 0;
+    padding: 0;
+    display: grid;
+    gap: 6px;
+  }
+  .links a {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+    padding: 9px 12px;
+    border: 1px solid var(--line);
+    border-radius: 9px;
+    background: var(--tile);
+    font-size: 13.5px;
+    transition:
+      border-color 0.2s,
+      color 0.2s,
+      transform 0.3s var(--ease);
+  }
+  .links a span {
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .links a:hover {
+    border-color: var(--accent);
+    color: var(--accent-ink);
+    transform: translateX(2px);
+  }
+  .phone {
+    border: 6px solid var(--ink);
+    border-radius: 26px;
+    overflow: hidden;
+    background: #fff;
+    box-shadow: var(--shadow);
+    transform: rotate(2deg);
+  }
+  .phone img {
+    width: 100%;
+    height: auto;
+  }
+  .pager {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-top: 64px;
+  }
+  .pg {
+    padding: 16px 18px;
+    display: grid;
+    gap: 6px;
+  }
+  .pg .mono {
+    color: var(--muted);
+  }
+  .pg-title {
+    font-family: var(--font-serif);
+    font-size: 19px;
+    line-height: 1.25;
+  }
+  .pg:hover .pg-title {
+    color: var(--accent-ink);
+  }
+  .next {
+    text-align: right;
+  }
+  @media (max-width: 1000px) {
+    .layout {
+      grid-template-columns: 1fr;
+    }
+    .aside {
+      position: static;
+    }
+    .phone-fig {
+      max-width: 240px;
+    }
+  }
+  @media (max-width: 560px) {
+    .title-row.has-icon {
+      flex-direction: column;
+      align-items: flex-start;
+      gap: 16px;
+    }
+    .app-icon {
+      width: 64px;
+      height: 64px;
+      border-radius: 16px;
+    }
+    .lede {
+      font-size: 19px;
+    }
+    .prose {
+      font-size: 18.5px;
+    }
+    .pager {
+      grid-template-columns: 1fr;
+    }
+  }
+</style>

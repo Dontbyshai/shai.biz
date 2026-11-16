@@ -1,0 +1,302 @@
+---
+import Icon from "@/components/Icon.astro"
+import Base from "@/layouts/Base.astro"
+import type { Locale } from "@/data/types"
+import { t } from "@/i18n/ui"
+import { localizedPath } from "@/lib/paths"
+import { postsByYear, postsNewestFirst, readingMinutes, upcomingPosts } from "@/lib/posts"
+
+interface Props {
+  locale: Locale
+}
+const { locale } = Astro.props
+const L = (p: string) => localizedPath(locale, p)
+const groups = postsByYear()
+const upcoming = upcomingPosts()
+const count = postsNewestFirst().length + upcoming.length
+const dayMonth = (iso: string) =>
+  new Intl.DateTimeFormat(locale === "fr" ? "fr-FR" : "en-GB", { day: "2-digit", month: "short" })
+    .format(new Date(`${iso}T12:00:00Z`))
+    .replace(".", "")
+let i = 0
+---
+
+<Base locale={locale} path="/blog/" title={t(locale, "blogTitle")} description={t(locale, "blogLede")}>
+  <header class="page-head rise" style="--i:0">
+    <p class="eyebrow">shai.biz / blog</p>
+    <h1 class="display">{t(locale, "blogTitle")}<span class="count">{count}</span></h1>
+    <p class="lede">{t(locale, "blogLede")}</p>
+  </header>
+
+  {
+    upcoming.length > 0 && (
+      <section class="year rise" style="--i:1">
+        <h2 class="year-label mono">{t(locale, "upcoming")}</h2>
+        <ul class="rows">
+          {upcoming.map((post) => (
+            <li>
+              <a class="row soon" href={L(`/blog/${post.slug}/`)}>
+                <span class="mono date">{t(locale, "noDate")}</span>
+                <span class="body">
+                  <span class="title">{post.title[locale]}</span>
+                  <span class="desc">{post.description[locale]}</span>
+                </span>
+                <span class="thumb snowthumb" aria-hidden="true">
+                  <i />
+                  <i />
+                  <i />
+                </span>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )
+  }
+
+  {
+    groups.map((group) => (
+      <section class="year">
+        <h2 class="year-label">
+          <span class="display">{group.year}</span>
+          <span class="mono n">{group.posts.length}</span>
+        </h2>
+        <ul class="rows">
+          {group.posts.map((post) => (
+            <li class="rise" style={`--i:${Math.min(++i, 14)}`}>
+              <a class="row" href={L(`/blog/${post.slug}/`)}>
+                <time class="mono date" datetime={post.date}>
+                  {dayMonth(post.date)}
+                </time>
+                <span class="body">
+                  <span class="title">{post.title[locale]}</span>
+                  <span class="desc">{post.description[locale]}</span>
+                  <span class="mono meta">
+                    {readingMinutes(post, locale)} {t(locale, "readTime")}
+                  </span>
+                </span>
+                {post.image ? (
+                  <span class:list={["thumb", { cover: post.image.wide }]}>
+                    <img src={post.image.src} alt="" loading="lazy" width="64" height="64" />
+                  </span>
+                ) : (
+                  <span class="thumb mono letter" aria-hidden="true">
+                    {post.title[locale].charAt(0)}
+                  </span>
+                )}
+                <Icon name="arrow" size={15} class="row-arrow" />
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    ))
+  }
+</Base>
+
+<style>
+  .year {
+    display: grid;
+    grid-template-columns: 150px minmax(0, 1fr);
+    gap: 24px;
+    padding: 6px 0 26px;
+  }
+  .year + .year {
+    border-top: 1px solid var(--line);
+    padding-top: 26px;
+  }
+  .year-label {
+    position: sticky;
+    top: 28px;
+    align-self: start;
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    font-weight: 400;
+  }
+  .year-label .display {
+    font-size: 44px;
+    color: var(--ink);
+  }
+  .year-label.mono {
+    font-size: 12px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--accent-ink);
+    padding-top: 18px;
+  }
+  .year-label .n {
+    color: var(--muted);
+  }
+  .rows {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: grid;
+    gap: 2px;
+  }
+  .row {
+    position: relative;
+    display: grid;
+    grid-template-columns: 84px minmax(0, 1fr) 64px 20px;
+    gap: 18px;
+    align-items: center;
+    padding: 14px 14px;
+    margin: 0 -14px;
+    border-radius: var(--radius);
+    border: 1px solid transparent;
+    transition:
+      background 0.25s var(--ease),
+      border-color 0.25s var(--ease);
+  }
+  .row:hover {
+    background: var(--tile);
+    border-color: var(--line);
+  }
+  .date {
+    color: var(--muted);
+    align-self: start;
+    padding-top: 5px;
+  }
+  .body {
+    display: grid;
+    gap: 3px;
+  }
+  .title {
+    font-family: var(--font-serif);
+    font-size: 23px;
+    line-height: 1.2;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+    transition: color 0.2s;
+  }
+  .row:hover .title {
+    color: var(--accent-ink);
+  }
+  .desc {
+    color: var(--ink-2);
+    font-size: 14.5px;
+  }
+  .meta {
+    color: var(--muted);
+    font-size: 11px;
+    margin-top: 2px;
+  }
+  .thumb {
+    width: 64px;
+    height: 64px;
+    border-radius: 12px;
+    overflow: hidden;
+    border: 1px solid var(--line);
+    background: #fff;
+    display: grid;
+    place-items: center;
+    transition: transform 0.4s var(--ease);
+  }
+  .thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+  .thumb.cover img {
+    object-fit: cover;
+  }
+  .letter {
+    background: var(--tile-2);
+    color: var(--muted);
+    font-size: 22px;
+  }
+  .row:hover .thumb {
+    transform: rotate(-4deg) scale(1.06);
+  }
+  .row :global(.row-arrow) {
+    color: var(--muted);
+    opacity: 0;
+    transform: translate(-6px, 6px);
+    transition:
+      opacity 0.2s,
+      transform 0.3s var(--ease);
+  }
+  .row:hover :global(.row-arrow) {
+    opacity: 1;
+    transform: none;
+    color: var(--accent);
+  }
+  .soon {
+    background: var(--tile);
+    border-color: var(--line);
+  }
+  .snowthumb {
+    position: relative;
+    background: linear-gradient(180deg, #1c2a3a, #3b5672);
+    border-color: #2b3e52;
+  }
+  .snowthumb i {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    border-radius: 9px;
+    background: #fff;
+    animation: sn 3s linear infinite;
+  }
+  .snowthumb i:nth-child(1) {
+    left: 20%;
+  }
+  .snowthumb i:nth-child(2) {
+    left: 55%;
+    animation-delay: -1s;
+  }
+  .snowthumb i:nth-child(3) {
+    left: 78%;
+    animation-delay: -2s;
+  }
+  @keyframes sn {
+    from {
+      transform: translateY(-34px);
+    }
+    to {
+      transform: translateY(34px);
+    }
+  }
+
+  @media (max-width: 760px) {
+    .year {
+      grid-template-columns: 1fr;
+      gap: 6px;
+    }
+    .year-label {
+      position: static;
+    }
+    .year-label .display {
+      font-size: 36px;
+    }
+    .year-label.mono {
+      padding-top: 0;
+    }
+    .row {
+      grid-template-columns: minmax(0, 1fr) 56px;
+      gap: 14px;
+      padding: 14px 12px;
+      margin: 0 -12px;
+    }
+    .date {
+      grid-column: 1 / -1;
+      padding: 0;
+      order: -1;
+      margin-bottom: -10px;
+    }
+    .thumb {
+      width: 56px;
+      height: 56px;
+    }
+    .row :global(.row-arrow) {
+      display: none;
+    }
+    .title {
+      font-size: 20px;
+    }
+    .desc {
+      font-size: 14px;
+    }
+  }
+</style>

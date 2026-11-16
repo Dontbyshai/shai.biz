@@ -1,31 +1,93 @@
 ---
-import SocialIcons from "@/components/SocialIcons.astro"
-import { SITE, SOCIALS } from "@/consts"
+import Icon from "@/components/Icon.astro"
+import type { Locale } from "@/data/types"
+import { t } from "@/i18n/ui"
+
+interface Props {
+  locale: Locale
+  path: string
+}
+const { locale } = Astro.props
+const links = [
+  { href: "https://github.com/Dontbyshai", label: "GitHub", icon: "github" },
+  { href: "https://twitter.com/Dontbyshai", label: "X", icon: "x" },
+  { href: "https://www.linkedin.com/in/shai-chomette-dugat-276a542a0/", label: "LinkedIn", icon: "linkedin" },
+  { href: "https://www.instagram.com/dontbyshai/", label: "Instagram", icon: "instagram" },
+  { href: "https://open.spotify.com/intl-fr/artist/47Nz6g4SrrfU7kFEjpxP6k", label: "Spotify", icon: "spotify" },
+  { href: "mailto:dontbyshai@gmail.com", label: "E-mail", icon: "mail" },
+  { href: locale === "fr" ? "/rss.xml" : "/en/rss.xml", label: t(locale, "rss"), icon: "rss" },
+] as const
 ---
 
-<footer>
+<footer class="foot">
   <p>
-    &copy; {new Date().getFullYear()}
-    {SITE.title}
+    <span class="mark">shai.biz</span>
+    <span class="copy">© 2026 Shaï Chomette-Dugat</span>
   </p>
-  <SocialIcons links={SOCIALS} />
+  <ul>
+    {
+      links.map((l) => (
+        <li>
+          <a href={l.href} aria-label={l.label} title={l.label} rel={l.href.startsWith("http") ? "me noopener" : undefined}>
+            <Icon name={l.icon} size={16} />
+          </a>
+        </li>
+      ))
+    }
+  </ul>
 </footer>
 
 <style>
-  footer {
+  .foot {
+    max-width: 1040px;
+    margin-top: 56px;
+    padding-top: 18px;
+    border-top: 1px solid var(--line);
     display: flex;
-    flex-direction: column;
     align-items: center;
-    margin-block: var(--space-xs) var(--page-offset-bottom);
-
-    @media (width >= 40rem) {
-      flex-direction: row;
-      justify-content: space-between;
-    }
-
-    p {
-      font-size: var(--step--1);
-      color: var(--muted-foreground);
-    }
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    color: var(--muted);
+    font-size: 13px;
+  }
+  p {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .mark {
+    font-family: var(--font-serif);
+    font-size: 15px;
+    font-style: italic;
+    color: var(--ink);
+    padding: 1px 8px 2px;
+    background: var(--tile-2);
+    border: 1px solid var(--line);
+    border-radius: 6px;
+  }
+  ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    gap: 4px;
+  }
+  a {
+    width: 32px;
+    height: 32px;
+    display: grid;
+    place-items: center;
+    border-radius: 8px;
+    color: var(--muted);
+    transition:
+      color 0.2s,
+      background 0.2s,
+      transform 0.3s var(--ease);
+  }
+  a:hover {
+    color: var(--accent-ink);
+    background: var(--tile-2);
+    transform: translateY(-2px);
   }
 </style>

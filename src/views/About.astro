@@ -1,0 +1,315 @@
+---
+import Icon from "@/components/Icon.astro"
+import Scene from "@/components/Scene.astro"
+import Base from "@/layouts/Base.astro"
+import { aboutParagraphs } from "@/data/about"
+import type { Locale } from "@/data/types"
+import { t } from "@/i18n/ui"
+import { localizedPath } from "@/lib/paths"
+import { getPost } from "@/lib/posts"
+import { renderParagraphs } from "@/lib/text"
+
+interface Props {
+  locale: Locale
+}
+const { locale } = Astro.props
+const L = (p: string) => localizedPath(locale, p)
+const html = renderParagraphs(aboutParagraphs[locale], locale)
+const milestoneSlugs = [
+  "kali-linux",
+  "qcm-interactif",
+  "notianote-v1",
+  "shai-company",
+  "notianote-app-store",
+  "left-to-live-app-store",
+  "bitixe",
+  "serpentix",
+]
+const milestones = milestoneSlugs.map(getPost)
+const monthYear = (iso: string) =>
+  new Intl.DateTimeFormat(locale === "fr" ? "fr-FR" : "en-GB", { month: "short", year: "numeric" })
+    .format(new Date(`${iso}T12:00:00Z`))
+    .replace(".", "")
+const socials = [
+  { href: "https://github.com/Dontbyshai", label: "GitHub", icon: "github" },
+  { href: "https://twitter.com/Dontbyshai", label: "X", icon: "x" },
+  { href: "https://www.linkedin.com/in/shai-chomette-dugat-276a542a0/", label: "LinkedIn", icon: "linkedin" },
+  { href: "https://www.instagram.com/dontbyshai/", label: "Instagram", icon: "instagram" },
+  { href: "https://open.spotify.com/intl-fr/artist/47Nz6g4SrrfU7kFEjpxP6k", label: "Spotify", icon: "spotify" },
+] as const
+---
+
+<Base locale={locale} path="/about/" title={t(locale, "aboutTitle")}>
+  <header class="page-head rise" style="--i:0">
+    <p class="eyebrow">shai.biz / {locale === "fr" ? "a-propos" : "about"}</p>
+    <h1 class="display">{t(locale, "aboutTitle")}</h1>
+  </header>
+
+  <div class="banner tile rise" style="--i:1" aria-hidden="true">
+    <Scene align="middle" />
+  </div>
+
+  <div class="cols">
+    <div class="prose rise" style="--i:2" set:html={html} />
+
+    <aside class="side rise" style="--i:3">
+      <div class="tile card">
+        <div class="who">
+          <div class="avatar" aria-hidden="true">S</div>
+          <div>
+            <p class="nm">Shaï Chomette-Dugat</p>
+            <p class="mono hd">@Dontbyshai</p>
+          </div>
+        </div>
+        <p class="eyebrow">{t(locale, "facts")}</p>
+        <dl>
+          <dt>{t(locale, "factBase")}</dt>
+          <dd>{t(locale, "factBaseV")}</dd>
+          <dt>{t(locale, "factSchool")}</dt>
+          <dd>{t(locale, "factSchoolV")}</dd>
+          <dt>{t(locale, "factCompany")}</dt>
+          <dd><a class="link" href="https://shaiscompany.com" rel="noopener">Shaï Company</a></dd>
+          <dt>{t(locale, "factGoal")}</dt>
+          <dd>{t(locale, "factGoalV")}</dd>
+        </dl>
+        <ul class="soc">
+          {
+            socials.map((s) => (
+              <li>
+                <a href={s.href} rel="me noopener" aria-label={s.label} title={s.label}>
+                  <Icon name={s.icon} size={16} />
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+        <a class="mail" href="mailto:dontbyshai@gmail.com">
+          <Icon name="mail" size={16} />
+          {t(locale, "contact")}
+        </a>
+      </div>
+    </aside>
+  </div>
+
+  <section class="ms">
+    <h2 class="eyebrow">{t(locale, "milestones")}</h2>
+    <ol>
+      {
+        milestones.map((p, i) => (
+          <li class="rise" style={`--i:${i + 4}`}>
+            <a href={L(`/blog/${p.slug}/`)}>
+              <span class="mono when">{p.date && monthYear(p.date)}</span>
+              <span class="knot" aria-hidden="true" />
+              <span class="what">{p.title[locale]}</span>
+            </a>
+          </li>
+        ))
+      }
+    </ol>
+  </section>
+</Base>
+
+<style>
+  .banner {
+    height: 210px;
+    padding: 0;
+    margin-bottom: 40px;
+  }
+  .cols {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) 290px;
+    gap: 48px;
+    align-items: start;
+  }
+  .prose {
+    max-width: 660px;
+  }
+  .prose :global(p:first-child::first-letter) {
+    float: left;
+    font-size: 3.6em;
+    line-height: 0.85;
+    padding: 6px 10px 0 0;
+    color: var(--accent);
+    font-variation-settings: "opsz" 72;
+  }
+  .side {
+    position: sticky;
+    top: 30px;
+  }
+  .card {
+    padding: 20px;
+    display: grid;
+    gap: 14px;
+  }
+  .who {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--line);
+  }
+  .avatar {
+    width: 48px;
+    height: 48px;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    background: var(--accent);
+    color: #fff;
+    font-family: var(--font-serif);
+    font-style: italic;
+    font-size: 27px;
+    box-shadow: inset 0 -6px 12px rgb(0 0 0 / 0.15);
+  }
+  .nm {
+    font-weight: 600;
+  }
+  .hd {
+    color: var(--muted);
+  }
+  dl {
+    margin: 0;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 8px 14px;
+    font-size: 14px;
+  }
+  dt {
+    color: var(--muted);
+  }
+  dd {
+    margin: 0;
+    text-align: right;
+    color: var(--ink);
+  }
+  .soc {
+    list-style: none;
+    margin: 4px 0 0;
+    padding: 0;
+    display: flex;
+    gap: 4px;
+  }
+  .soc a {
+    width: 36px;
+    height: 36px;
+    display: grid;
+    place-items: center;
+    border-radius: 9px;
+    border: 1px solid var(--line);
+    color: var(--ink-2);
+    transition:
+      color 0.2s,
+      border-color 0.2s,
+      transform 0.3s var(--ease);
+  }
+  .soc a:hover {
+    color: var(--accent-ink);
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+  .mail {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    padding: 11px;
+    border-radius: 10px;
+    background: var(--ink);
+    color: var(--bg);
+    font-weight: 500;
+    font-size: 14px;
+    transition:
+      background 0.2s,
+      transform 0.3s var(--ease);
+  }
+  .mail:hover {
+    background: var(--accent);
+    color: #fff;
+    transform: translateY(-1px);
+  }
+  .ms {
+    margin-top: 64px;
+  }
+  .ms ol {
+    list-style: none;
+    margin: 18px 0 0;
+    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
+    gap: 0;
+  }
+  .ms li {
+    border-top: 1px solid var(--line);
+  }
+  .ms li a {
+    position: relative;
+    display: grid;
+    gap: 8px;
+    padding: 22px 18px 22px 0;
+  }
+  .knot {
+    position: absolute;
+    top: -5px;
+    left: 0;
+    width: 9px;
+    height: 9px;
+    border-radius: 99px;
+    background: var(--bg);
+    border: 2px solid var(--accent);
+    transition:
+      background 0.2s,
+      transform 0.3s var(--ease);
+  }
+  .ms li a:hover .knot {
+    background: var(--accent);
+    transform: scale(1.3);
+  }
+  .when {
+    color: var(--accent-ink);
+  }
+  .what {
+    font-family: var(--font-serif);
+    font-size: 19px;
+    line-height: 1.25;
+    transition: color 0.2s;
+  }
+  .ms li a:hover .what {
+    color: var(--accent-ink);
+  }
+  @media (max-width: 960px) {
+    .cols {
+      grid-template-columns: 1fr;
+    }
+    .side {
+      position: static;
+      max-width: 420px;
+    }
+    .ms ol {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 560px) {
+    .banner {
+      height: 150px;
+      margin-bottom: 28px;
+    }
+    .prose {
+      font-size: 18.5px;
+    }
+    .ms li {
+      border-top: 0;
+    }
+    .ms ol {
+      grid-template-columns: 1fr;
+      border-left: 1px solid var(--line);
+      margin-left: 4px;
+    }
+    .ms li a {
+      padding: 12px 0 12px 20px;
+    }
+    .knot {
+      top: 17px;
+      left: -5px;
+    }
+  }
+</style>

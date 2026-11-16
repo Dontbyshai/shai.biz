@@ -1,0 +1,116 @@
+---
+import "@fontsource-variable/newsreader/opsz.css"
+import "@fontsource-variable/newsreader/opsz-italic.css"
+import "@fontsource-variable/geist"
+import "@fontsource-variable/geist-mono"
+import "@/styles/global.css"
+import Sidebar from "@/components/Sidebar.astro"
+import Footer from "@/components/Footer.astro"
+import { SITE } from "@/data/site"
+import type { Locale } from "@/data/types"
+import { t } from "@/i18n/ui"
+import { localizedPath } from "@/lib/paths"
+
+interface Props {
+  locale: Locale
+  path: string
+  title?: string
+  description?: string
+  image?: string
+  wide?: boolean
+}
+
+const { locale, path, title, description, image, wide = false } = Astro.props
+const fullTitle = title ? `${title} · shai.biz` : "Shaï Chomette-Dugat · shai.biz"
+const desc = description ?? SITE.description[locale]
+const canonical = new URL(localizedPath(locale, path), Astro.site)
+const alternates = (["fr", "en"] as const).map((l) => ({
+  locale: l,
+  href: new URL(localizedPath(l, path), Astro.site).href,
+}))
+const ogImage = new URL(image ?? "/images/shai-company-mark.webp", Astro.site).href
+---
+
+<!doctype html>
+<html lang={locale}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{fullTitle}</title>
+    <meta name="description" content={desc} />
+    <link rel="canonical" href={canonical.href} />
+    {alternates.map((a) => <link rel="alternate" hreflang={a.locale} href={a.href} />)}
+    <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+    <link rel="alternate" type="application/rss+xml" title="shai.biz" href={locale === "fr" ? "/rss.xml" : "/en/rss.xml"} />
+    <meta property="og:title" content={fullTitle} />
+    <meta property="og:description" content={desc} />
+    <meta property="og:url" content={canonical.href} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:type" content="website" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:site" content="@Dontbyshai" />
+    <meta name="theme-color" content="#f3eee5" media="(prefers-color-scheme: light)" />
+    <meta name="theme-color" content="#12110f" media="(prefers-color-scheme: dark)" />
+    <script is:inline>
+      ;(() => {
+        const saved = localStorage.getItem("theme")
+        const dark = saved ? saved === "dark" : matchMedia("(prefers-color-scheme: dark)").matches
+        document.documentElement.dataset.theme = dark ? "dark" : "light"
+      })()
+    </script>
+  </head>
+  <body>
+    <a class="skip" href="#main">{t(locale, "skip")}</a>
+    <div class="frame">
+      <Sidebar locale={locale} path={path} />
+      <div class="column">
+        <main id="main" class:list={["main", { wide }]}>
+          <slot />
+        </main>
+        <Footer locale={locale} path={path} />
+      </div>
+    </div>
+    <script is:inline>
+      document.querySelectorAll("[data-theme-toggle]").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const root = document.documentElement
+          const next = root.dataset.theme === "dark" ? "light" : "dark"
+          document.body.classList.add("theme-anim")
+          root.dataset.theme = next
+          localStorage.setItem("theme", next)
+          setTimeout(() => document.body.classList.remove("theme-anim"), 400)
+        })
+      })
+    </script>
+  </body>
+</html>
+
+<style>
+  .frame {
+    display: grid;
+    grid-template-columns: var(--side) minmax(0, 1fr);
+    max-width: 1320px;
+    margin: 0 auto;
+    min-height: 100vh;
+    min-height: 100dvh;
+  }
+  .column {
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    padding: 36px 40px 28px 8px;
+  }
+  .main {
+    flex: 1;
+    width: 100%;
+    max-width: 1040px;
+  }
+  @media (max-width: 860px) {
+    .frame {
+      grid-template-columns: 1fr;
+    }
+    .column {
+      padding: 18px 16px 24px;
+    }
+  }
+</style>

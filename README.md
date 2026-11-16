@@ -1,17 +1,11 @@
-<div align="center">
-
 # shai.biz
 
-</div>
+Site perso de Shaï : accueil, blog, projets open source et à propos.
 
-Welcome to the source code for my personal website.
+- `bun install`
+- `bun run dev` : site local sur http://localhost:4321
+- `bun run build` : vérifie le contenu, les types, puis génère `dist/`
+- `bun run deploy:cloudflare` : build puis mise en ligne (Cloudflare)
 
-This project is a customized version based on the excellent work by Jason (jktrn). It utilizes the [astro-erudite](https://github.com/jktrn/astro-erudite) black and white theme, originally designed for enscribe.dev.
-
-### Features
-- Built with [Astro](https://astro.build/)
-- Beautiful and minimalistic black and white aesthetic
-- Advanced typography and layout engine
-
-### Acknowledgments
-All credits for the original visual design, Knuth–Plass line-breaking algorithm implementation, and bento grid layout go to [jktrn](https://github.com/jktrn/enscribe.dev). This repository serves as a personal fork stripped down to the basic necessities for my own use.
+Le contenu est dans `src/data/` (articles, projets, à propos). Les images sont dans `public/images/`.
+Aucun secret dans le dépôt : les fichiers `.env` sont ignorés.

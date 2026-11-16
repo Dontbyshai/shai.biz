@@ -1,0 +1,282 @@
+---
+import Icon from "@/components/Icon.astro"
+import Base from "@/layouts/Base.astro"
+import type { Locale } from "@/data/types"
+import { languageColor, otherRepos, repos, statusLabel } from "@/data/work"
+import { t } from "@/i18n/ui"
+import { localizedPath } from "@/lib/paths"
+
+interface Props {
+  locale: Locale
+}
+const { locale } = Astro.props
+const L = (p: string) => localizedPath(locale, p)
+const year = (iso: string) => iso.slice(0, 4)
+---
+
+<Base locale={locale} path="/work/" title={t(locale, "workTitle")} description={t(locale, "workLede")}>
+  <header class="page-head rise" style="--i:0">
+    <p class="eyebrow">shai.biz / work</p>
+    <h1 class="display">{t(locale, "workTitle")}<span class="count">{repos.length}</span></h1>
+    <p class="lede">{t(locale, "workLede")}</p>
+  </header>
+
+  <div class="grid">
+    {
+      repos.map((r, idx) => (
+        <article class:list={["tile card is-link rise", `s-${r.status}`, { feat: idx < 2 }]} style={`--i:${idx + 1}`}>
+          <div class="card-top">
+            {r.image ? (
+              <img class="ico" src={r.image} alt="" width="44" height="44" loading="lazy" />
+            ) : (
+              <span class="ico mono mono-ico" style={`--c:${languageColor[r.language] ?? "var(--muted)"}`}>
+                {r.name.replace(/[^A-Za-z]/g, "").slice(0, 2)}
+              </span>
+            )}
+            <span class="chip">
+              <span class:list={["dot", { live: r.status === "active" }]} />
+              {statusLabel[r.status][locale]}
+            </span>
+          </div>
+          <h2 class="name">
+            <a class="stretch" href={`https://github.com/${r.repo}`} rel="noopener">
+              {r.name}
+            </a>
+          </h2>
+          <p class="repo mono">{r.repo}</p>
+          <p class="sum">{r.summary[locale]}</p>
+          <ul class="stack">
+            {r.stack.map((s) => (
+              <li class="chip">{s}</li>
+            ))}
+          </ul>
+          <div class="foot">
+            <span class="mono lang">
+              <span class="sw" style={`background:${languageColor[r.language] ?? "var(--muted)"}`} />
+              {r.language}
+            </span>
+            {r.license && <span class="mono lic">{r.license}</span>}
+            <span class="mono yr">{year(r.created)}</span>
+            {r.blogSlug && (
+              <a class="mono story" href={L(`/blog/${r.blogSlug}/`)}>
+                {t(locale, "readStory")} <Icon name="arrow" size={12} />
+              </a>
+            )}
+          </div>
+          <span class="go">
+            <Icon name="github" size={15} />
+          </span>
+        </article>
+      ))
+    }
+  </div>
+
+  <section class="others rise" style="--i:12">
+    <h2 class="eyebrow">{t(locale, "otherRepos")}</h2>
+    <ul>
+      {
+        otherRepos.map((o) => (
+          <li>
+            <a href={o.href} rel="noopener">
+              <span class="mono">{o.name}</span>
+              <span class="o-text">{o.text[locale]}</span>
+              <Icon name="arrow" size={14} />
+            </a>
+          </li>
+        ))
+      }
+    </ul>
+  </section>
+</Base>
+
+<style>
+  .grid {
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: 12px;
+  }
+  .card {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    min-height: 300px;
+  }
+  .card.feat {
+    grid-column: span 1;
+  }
+  .grid > .feat:first-child {
+    grid-column: span 2;
+  }
+  .grid > .feat:first-child .sum {
+    max-width: 52ch;
+    font-size: 15.5px;
+  }
+  .grid > .feat:first-child .name {
+    font-size: 34px;
+  }
+  .card-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  .ico {
+    width: 44px;
+    height: 44px;
+    border-radius: 11px;
+    border: 1px solid var(--line);
+    background: #fff;
+    object-fit: contain;
+    padding: 3px;
+  }
+  .mono-ico {
+    display: grid;
+    place-items: center;
+    background: color-mix(in srgb, var(--c) 14%, var(--tile));
+    color: color-mix(in srgb, var(--c) 70%, var(--ink));
+    font-size: 14px;
+    font-weight: 600;
+    border-color: color-mix(in srgb, var(--c) 30%, var(--line));
+  }
+  .s-wip .chip .dot {
+    background: var(--accent);
+  }
+  .s-research .chip .dot {
+    background: #5b7fd6;
+  }
+  .s-done .chip .dot {
+    background: var(--muted);
+  }
+  .name {
+    margin-top: 22px;
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: 26px;
+    line-height: 1.1;
+    letter-spacing: -0.015em;
+  }
+  .stretch::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    z-index: 1;
+  }
+  .card:hover .name {
+    color: var(--accent-ink);
+  }
+  .repo {
+    margin-top: 4px;
+    color: var(--muted);
+    font-size: 11.5px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .sum {
+    margin-top: 12px;
+    color: var(--ink-2);
+    font-size: 14px;
+  }
+  .stack {
+    list-style: none;
+    padding: 0;
+    margin: 16px 0 0;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+  }
+  .stack .chip {
+    background: var(--tile-2);
+  }
+  .foot {
+    margin-top: auto;
+    padding-top: 18px;
+    padding-right: 44px;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 6px 14px;
+    color: var(--muted);
+  }
+  .lang {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .sw {
+    width: 8px;
+    height: 8px;
+    border-radius: 99px;
+  }
+  .story {
+    position: relative;
+    z-index: 2;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    color: var(--ink-2);
+    border-bottom: 1px solid var(--line-strong);
+    transition:
+      color 0.2s,
+      border-color 0.2s;
+  }
+  .story:hover {
+    color: var(--accent-ink);
+    border-color: var(--accent);
+  }
+  .card:hover .go {
+    background: var(--ink);
+    border-color: var(--ink);
+    color: var(--bg);
+  }
+  .others {
+    margin-top: 44px;
+  }
+  .others ul {
+    list-style: none;
+    padding: 0;
+    margin: 12px 0 0;
+    border-top: 1px solid var(--line);
+  }
+  .others a {
+    display: grid;
+    grid-template-columns: 240px 1fr auto;
+    gap: 16px;
+    align-items: center;
+    padding: 12px 0;
+    border-bottom: 1px solid var(--line);
+    color: var(--ink-2);
+    transition: color 0.2s;
+  }
+  .others a:hover {
+    color: var(--accent-ink);
+  }
+  .o-text {
+    color: var(--muted);
+    font-size: 14px;
+  }
+  @media (max-width: 1000px) {
+    .grid {
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
+  }
+  @media (max-width: 620px) {
+    .grid {
+      grid-template-columns: 1fr;
+    }
+    .grid > .feat:first-child {
+      grid-column: auto;
+    }
+    .grid > .feat:first-child .name {
+      font-size: 28px;
+    }
+    .card {
+      min-height: 0;
+    }
+    .others a {
+      grid-template-columns: 1fr auto;
+    }
+    .o-text {
+      grid-column: 1;
+    }
+  }
+</style>
