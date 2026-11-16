@@ -46,7 +46,7 @@ const notianoteIa: PostImage = {
     fr: "L'accueil de Notia sur ia.notianote.fr : « Salut, je suis Notia », un champ pour poser sa question et des suggestions.",
     en: "Notia's home on ia.notianote.fr: “Salut, je suis Notia”, a field to ask a question and suggestions.",
   },
-  caption: { fr: "Notia, sur ia.notianote.fr", en: "Notia, on ia.notianote.fr" },
+  caption: { fr: "La nouvelle Notia, sur ia.notianote.fr", en: "The new Notia, on ia.notianote.fr" },
 }
 
 const notianoteApp: PostImage = {
@@ -348,13 +348,13 @@ export const posts: Post[] = [
         "Le 3 mars 2026, NotiaNote sort sur l'App Store français. Elle est gratuite, rangée dans Éducation, et tourne à partir d'iOS 15.1. La version Android arrive sur le Play Store début décembre 2026.",
         "Le principe ne change pas : on connecte son compte scolaire, et on retrouve au même endroit les notes, l'emploi du temps et les devoirs. L'écran d'accueil résume la journée : moyenne, devoirs, cours et messages.",
         "Depuis, l'appli continue d'avancer : la [[notianote-uca|connexion à l'UCA]] en septembre, puis la [[notianote-2-7-2|2.7.2]] en octobre. Mi-novembre 2026, elle a une note de 4,5 sur 5 sur l'App Store, avec 16 avis.",
-        "Je n'ai pas de chiffres à montrer, mais depuis la rentrée, l'appli grandit fort. Et maintenant, NotiaNote a aussi son IA : [[notianote-ia|Notia]].",
+        "Je n'ai pas de chiffres à montrer, mais depuis la rentrée, l'appli grandit fort. Et son IA, [[notianote-ia|Notia]], revient cette semaine, refaite de zéro.",
       ],
       en: [
         "On 3 March 2026 NotiaNote went live on the French App Store. It's free, listed under Education, and runs on iOS 15.1 and later. The Android version is coming to the Play Store in early December 2026.",
         "The idea stays the same: you connect your school account and find your grades, timetable and homework in one place. The home screen sums up the day: average, homework, classes and messages.",
         "Since then the app has kept moving: the [[notianote-uca|UCA sign-in]] in September, then [[notianote-2-7-2|2.7.2]] in October. In mid-November 2026 it's rated 4.5 out of 5 on the App Store, from 16 ratings.",
-        "I don't have numbers to show, but since the start of the school year the app has been growing fast. And now NotiaNote has its own AI too: [[notianote-ia|Notia]].",
+        "I don't have numbers to show, but since the start of the school year the app has been growing fast. And its AI, [[notianote-ia|Notia]], comes back this week, rebuilt from scratch.",
       ],
     },
   },
@@ -756,12 +756,12 @@ export const posts: Post[] = [
       fr: [
         "Le 7 octobre 2026, la version 2.7.2 de NotiaNote sort sur l'App Store. C'est un correctif : les connexions à Pronote et à ÉcoleDirecte posaient problème, elles remarchent normalement. Il y a aussi des corrections de stabilité.",
         "## Les versions d'avant",
-        "- 21 mai, 2.5.1 : téléchargement des pièces jointes des devoirs réparé, plus de plantage du verrouillage biométrique, graphique de l'accueil corrigé.\n- 11 août, 2.5.2 : corrections sur les achats intégrés, la moyenne et les devoirs.\n- 11 septembre, 2.7 : la [[notianote-uca|connexion à l'UCA]] et des retouches d'interface.\n- 27 septembre, 2.7.1 : correction du lien de l'activité en direct dans la Dynamic Island.",
+        "- 20 mai, 2.5 : grosse mise à jour, avec l'appli Apple Watch, les widgets iOS, les icônes sombres et teintées d'iOS 18, une connexion Pronote plus rapide, et la première version de [[notianote-ia|Notia]], l'IA (ratée, je l'ai refaite depuis).\n- 21 mai, 2.5.1 : téléchargement des pièces jointes des devoirs réparé, plus de plantage du verrouillage biométrique, graphique de l'accueil corrigé.\n- 11 août, 2.5.2 : corrections sur les achats intégrés, la moyenne et les devoirs.\n- 11 septembre, 2.7 : la [[notianote-uca|connexion à l'UCA]] et des retouches d'interface.\n- 27 septembre, 2.7.1 : correction du lien de l'activité en direct dans la Dynamic Island.",
       ],
       en: [
         "On 7 October 2026, NotiaNote 2.7.2 went out on the App Store. It's a fix: sign-ins to Pronote and ÉcoleDirecte were failing, and they work again. There are stability fixes too.",
         "## Earlier versions",
-        "- 21 May, 2.5.1: homework attachment downloads fixed, no more biometric-lock crash, home chart fixed.\n- 11 August, 2.5.2: fixes for in-app purchases, the average and homework.\n- 11 September, 2.7: the [[notianote-uca|UCA sign-in]] and UI touch-ups.\n- 27 September, 2.7.1: fixed the Live Activity link in the Dynamic Island.",
+        "- 20 May, 2.5: a big update, with the Apple Watch app, iOS widgets, iOS 18 dark and tinted icons, faster Pronote sign-in, and the first version of [[notianote-ia|Notia]], the AI (a miss, I've rebuilt it since).\n- 21 May, 2.5.1: homework attachment downloads fixed, no more biometric-lock crash, home chart fixed.\n- 11 August, 2.5.2: fixes for in-app purchases, the average and homework.\n- 11 September, 2.7: the [[notianote-uca|UCA sign-in]] and UI touch-ups.\n- 27 September, 2.7.1: fixed the Live Activity link in the Dynamic Island.",
       ],
     },
   },
@@ -884,11 +884,11 @@ export const posts: Post[] = [
   },
   {
     slug: "notianote-ia",
-    date: "2026-11-15",
-    title: { fr: "Notia, l'IA de NotiaNote", en: "Notia, NotiaNote's AI" },
+    date: "2026-11-16",
+    title: { fr: "Notia 2 : j'ai refait l'IA de NotiaNote", en: "Notia 2: I rebuilt NotiaNote's AI" },
     description: {
-      fr: "NotiaNote a son IA : Notia aide aux devoirs, fait des fiches et des QCM, et entraîne au brevet et au bac, sans faire à ta place.",
-      en: "NotiaNote has its own AI: Notia helps with homework, makes revision sheets and quizzes, and trains you for exams, without doing the work for you.",
+      fr: "La première version de mon IA était ratée. Je l'ai refaite de zéro : la nouvelle Notia sort cette semaine.",
+      en: "The first version of my AI was a miss. I rebuilt it from scratch: the new Notia comes out this week.",
     },
     image: notianoteIa,
     links: [
@@ -903,22 +903,24 @@ export const posts: Post[] = [
     ],
     paragraphs: {
       fr: [
-        "C'est la nouveauté dont je suis le plus fier : NotiaNote a son IA. Elle s'appelle Notia, et elle est sur [ia.notianote.fr](https://ia.notianote.fr). Mon idée de départ : une IA qui t'aide sans faire à ta place.",
+        "Je vais être honnête sur Notia, l'IA de NotiaNote. La première version est sortie le 20 mai 2026, avec la [[notianote-2-7-2|2.5]] de l'appli mobile, la deuxième version publiée sur l'App Store. Et elle était nulle : franchement décevante.",
+        "Alors je l'ai refaite de zéro. La nouvelle version, qui tourne avec le modèle Tia 2, sort cette semaine sur [ia.notianote.fr](https://ia.notianote.fr). Mon idée cette fois : une IA qui t'aide sans faire à ta place.",
         "Par défaut, elle est en mode guide. Tu poses ta question ou tu envoies la photo de ton exercice (photo, PDF, Word ou PowerPoint). Elle te dit ce qui est demandé, te pose une question, puis te donne un indice à la fois, et elle vérifie chaque étape que tu proposes. La solution complète, c'est seulement si tu la demandes. Pour un devoir noté, elle corrige ce que tu as écrit, sans rédiger à ta place.",
         "## Ce qu'elle sait faire",
         "- Des fiches de révision toujours sur le même plan : l'essentiel, la méthode, un exemple corrigé, les pièges à éviter, et 5 questions pour te tester.\n- Des QCM qui expliquent chaque réponse, des flashcards, et tes erreurs qui reviennent dans « À revoir » à 1, 3, 7 puis 14 jours.\n- Un planning de révision avant un contrôle ou un examen.\n- La correction d'une copie critère par critère, avec une note indicative sur 20 : contrôles, brevet, bac de français, bac général et technologique.\n- L'entraînement à l'oral du bac de français, déroulé comme devant le jury, et au grand oral.\n- La lecture à voix haute et la dictée au micro. L'audio passe par le navigateur, il n'est pas envoyé sur nos serveurs.",
         "## Pour qui, et combien",
         "Notia est pensée pour l'école, du collège à la fac, dès 11 ans avec l'accord des parents. Elle marche dans le navigateur, sur le téléphone comme sur l'ordinateur : rien à installer. L'offre gratuite donne accès à Tia 2 Lite, avec 15 messages par jour et 2 fiches par semaine. Les offres NotiaNote IA (Tia 2) et Pro (Tia 2 Pro) ajoutent des messages, des fiches et un modèle plus puissant.",
-        "Fin septembre, j'avais mis un module « bientôt » sur le site de NotiaNote. Le 15 novembre, j'ai refait la page [notianote.fr/ia](https://notianote.fr/ia) qui présente Notia. L'appli [[notianote-app-store|NotiaNote]], elle, reste là pour les notes, les devoirs et l'emploi du temps.",
+        "Fin septembre, j'avais mis un module « bientôt » sur le site de NotiaNote. Le 15 novembre, j'ai refait la page [notianote.fr/ia](https://notianote.fr/ia) qui présente la nouvelle Notia. L'appli [[notianote-app-store|NotiaNote]], elle, reste là pour les notes, les devoirs et l'emploi du temps.",
       ],
       en: [
-        "This is the update I'm proudest of: NotiaNote has its own AI. It's called Notia, and it lives at [ia.notianote.fr](https://ia.notianote.fr). My starting idea: an AI that helps you without doing the work for you.",
+        "I'll be honest about Notia, NotiaNote's AI. The first version came out on 20 May 2026, with [[notianote-2-7-2|2.5]] of the mobile app, the second version published on the App Store. And it was bad: honestly disappointing.",
+        "So I rebuilt it from scratch. The new version, running on the Tia 2 model, comes out this week at [ia.notianote.fr](https://ia.notianote.fr). My idea this time: an AI that helps you without doing the work for you.",
         "By default it's in guide mode. You ask your question or send a photo of your exercise (photo, PDF, Word or PowerPoint). It tells you what's being asked, asks you a question, then gives you one hint at a time, and checks every step you suggest. The full solution only comes if you ask for it. For graded homework, it corrects what you wrote without writing it for you.",
         "## What it can do",
         "- Revision sheets that always follow the same plan: the key points, the method, a worked example, the traps to avoid, and 5 questions to test yourself.\n- Quizzes that explain every answer, flashcards, and your mistakes coming back in “To review” after 1, 3, 7 and 14 days.\n- A revision schedule before a test or an exam.\n- Marking a paper criterion by criterion, with an indicative grade out of 20: tests, the brevet, the French bac, the general and technological bac.\n- Practice for the French bac oral, run like the real jury, and for the grand oral.\n- Read-aloud and mic dictation. The audio goes through the browser and isn't sent to our servers.",
         "## Who it's for, and the price",
         "Notia is built for school, from middle school to university, from age 11 with parental consent. It runs in the browser, on phone or computer: nothing to install. The free plan gives access to Tia 2 Lite, with 15 messages a day and 2 revision sheets a week. The NotiaNote IA (Tia 2) and Pro (Tia 2 Pro) plans add more messages, more sheets and a more powerful model.",
-        "At the end of September I had put a “coming soon” module on the NotiaNote site. On 15 November I rebuilt the [notianote.fr/ia](https://notianote.fr/ia) page that presents Notia. The [[notianote-app-store|NotiaNote]] app itself is still where your grades, homework and timetable live.",
+        "At the end of September I had put a “coming soon” module on the NotiaNote site. On 15 November I rebuilt the [notianote.fr/ia](https://notianote.fr/ia) page that presents the new Notia. The [[notianote-app-store|NotiaNote]] app itself is still where your grades, homework and timetable live.",
       ],
     },
   },

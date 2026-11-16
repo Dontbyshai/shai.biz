@@ -30,7 +30,7 @@ const expected: Record<string, string | null> = {
   bitixe: "2026-10-29",
   "shaiscompany-deploiement": "2026-11-02",
   serpentix: "2026-11-09",
-  "notianote-ia": "2026-11-15",
+  "notianote-ia": "2026-11-16",
   snowbound: "2026-11-12",
 }
 
