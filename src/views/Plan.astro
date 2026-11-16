@@ -1,0 +1,610 @@
+---
+import Flag from "@/components/Flag.astro"
+import Icon from "@/components/Icon.astro"
+import Logo from "@/components/Logo.astro"
+import Base from "@/layouts/Base.astro"
+import { companies, personalProjects, type GroupProject } from "@/data/group"
+import type { Locale } from "@/data/types"
+import { t } from "@/i18n/ui"
+import { localizedPath } from "@/lib/paths"
+
+interface Props {
+  locale: Locale
+}
+const { locale } = Astro.props
+const L = (p: string) => localizedPath(locale, p)
+const fr = locale === "fr"
+const companyProjects = companies.reduce((n, c) => n + c.projects.length, 0)
+const host = (href: string) => new URL(href).hostname.replace(/^www\./, "")
+const projectHref = (p: GroupProject) => (p.slug ? L(`/blog/${p.slug}/`) : (p.href ?? "#"))
+---
+
+<Base locale={locale} path="/plan/" title={t(locale, "planTitle")} description={t(locale, "planLede")}>
+  <header class="page-head rise" style="--i:0">
+    <p class="eyebrow">shai.biz / plan</p>
+    <h1 class="display">{t(locale, "planTitle")}</h1>
+    <p class="lede">{t(locale, "planLede")}</p>
+  </header>
+
+  <ul class="stats mono rise" style="--i:1">
+    <li><strong>{companies.length}</strong> {fr ? "sociétés" : "companies"}</li>
+    <li><strong>{companyProjects}</strong> {fr ? "projets en société" : "company projects"}</li>
+    <li><strong>{personalProjects.length}</strong> {fr ? "projets open source perso" : "personal open-source projects"}</li>
+  </ul>
+
+  <div class="chart" data-chart>
+    <svg class="wires" data-wires aria-hidden="true"></svg>
+
+    <section class="col col-oss">
+      <article class="tile node oss rise" style="--i:3" data-node="oss">
+        <header class="n-head">
+          <span class="n-badge oss-badge" aria-hidden="true"><Icon name="github" size={16} /></span>
+          <div>
+            <h2 class="n-name">{fr ? "Projets open source perso" : "Personal open source"}</h2>
+            <p class="n-sub">{fr ? "Sans lien avec mes sociétés" : "Not tied to my companies"}</p>
+          </div>
+        </header>
+        <ul class="pjs">
+          {
+            personalProjects.map((p) => (
+              <li class="pj">
+                <a class="pj-main" href={projectHref(p)}>
+                  {p.icon ? (
+                    <img class:list={["pj-ic", { pixel: p.pixel, dark: p.dark }]} src={p.icon} alt="" width="34" height="34" loading="lazy" />
+                  ) : (
+                    <span class="pj-ic pj-mono" aria-hidden="true">{p.name.slice(0, 2)}</span>
+                  )}
+                  <span class="pj-txt">
+                    <span class="pj-name">{p.name}</span>
+                    <span class="pj-note">{p.note[locale]}</span>
+                  </span>
+                  <Icon name="arrow" size={13} class="pj-go" />
+                </a>
+              </li>
+            ))
+          }
+        </ul>
+        <a class="n-foot mono" href={L("/work/")}>{fr ? "Tout voir dans Work" : "See all in Work"} <Icon name="arrow" size={12} /></a>
+      </article>
+    </section>
+
+    <section class="col col-me">
+      <div class="me rise" style="--i:2" data-node="me">
+        <div class="me-ring" aria-hidden="true"></div>
+        <div class="me-av" aria-hidden="true"><Logo size={46} /></div>
+        <p class="me-name">Shaï Chomette-Dugat</p>
+        <p class="mono me-handle">@Dontbyshai</p>
+        <p class="me-role">{fr ? "Fondateur" : "Founder"} · Shai's Company</p>
+      </div>
+    </section>
+
+    <section class="col col-co">
+      {
+        companies.map((c, i) => (
+          <article class={`tile node co co-${c.id} rise`} style={`--i:${4 + i}`} data-node={`co-${c.id}`}>
+            <header class="n-head">
+              <span class="n-badge" aria-hidden="true">
+                <Flag code={c.flag} size={22} />
+              </span>
+              <div>
+                <h2 class="n-name">{c.name}</h2>
+                <p class="n-sub">{c.role[locale]}</p>
+              </div>
+            </header>
+            <dl class="n-facts">
+              <dt>{fr ? "Pays" : "Country"}</dt>
+              <dd>{c.country[locale]}</dd>
+              {c.kind && (
+                <>
+                  <dt>{fr ? "Structure" : "Entity"}</dt>
+                  <dd>{c.kind[locale]}</dd>
+                </>
+              )}
+            </dl>
+            <ul class="pjs">
+              {c.projects.map((p) => (
+                <li class="pj">
+                  <a class="pj-main" href={projectHref(p)}>
+                    {p.icon ? (
+                      <img class:list={["pj-ic", { pixel: p.pixel, dark: p.dark }]} src={p.icon} alt="" width="34" height="34" loading="lazy" />
+                    ) : (
+                      <span class="pj-ic pj-snow" aria-hidden="true">
+                        <svg viewBox="0 0 24 24" width="18" height="18">
+                          <path d="M12 2v20M3.3 7l17.4 10M3.3 17L20.7 7M12 2l-2.2 2.2M12 2l2.2 2.2M12 22l-2.2-2.2M12 22l2.2-2.2" />
+                        </svg>
+                      </span>
+                    )}
+                    <span class="pj-txt">
+                      <span class="pj-name">{p.name}</span>
+                      <span class="pj-note">{p.note[locale]}</span>
+                    </span>
+                    <Icon name="arrow" size={13} class="pj-go" />
+                  </a>
+                  {p.href && (
+                    <a class="pj-site mono" href={p.href} rel="noopener" title={host(p.href)}>
+                      <Icon name="globe" size={13} />
+                      <span>{host(p.href)}</span>
+                    </a>
+                  )}
+                </li>
+              ))}
+            </ul>
+          </article>
+        ))
+      }
+    </section>
+  </div>
+
+  <p class="note rise" style="--i:8">
+    {
+      fr
+        ? "Ce plan montre seulement qui porte quel projet. Les infos légales des sociétés ne sont pas publiées ici."
+        : "This map only shows which entity runs which project. Company legal details are not published here."
+    }
+  </p>
+</Base>
+
+<script>
+  const R = 14
+  function draw(chart: HTMLElement) {
+    const svg = chart.querySelector<SVGSVGElement>("[data-wires]")
+    const me = chart.querySelector<HTMLElement>('[data-node="me"]')
+    if (!svg || !me) return
+    const box = chart.getBoundingClientRect()
+    svg.setAttribute("viewBox", `0 0 ${box.width} ${box.height}`)
+    svg.setAttribute("width", String(box.width))
+    svg.setAttribute("height", String(box.height))
+    if (getComputedStyle(svg).display === "none") return
+    const m = me.getBoundingClientRect()
+    const my = m.top - box.top + m.height / 2
+    const paths: string[] = []
+    const dots: string[] = []
+    const link = (fromX: number, toX: number, toY: number) => {
+      const dir = toX > fromX ? 1 : -1
+      const midX = fromX + (toX - fromX) / 2
+      const dy = toY - my
+      const r = Math.min(R, Math.abs(dy) / 2, Math.abs(toX - fromX) / 4)
+      if (Math.abs(dy) < 1) {
+        paths.push(`M${fromX} ${my}H${toX}`)
+      } else {
+        const sy = Math.sign(dy)
+        paths.push(
+          `M${fromX} ${my}H${midX - dir * r}Q${midX} ${my} ${midX} ${my + sy * r}V${toY - sy * r}Q${midX} ${toY} ${midX + dir * r} ${toY}H${toX}`,
+        )
+      }
+      dots.push(`<circle class="w-dot" cx="${toX}" cy="${toY}" r="3.5"/>`)
+    }
+    const right = m.right - box.left
+    const left = m.left - box.left
+    for (const n of chart.querySelectorAll<HTMLElement>('[data-node^="co-"]')) {
+      const r = n.getBoundingClientRect()
+      const head = n.querySelector<HTMLElement>(".n-head")?.getBoundingClientRect()
+      const y = head ? head.top - box.top + head.height / 2 : r.top - box.top + 30
+      link(right, r.left - box.left, y)
+    }
+    const oss = chart.querySelector<HTMLElement>('[data-node="oss"]')
+    if (oss) {
+      const r = oss.getBoundingClientRect()
+      const head = oss.querySelector<HTMLElement>(".n-head")?.getBoundingClientRect()
+      const y = head ? head.top - box.top + head.height / 2 : r.top - box.top + 30
+      link(left, r.right - box.left, y)
+    }
+    svg.innerHTML =
+      paths.map((d, i) => `<path class="w-line" style="--n:${i}" d="${d}"/>`).join("") +
+      dots.join("") +
+      `<circle class="w-hub" cx="${right}" cy="${my}" r="4"/><circle class="w-hub" cx="${left}" cy="${my}" r="4"/>`
+    for (const path of svg.querySelectorAll<SVGPathElement>(".w-line")) {
+      path.style.setProperty("--len", `${Math.ceil(path.getTotalLength())}`)
+    }
+    const first = Number(chart.dataset.drawn || 0)
+    if (!first) chart.dataset.drawn = String(performance.now())
+    else if (performance.now() - first > 1600) svg.classList.add("static")
+  }
+  for (const chart of document.querySelectorAll<HTMLElement>("[data-chart]")) {
+    const run = () => requestAnimationFrame(() => draw(chart))
+    new ResizeObserver(run).observe(chart)
+    window.addEventListener("load", run)
+    document.fonts?.ready.then(run)
+    run()
+  }
+</script>
+
+<style>
+  .lede {
+    margin-top: 16px;
+    max-width: 60ch;
+    color: var(--ink-2);
+    font-size: 16.5px;
+  }
+  .stats {
+    list-style: none;
+    padding: 0;
+    margin: 0 0 28px;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 8px;
+  }
+  .stats li {
+    padding: 7px 12px;
+    border: 1px solid var(--line);
+    border-radius: 99px;
+    background: var(--tile);
+    color: var(--ink-2);
+    font-size: 12.5px;
+  }
+  .stats strong {
+    color: var(--accent-ink);
+    font-weight: 600;
+    margin-right: 2px;
+  }
+
+  .chart {
+    position: relative;
+    display: grid;
+    grid-template-columns: minmax(280px, 1fr) minmax(220px, 250px) minmax(320px, 1.2fr);
+    column-gap: clamp(64px, 7vw, 130px);
+    align-items: center;
+    padding: 28px 0 12px;
+    background-image: radial-gradient(circle at 1px 1px, color-mix(in srgb, var(--ink) 9%, transparent) 1px, transparent 0);
+    background-size: 22px 22px;
+    border-radius: var(--radius);
+  }
+  .wires {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    overflow: visible;
+    z-index: 0;
+  }
+  .wires :global(.w-line) {
+    fill: none;
+    stroke: color-mix(in srgb, var(--accent) 55%, var(--line-strong));
+    stroke-width: 1.6;
+    stroke-linecap: round;
+  }
+  .wires :global(.w-dot) {
+    fill: var(--bg);
+    stroke: var(--accent);
+    stroke-width: 2;
+  }
+  .wires :global(.w-hub) {
+    fill: var(--accent);
+  }
+  @media (prefers-reduced-motion: no-preference) {
+    .wires :global(.w-line) {
+      stroke-dasharray: calc(var(--len, 2000) * 1px);
+      stroke-dashoffset: calc(var(--len, 2000) * 1px);
+      animation: wire 1.1s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+      animation-delay: calc(0.35s + var(--n) * 0.12s);
+    }
+  }
+  .wires:global(.static) :global(.w-line) {
+    animation: none;
+    stroke-dashoffset: 0;
+  }
+  @keyframes wire {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+  .col {
+    position: relative;
+    z-index: 1;
+    min-width: 0;
+  }
+  .col-co {
+    display: grid;
+    gap: calc(var(--gap) * 1.6);
+  }
+
+  /* Shaï */
+  .me {
+    position: relative;
+    display: grid;
+    justify-items: center;
+    text-align: center;
+    padding: 26px 18px 22px;
+    background: var(--tile);
+    border: 1px solid var(--line-strong);
+    border-radius: 20px;
+    box-shadow: var(--shadow);
+  }
+  .me-ring {
+    position: absolute;
+    inset: -8px;
+    border-radius: 26px;
+    border: 1px dashed color-mix(in srgb, var(--accent) 45%, transparent);
+    pointer-events: none;
+  }
+  .me-av {
+    --ink: var(--bg);
+    width: 84px;
+    height: 84px;
+    border-radius: 999px;
+    display: grid;
+    place-items: center;
+    background: #221e19;
+    box-shadow:
+      0 0 0 6px color-mix(in srgb, var(--accent) 14%, transparent),
+      inset 0 -8px 18px rgb(0 0 0 / 0.3);
+  }
+  :global([data-theme="dark"]) .me-av {
+    background: #efe8dc;
+    --ink: #12110f;
+  }
+  .me-name {
+    margin-top: 16px;
+    font-family: var(--font-serif);
+    font-size: 24px;
+    line-height: 1.1;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .me-handle {
+    margin-top: 6px;
+    color: var(--muted);
+  }
+  .me-role {
+    margin-top: 12px;
+    padding: 5px 11px;
+    border-radius: 99px;
+    background: color-mix(in srgb, var(--accent) 12%, var(--tile));
+    color: var(--accent-ink);
+    font-size: 12.5px;
+    font-weight: 600;
+  }
+
+  /* Cartes */
+  .node {
+    padding: 16px 16px 12px;
+  }
+  .n-head {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  .n-badge {
+    width: 40px;
+    height: 40px;
+    flex: none;
+    border-radius: 10px;
+    display: grid;
+    place-items: center;
+    background: var(--tile-2);
+    border: 1px solid var(--line);
+  }
+  .oss-badge {
+    color: var(--ink);
+  }
+  .n-name {
+    font-family: var(--font-serif);
+    font-weight: 400;
+    font-size: 21px;
+    line-height: 1.15;
+    letter-spacing: -0.01em;
+    color: var(--ink);
+  }
+  .n-sub {
+    margin-top: 2px;
+    font-size: 13px;
+    color: var(--ink-2);
+  }
+  .n-role {
+    margin-left: auto;
+    flex: none;
+  }
+  .n-facts {
+    margin: 12px 0 0;
+    padding: 10px 12px;
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 5px 14px;
+    border-radius: 8px;
+    background: var(--tile-2);
+    font-size: 13px;
+  }
+  .n-facts dt {
+    color: var(--muted);
+  }
+  .n-facts dd {
+    margin: 0;
+    color: var(--ink);
+  }
+  .pjs {
+    list-style: none;
+    padding: 0;
+    margin: 10px 0 0;
+    display: grid;
+  }
+  .co .pjs {
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 230px), 1fr));
+    column-gap: 14px;
+  }
+  .pj {
+    display: grid;
+    border-top: 1px solid var(--line);
+  }
+  .pj-main {
+    display: grid;
+    grid-template-columns: 34px 1fr auto;
+    align-items: center;
+    gap: 12px;
+    padding: 9px 2px;
+    color: var(--ink);
+  }
+  .pj-ic {
+    width: 34px;
+    height: 34px;
+    border-radius: 9px;
+    border: 1px solid var(--line);
+    background: #fff;
+    object-fit: cover;
+  }
+  .pj-ic.dark {
+    background: #0b0b0d;
+  }
+  .pj-ic.pixel {
+    image-rendering: pixelated;
+    object-fit: contain;
+    padding: 4px;
+  }
+  .pj-mono {
+    display: grid;
+    place-items: center;
+    background: var(--tile-2);
+    color: var(--ink-2);
+    font-family: var(--font-mono);
+    font-size: 11.5px;
+    font-weight: 600;
+  }
+  .pj-snow {
+    display: grid;
+    place-items: center;
+    background: linear-gradient(180deg, #1c2a3a, #3b5672);
+    border-color: #2b3e52;
+  }
+  .pj-snow path {
+    fill: none;
+    stroke: #eef3f8;
+    stroke-width: 1.6;
+    stroke-linecap: round;
+  }
+  .pj-txt {
+    display: grid;
+    min-width: 0;
+  }
+  .pj-name {
+    font-weight: 500;
+    font-size: 14.5px;
+  }
+  .pj-note {
+    font-size: 12.5px;
+    color: var(--ink-2);
+  }
+  .pj :global(.pj-go) {
+    color: var(--muted);
+    transition:
+      transform 0.3s var(--ease),
+      color 0.2s;
+  }
+  .pj-main:hover .pj-name {
+    color: var(--accent-ink);
+  }
+  .pj-main:hover :global(.pj-go) {
+    color: var(--accent);
+    transform: rotate(45deg);
+  }
+  .pj-site {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin: -4px 0 9px 48px;
+    width: fit-content;
+    color: var(--ink-2);
+    font-size: 11.5px;
+  }
+  .pj-site:hover {
+    color: var(--accent-ink);
+  }
+  .n-foot {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    margin-top: 6px;
+    padding-top: 10px;
+    border-top: 1px solid var(--line);
+    width: 100%;
+    color: var(--ink-2);
+  }
+  .n-foot:hover {
+    color: var(--accent-ink);
+  }
+  .note {
+    margin-top: 26px;
+    font-size: 13px;
+    color: var(--ink-2);
+  }
+
+  /* Tablette et mobile : tout s'empile, avec un tronc vertical */
+  @media (max-width: 1180px) {
+    .chart {
+      grid-template-columns: 1fr;
+      row-gap: 18px;
+      padding: 0 0 0 26px;
+      background: none;
+    }
+    .chart::before {
+      content: "";
+      position: absolute;
+      left: 8px;
+      top: 40px;
+      bottom: 40px;
+      width: 2px;
+      border-radius: 2px;
+      background: color-mix(in srgb, var(--accent) 45%, var(--line-strong));
+    }
+    .wires {
+      display: none;
+    }
+    .col-me {
+      order: -1;
+    }
+    .col-oss {
+      order: 2;
+    }
+    .me {
+      justify-items: start;
+      text-align: left;
+      grid-template-columns: auto 1fr;
+      column-gap: 16px;
+      align-items: center;
+      padding: 18px;
+    }
+    .me-av {
+      grid-row: span 3;
+      width: 64px;
+      height: 64px;
+    }
+    .me-name {
+      margin-top: 0;
+      font-size: 21px;
+    }
+    .me-handle {
+      margin-top: 2px;
+    }
+    .me-role {
+      margin-top: 8px;
+      justify-self: start;
+    }
+    .node::before,
+    .me::before {
+      content: "";
+      position: absolute;
+      left: -19px;
+      top: 34px;
+      width: 19px;
+      height: 2px;
+      background: color-mix(in srgb, var(--accent) 45%, var(--line-strong));
+    }
+    .node,
+    .me {
+      overflow: visible;
+    }
+    .node::after,
+    .me::after {
+      content: "";
+      position: absolute;
+      left: -23px;
+      top: 30px;
+      width: 6px;
+      height: 6px;
+      border-radius: 99px;
+      background: var(--bg);
+      border: 2px solid var(--accent);
+    }
+    .me-ring {
+      display: none;
+    }
+  }
+
+</style>

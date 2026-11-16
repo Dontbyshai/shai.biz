@@ -1,0 +1,52 @@
+---
+interface Props {
+  code: "bs" | "us" | "fr"
+  size?: number
+}
+const { code, size = 22 } = Astro.props
+const h = Math.round((size * 2) / 3)
+---
+
+<svg class="flag" width={size} height={h} viewBox="0 0 30 20" aria-hidden="true">
+  {
+    code === "fr" && (
+      <>
+        <rect width="10" height="20" fill="#002654" />
+        <rect x="10" width="10" height="20" fill="#fff" />
+        <rect x="20" width="10" height="20" fill="#ce1126" />
+      </>
+    )
+  }
+  {
+    code === "bs" && (
+      <>
+        <rect width="30" height="20" fill="#00778b" />
+        <rect y="6.67" width="30" height="6.67" fill="#ffc72c" />
+        <path d="M0 0L11 10L0 20Z" fill="#000" />
+      </>
+    )
+  }
+  {
+    code === "us" && (
+      <>
+        <rect width="30" height="20" fill="#fff" />
+        {[0, 2, 4, 6, 8, 10, 12].map((i) => (
+          <rect y={(i * 20) / 13} width="30" height={20 / 13} fill="#b22234" />
+        ))}
+        <rect width="13" height={(7 * 20) / 13} fill="#3c3b6e" />
+        {[0, 1, 2].map((r) =>
+          [0, 1, 2, 3].map((c) => <circle cx={1.8 + c * 3.1} cy={1.7 + r * 3.4} r="0.55" fill="#fff" />),
+        )}
+      </>
+    )
+  }
+</svg>
+
+<style>
+  .flag {
+    display: block;
+    border-radius: 3px;
+    box-shadow: 0 0 0 1px rgb(0 0 0 / 0.12);
+    flex: none;
+  }
+</style>

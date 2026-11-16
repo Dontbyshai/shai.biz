@@ -38,6 +38,9 @@ export function renderParagraphs(paragraphs: string[], locale: Locale): string {
         .split("\n")
         .map((line) => line.trim())
         .filter(Boolean)
+      if (lines.length === 1 && lines[0]?.startsWith("## ")) {
+        return `<h2>${renderInline(lines[0].slice(3), locale)}</h2>`
+      }
       if (lines.length > 0 && lines.every((line) => line.startsWith("- "))) {
         const items = lines
           .map((line) => `<li>${renderInline(line.slice(2), locale)}</li>`)

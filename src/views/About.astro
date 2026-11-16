@@ -4,6 +4,7 @@ import Logo from "@/components/Logo.astro"
 import Scene from "@/components/Scene.astro"
 import Base from "@/layouts/Base.astro"
 import { aboutParagraphs } from "@/data/about"
+import { postIcon } from "@/data/icons"
 import type { Locale } from "@/data/types"
 import { t } from "@/i18n/ui"
 import { localizedPath } from "@/lib/paths"
@@ -45,7 +46,7 @@ const socials = [
     <h1 class="display">{t(locale, "aboutTitle")}</h1>
   </header>
 
-  <div class="banner tile rise" style="--i:1" aria-hidden="true">
+  <div class="banner tile rise" style="--i:1" aria-hidden="true" data-scene-host>
     <Scene align="middle" />
   </div>
 
@@ -92,18 +93,31 @@ const socials = [
   </div>
 
   <section class="ms">
-    <h2 class="eyebrow">{t(locale, "milestones")}</h2>
+    <div class="ms-head">
+      <h2 class="ms-title">{t(locale, "milestones")}</h2>
+      <p class="ms-sub">{locale === "fr" ? "Les étapes qui comptent, dans l'ordre." : "The steps that matter, in order."}</p>
+    </div>
     <ol>
       {
-        milestones.map((p, i) => (
-          <li class="rise" style={`--i:${i + 4}`}>
-            <a href={L(`/blog/${p.slug}/`)}>
-              <span class="mono when">{p.date && monthYear(p.date)}</span>
-              <span class="knot" aria-hidden="true" />
-              <span class="what">{p.title[locale]}</span>
-            </a>
-          </li>
-        ))
+        milestones.map((p, i) => {
+          const ic = postIcon[p.slug]
+          return (
+            <li class="rise" style={`--i:${i + 4}`}>
+              <a class="tile ms-card" href={L(`/blog/${p.slug}/`)}>
+                <span class="ms-top">
+                  <span class="mono when">{p.date && monthYear(p.date)}</span>
+                  {ic ? (
+                    <img class:list={["ms-ic", { pixel: ic.pixel, dark: ic.dark }]} src={ic.src} alt="" width="30" height="30" loading="lazy" />
+                  ) : (
+                    <span class="ms-ic ms-mono" aria-hidden="true">{p.title[locale].slice(0, 1)}</span>
+                  )}
+                </span>
+                <span class="what">{p.title[locale]}</span>
+                <span class="ms-n mono" aria-hidden="true">{String(i + 1).padStart(2, "0")}</span>
+              </a>
+            </li>
+          )
+        })
       }
     </ol>
   </section>
@@ -229,53 +243,111 @@ const socials = [
     transform: translateY(-1px);
   }
   .ms {
-    margin-top: 64px;
+    margin-top: 72px;
+  }
+  .ms-head {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 16px;
+    flex-wrap: wrap;
+    padding-bottom: 14px;
+    border-bottom: 1px solid var(--line-strong);
+  }
+  .ms-title {
+    font-family: var(--font-serif);
+    font-size: clamp(26px, 2.2vw, 34px);
+    font-weight: 400;
+    letter-spacing: -0.015em;
+    color: var(--ink);
+  }
+  .ms-sub {
+    color: var(--ink-2);
+    font-size: 14.5px;
   }
   .ms ol {
     list-style: none;
     margin: 18px 0 0;
     padding: 0;
     display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(max(180px, calc(25% - 24px)), 1fr));
-    gap: 0;
+    grid-template-columns: repeat(auto-fill, minmax(max(200px, calc(25% - 12px)), 1fr));
+    gap: var(--gap);
   }
-  .ms li {
-    border-top: 1px solid var(--line);
-  }
-  .ms li a {
+  .ms-card {
     position: relative;
+    height: 100%;
     display: grid;
-    gap: 8px;
-    padding: 22px 18px 22px 0;
-  }
-  .knot {
-    position: absolute;
-    top: -5px;
-    left: 0;
-    width: 9px;
-    height: 9px;
-    border-radius: 99px;
-    background: var(--bg);
-    border: 2px solid var(--accent);
+    align-content: start;
+    gap: 14px;
+    padding: 16px 18px 18px;
     transition:
-      background 0.2s,
+      border-color 0.2s,
       transform 0.3s var(--ease);
   }
-  .ms li a:hover .knot {
-    background: var(--accent);
-    transform: scale(1.3);
+  .ms-card:hover {
+    border-color: var(--accent);
+    transform: translateY(-2px);
+  }
+  .ms-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
   }
   .when {
+    display: inline-flex;
+    align-items: center;
+    height: 26px;
+    padding: 0 10px;
+    border-radius: 99px;
+    background: color-mix(in srgb, var(--accent) 13%, var(--tile));
+    border: 1px solid color-mix(in srgb, var(--accent) 35%, transparent);
     color: var(--accent-ink);
+    font-size: 12.5px;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+  }
+  .ms-ic {
+    width: 30px;
+    height: 30px;
+    border-radius: 8px;
+    border: 1px solid var(--line);
+    background: #fff;
+    object-fit: cover;
+  }
+  .ms-ic.dark {
+    background: #0b0b0d;
+  }
+  .ms-ic.pixel {
+    image-rendering: pixelated;
+    object-fit: contain;
+    padding: 3px;
+  }
+  .ms-mono {
+    display: grid;
+    place-items: center;
+    background: var(--tile-2);
+    color: var(--ink-2);
+    font-family: var(--font-serif);
+    font-size: 16px;
   }
   .what {
     font-family: var(--font-serif);
-    font-size: 19px;
+    font-size: 20px;
     line-height: 1.25;
+    color: var(--ink);
+    padding-right: 26px;
     transition: color 0.2s;
   }
-  .ms li a:hover .what {
+  .ms-card:hover .what {
     color: var(--accent-ink);
+  }
+  .ms-n {
+    position: absolute;
+    right: 16px;
+    bottom: 16px;
+    font-size: 11.5px;
+    color: var(--muted);
   }
   @media (max-width: 960px) {
     .cols {
@@ -297,20 +369,8 @@ const socials = [
     .prose {
       font-size: 18.5px;
     }
-    .ms li {
-      border-top: 0;
-    }
     .ms ol {
       grid-template-columns: 1fr;
-      border-left: 1px solid var(--line);
-      margin-left: 4px;
-    }
-    .ms li a {
-      padding: 12px 0 12px 20px;
-    }
-    .knot {
-      top: 17px;
-      left: -5px;
     }
   }
 </style>

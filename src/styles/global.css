@@ -11,7 +11,7 @@
   --line-strong: #c9bca8;
   --ink: #221e19;
   --ink-2: #4a433a;
-  --muted: #7b7163;
+  --muted: #675d50;
   --accent: #d4522a;
   --accent-ink: #b7421d;
   --accent-soft: #f5dccf;
@@ -52,7 +52,7 @@
   --line-strong: #3d3730;
   --ink: #efe8dc;
   --ink-2: #cfc6b8;
-  --muted: #8f8576;
+  --muted: #a69b8a;
   --accent: #ff7547;
   --accent-ink: #ff8f69;
   --accent-soft: #3a2219;
@@ -350,6 +350,22 @@ a:hover > .go svg {
   background: var(--tile-2);
   border: 1px solid var(--line);
   color: var(--ink);
+}
+.prose h2 {
+  font-family: var(--font-sans);
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--accent-ink);
+  margin: 2.2em 0 0.6em;
+}
+.prose h2:first-child {
+  margin-top: 0;
+}
+.prose h2 + p,
+.prose h2 + ul {
+  margin-top: 0;
 }
 .prose ul {
   padding-left: 1.1em;

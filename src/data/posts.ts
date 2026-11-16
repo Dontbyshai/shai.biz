@@ -1,19 +1,5 @@
 import type { Post, PostImage } from "./types"
 
-const notianoteIcon: PostImage = {
-  src: "/images/notianote-icon.webp",
-  width: 512,
-  height: 512,
-  alt: {
-    fr: "Icône NotiaNote : un livre ouvert bleu nuit et un éclair violet.",
-    en: "NotiaNote icon: an open navy book and a purple lightning bolt.",
-  },
-  caption: {
-    fr: "Icône App Store de NotiaNote.",
-    en: "NotiaNote App Store icon.",
-  },
-}
-
 const leftIcon: PostImage = {
   src: "/images/lefttolive-icon.webp",
   width: 512,
@@ -135,37 +121,31 @@ export const posts: Post[] = [
   {
     slug: "kali-linux",
     date: "2024-06-19",
-    title: {
-      fr: "Un labo Kali pour apprendre",
-      en: "A Kali lab for learning",
-    },
+    title: { fr: "Mon labo Kali", en: "My Kali lab" },
     description: {
-      fr: "Notes et configs de pentest, dans un dépôt privé ouvert le 19 juin 2024.",
-      en: "Pentest notes and configs, in a private repo opened on 19 June 2024.",
+      fr: "Mon tout premier dépôt : des notes et des commandes de pentest, rangées outil par outil.",
+      en: "My very first repo: pentest notes and commands, sorted tool by tool.",
     },
     paragraphs: {
       fr: [
-        "Le 19 juin 2024, j'ouvre KALI-LINUX- sur GitHub. C'est un dépôt privé, un des premiers que j'ai gardés. La description dit « Metasploit reverse shell (Contrôle à distance) ».",
-        "Dedans, des dossiers d'outils et de notes : Ettercap, Metasploit, Wireshark, aircrack, evil portal, nmap, wifiphisher, et un dossier doc. C'est un cahier de labo autour du pentest.",
-        "Dernier push le 2 août 2025. Depuis, plus d'activité. Le dépôt reste privé, et je le considère archivé. C'est par la cybersécurité que je suis entré dans le code.",
+        "Tout a commencé par la cybersécurité. Le 19 juin 2024, j'ouvre KALI-LINUX- sur GitHub, en privé. Le premier fichier s'appelle « Comande », je le renomme tout de suite en Metasploit.",
+        "Ensuite le dépôt grossit par dossiers, un par outil : Metasploit, Ettercap, Wireshark, aircrack, nmap, evil portal, wifiphisher, plus un dossier doc. C'est mon cahier de labo : ce que je teste sur Kali, je le note là.",
+        "Les dernières retouches datent de l'été 2025 (wifiphisher fin juillet, Ettercap et Wireshark début août). 27 commits en tout. Je ne l'ai plus touché depuis, mais c'est le point de départ de tout le reste.",
       ],
       en: [
-        "On 19 June 2024 I opened KALI-LINUX- on GitHub. It is a private repo, one of the earliest I still have. The description reads “Metasploit reverse shell (Contrôle à distance)”.",
-        "Inside, folders of tools and notes: Ettercap, Metasploit, Wireshark, aircrack, evil portal, nmap, wifiphisher, and a doc folder. It is a lab notebook around pentesting.",
-        "Last push on 2 August 2025. Nothing since. The repo stays private, and I treat it as archived. Cybersecurity is how I got into writing code.",
+        "It all started with cybersecurity. On 19 June 2024 I opened KALI-LINUX- on GitHub, as a private repo. The first file was called “Comande”; I renamed it Metasploit right away.",
+        "Then the repo grew folder by folder, one per tool: Metasploit, Ettercap, Wireshark, aircrack, nmap, evil portal, wifiphisher, plus a doc folder. It's my lab notebook: whatever I try on Kali, I write it down there.",
+        "The last edits are from summer 2025 (wifiphisher at the end of July, Ettercap and Wireshark in early August). 27 commits in all. I haven't touched it since, but it's where everything else started.",
       ],
     },
   },
   {
     slug: "qcm-interactif",
     date: "2025-11-17",
-    title: {
-      fr: "QCM interactif, projet NSI",
-      en: "Interactive quiz, an NSI school project",
-    },
+    title: { fr: "QCM interactif, projet NSI", en: "Interactive quiz, a school project" },
     description: {
-      fr: "Un QCM en HTML, CSS et JavaScript, avec un fond d'étoiles. Huit commits, du 17 au 27 novembre 2025.",
-      en: "An HTML, CSS and JavaScript quiz with a starfield. Eight commits, from 17 to 27 November 2025.",
+      fr: "Mon premier projet public : un QCM en JavaScript avec un fond d'étoiles animé.",
+      en: "My first public repo: a JavaScript quiz with an animated starfield.",
     },
     links: [
       {
@@ -175,27 +155,24 @@ export const posts: Post[] = [
     ],
     paragraphs: {
       fr: [
-        "Projet d'école, pour la spécialité NSI. Le dépôt public Dontbyshai/NSI-site-QCM est créé le 17 novembre 2025, le premier commit est du même jour, le dernier du 27 novembre. Huit commits. Le projet est terminé.",
-        "Le site affiche des questions écrites dans le code, valide les réponses, calcule un score et propose de recommencer. Le fond est un canvas d'étoiles animées.",
-        "La répartition lue dans le dépôt : JavaScript 37,5 %, HTML 32,1 %, CSS 17,7 %, Python 12,7 %. La licence n'est pas précisée.",
+        "Projet de NSI, rendu en novembre 2025. Le dépôt NSI-site-QCM est créé le 17 novembre, les derniers commits (le README) datent du 27.",
+        "Le principe : les questions sont écrites dans le code, le site les affiche une par une, valide la réponse, calcule le score à la fin et propose de recommencer. Le fond est un canvas avec des étoiles qui bougent.",
+        "C'est du HTML, du CSS et du JavaScript, avec un petit peu de Python. 8 commits, projet terminé.",
       ],
       en: [
-        "A school project for the NSI computer-science class. The public repo Dontbyshai/NSI-site-QCM was created on 17 November 2025, with the first commit the same day and the last on 27 November. Eight commits. It is finished.",
-        "The site shows questions defined in the code, checks the answers, computes a score and offers to start again. The background is an animated starfield on a canvas.",
-        "Languages in the repo: JavaScript 37.5%, HTML 32.1%, CSS 17.7%, Python 12.7%. No license is specified.",
+        "A computer-science class project, handed in in November 2025. The NSI-site-QCM repo was created on 17 November; the last commits (the README) are from the 27th.",
+        "How it works: questions are written in the code, the site shows them one by one, checks the answer, computes the score at the end and lets you start again. The background is a canvas with moving stars.",
+        "It's HTML, CSS and JavaScript, with a little Python. 8 commits, finished.",
       ],
     },
   },
   {
     slug: "notianote-debuts",
     date: "2025-11-27",
-    title: {
-      fr: "NotiaNote commence",
-      en: "NotiaNote starts",
-    },
+    title: { fr: "NotiaNote commence", en: "NotiaNote begins" },
     description: {
-      fr: "Le dépôt web ouvre le 27 novembre 2025. L'idée : un espace scolaire, à côté d'ÉcoleDirecte.",
-      en: "The web repo opens on 27 November 2025. The idea: a school workspace, alongside ÉcoleDirecte.",
+      fr: "Le 27 novembre 2025, j'ouvre le dépôt de NotiaNote : mon espace scolaire, en alternative à ÉcoleDirecte.",
+      en: "On 27 November 2025 I opened the NotiaNote repo: my school workspace, an alternative to ÉcoleDirecte.",
     },
     links: [
       {
@@ -205,104 +182,94 @@ export const posts: Post[] = [
     ],
     paragraphs: {
       fr: [
-        "Le 27 novembre 2025, je crée le dépôt Shai-Company-Ltd/NotiaNote, la partie web et le proxy. Le code est privé. NotiaNote est mon premier projet public, et il tourne toujours.",
-        "L'idée, dès le départ : un espace scolaire numérique, présenté comme l'alternative stable et sécurisée à ÉcoleDirecte. Notes, emploi du temps, cahier de textes. La version 1.0.0 arrive quatre jours plus tard : [[notianote-v1|NotiaNote v1.0.0]].",
-        "Le site est [notianote.fr](https://notianote.fr). NotiaNote n'est pas affilié à ÉcoleDirecte ni à Pronote. L'éditeur est Shai's Company.",
+        "Le 27 novembre 2025, je crée le dépôt NotiaNote. L'idée : réunir notes, emploi du temps et devoirs dans une appli plus agréable que ce qu'on utilise au lycée, une alternative à ÉcoleDirecte.",
+        "La partie web est en JavaScript, avec un petit serveur Node qui sert de passerelle vers les plateformes scolaires. Quatre jours plus tard, je sors la [[notianote-v1|v1.0.0]].",
+        "C'est devenu mon projet principal : il a maintenant son site, [notianote.fr](https://notianote.fr), et une appli iOS et Android.",
       ],
       en: [
-        "On 27 November 2025 I created the Shai-Company-Ltd/NotiaNote repo, the web app and its proxy. The code is private. NotiaNote is my first public project, and it is still running.",
-        "The idea from day one: a digital school space, presented as a stable and secure alternative to ÉcoleDirecte. Grades, timetable, homework diary. Version 1.0.0 lands four days later: [[notianote-v1|NotiaNote v1.0.0]].",
-        "The site is [notianote.fr](https://notianote.fr). NotiaNote is not affiliated with ÉcoleDirecte or Pronote. The publisher is Shai's Company.",
+        "On 27 November 2025 I created the NotiaNote repo. The idea: bring grades, timetable and homework together in an app that's nicer than what we use at school, an alternative to ÉcoleDirecte.",
+        "The web side is JavaScript, with a small Node server acting as a gateway to the school platforms. Four days later I shipped [[notianote-v1|v1.0.0]].",
+        "It became my main project: it now has its own site, [notianote.fr](https://notianote.fr), and an iOS and Android app.",
       ],
     },
   },
   {
     slug: "notianote-v1",
     date: "2025-12-01",
-    title: {
-      fr: "NotiaNote v1.0.0",
-      en: "NotiaNote v1.0.0",
-    },
+    title: { fr: "NotiaNote v1 : cinq versions en quatre jours", en: "NotiaNote v1: five versions in four days" },
     description: {
-      fr: "Premier commit le 1er décembre 2025 : notes, emploi du temps, cahier de textes, assistant IA.",
-      en: "First commit on 1 December 2025: grades, timetable, homework diary, AI assistant.",
+      fr: "Du 1er au 4 décembre 2025 : la v1.0.0, puis l'emploi du temps, la vie scolaire et l'export calendrier.",
+      en: "From 1 to 4 December 2025: v1.0.0, then the timetable, school life and calendar export.",
     },
     paragraphs: {
       fr: [
-        "Le commit du 1er décembre 2025 s'intitule « Initial commit - NotiaNote v1.0.0 by dontbyshai ».",
-        "Cette v1 couvre le quotidien d'un élève : moyennes, simulateur de notes, graphiques d'évolution, emploi du temps avec détection d'absences, alertes de contrôles et gestion des trous, cahier de textes, et un assistant IA.",
-        "Le dépôt porte aussi les tags v1.1.3, v1.2.3, v1.3.0 et v1.4.0. Je n'ai pas leurs dates exactes. La refonte suivante est la [[notianote-v2|v2.0.0, le 9 janvier 2026]].",
-        "Côté technique, la partie web est en JavaScript et Node. Le proxy backend se lance avec `npm run backend:dev`.",
+        "Le 1er décembre 2025, premier commit : « Initial commit - NotiaNote v1.0.0 by dontbyshai ».",
+        "Puis ça s'enchaîne :",
+        "- 3 décembre, v1.1.3 : nettoyage et corrections.\n- 4 décembre, v1.2.3 : l'emploi du temps complet.\n- 4 décembre, v1.3.0 : la vie scolaire, et un tour sur la sécurité.\n- 4 décembre au soir, v1.4.0 : notes et devoirs améliorés, export vers le calendrier, connexion plus simple.",
+        "Cinq versions en quatre jours. La suivante est une refonte complète : la [[notianote-v2|v2]].",
       ],
       en: [
-        "The 1 December 2025 commit is titled “Initial commit - NotiaNote v1.0.0 by dontbyshai”.",
-        "This v1 covers a student's day: averages, a grade simulator, progress charts, a timetable that detects absences, test alerts and free periods, a homework diary, and an AI assistant.",
-        "The repo also has tags v1.1.3, v1.2.3, v1.3.0 and v1.4.0. I don't have their exact dates. The next rewrite is [[notianote-v2|v2.0.0, on 9 January 2026]].",
-        "The web side is JavaScript and Node. The backend proxy starts with `npm run backend:dev`.",
+        "On 1 December 2025, first commit: “Initial commit - NotiaNote v1.0.0 by dontbyshai”.",
+        "Then it moved fast:",
+        "- 3 December, v1.1.3: clean-up and fixes.\n- 4 December, v1.2.3: the full timetable.\n- 4 December, v1.3.0: school life, plus a security pass.\n- 4 December, evening, v1.4.0: better grades and homework, calendar export, simpler sign-in.",
+        "Five versions in four days. The next one is a full rewrite: [[notianote-v2|v2]].",
       ],
     },
   },
   {
     slug: "notianote-v2",
     date: "2026-01-09",
-    title: {
-      fr: "NotiaNote v2, le design Galaxy",
-      en: "NotiaNote v2, the Galaxy design",
-    },
+    title: { fr: "NotiaNote v2, le design Galaxy", en: "NotiaNote v2, the Galaxy design" },
     description: {
-      fr: "Le 9 janvier 2026 : refonte, chiffrement AES-256 local, et double authentification.",
-      en: "9 January 2026: a rewrite, local AES-256 encryption, and two-factor authentication.",
+      fr: "Le 9 janvier 2026 : nouveau design, chiffrement local AES-256 et double authentification.",
+      en: "9 January 2026: a new design, local AES-256 encryption and two-factor authentication.",
     },
     paragraphs: {
       fr: [
-        "Le 9 janvier 2026, le commit « Update README for V2 release & Final Security Fixes » marque la v2.0.0.",
-        "La refonte apporte le design appelé Galaxy, un chiffrement local AES-256, une passerelle qui ne conserve pas les données sur le serveur, et le support de l'A2F.",
-        "Un tag V2.1.0 existe ensuite. Sa date exacte ne figure pas dans mes notes. L'application mobile démarre le [[notianote-mobile|20 janvier 2026]].",
-        "NotiaNote est édité par Shai's Company et hébergé chez OuiHeberg, à Paris. L'IA et les publicités sont optionnelles, avec un consentement. Au 15 novembre 2026, le dernier commit du dépôt web porte sur les mentions légales, les CGV et la confidentialité : Shaï Company ltd., Bahamas et Nouveau-Mexique, États-Unis.",
+        "Le 9 janvier 2026, je publie la v2.0.0. Tout le design change : c'est le thème « Galaxy », sombre, que je garde encore aujourd'hui sur l'appli.",
+        "Côté sécurité : les données sont chiffrées en local en AES-256, la passerelle ne garde rien sur le serveur, et la double authentification est prise en charge.",
+        "Trois jours après, la v2.0.1 corrige les réglages qui se réinitialisaient, le chargement de l'apparence et un bug d'affichage du graphique des notes.",
+        "Fin janvier, je travaille le référencement (titres, sitemap, données structurées). Début février, j'ajoute un système de signalement de bugs et j'annonce l'[[notianote-mobile|appli mobile]] sur la page d'accueil.",
       ],
       en: [
-        "On 9 January 2026, the commit “Update README for V2 release & Final Security Fixes” marks v2.0.0.",
-        "The rewrite brings the design called Galaxy, local AES-256 encryption, a gateway that does not keep data on the server, and two-factor authentication.",
-        "A V2.1.0 tag exists after that. Its exact date is not in my notes. The mobile app starts on [[notianote-mobile|20 January 2026]].",
-        "NotiaNote is published by Shai's Company and hosted at OuiHeberg, in Paris. The AI and the ads are optional, with consent. As of 15 November 2026, the latest commit on the web repo covers the legal notice, terms of sale and privacy policy: Shaï Company ltd., the Bahamas and New Mexico, United States.",
+        "On 9 January 2026 I released v2.0.0. The whole design changed: it's the dark “Galaxy” theme, which the app still uses today.",
+        "On security: data is encrypted locally with AES-256, the gateway keeps nothing on the server, and two-factor authentication is supported.",
+        "Three days later, v2.0.1 fixed settings that kept resetting, appearance loading and a display bug in the grades chart.",
+        "At the end of January I worked on SEO (titles, sitemap, structured data). In early February I added a bug-report system and announced the [[notianote-mobile|mobile app]] on the home page.",
       ],
     },
   },
   {
     slug: "notianote-mobile",
-    date: "2026-01-20",
-    title: {
-      fr: "NotiaNote passe sur le téléphone",
-      en: "NotiaNote moves to the phone",
-    },
+    date: "2026-01-21",
+    title: { fr: "NotiaNote passe sur le téléphone", en: "NotiaNote moves to the phone" },
     description: {
-      fr: "Dépôt iOS et Android ouvert le 20 janvier 2026. React Native et Expo.",
-      en: "iOS and Android repo opened on 20 January 2026. React Native and Expo.",
+      fr: "Dans la nuit du 20 au 21 janvier 2026, je crée le dépôt de l'appli iOS et Android, en React Native.",
+      en: "On the night of 20 to 21 January 2026 I created the repo for the iOS and Android app, in React Native.",
     },
     image: notianoteApp,
     paragraphs: {
       fr: [
-        "Le 20 janvier 2026, premier commit de Shai-Company-Ltd/NotiaNote-app. Le dépôt est privé. L'application vise iOS et Android.",
-        "On y retrouve le mode sombre Galaxy, les notes (moyennes, simulation, graphiques), l'emploi du temps synchronisé, le cahier de texte avec le fait et l'à faire, les pièces jointes, la vie scolaire et la messagerie. Android a un widget de moyenne sur l'écran d'accueil. La connexion peut passer par Face ID ou Touch ID.",
-        "La stack est React Native avec Expo SDK 54, un prebuild natif, et Java 17 pour Android. Le README du dépôt indique une licence CC BY-NC-SA 4.0. La sortie App Store est le [[notianote-app-store|3 mars 2026]].",
+        "Dans la nuit du 20 au 21 janvier 2026, je crée NotiaNote-app : la version téléphone de NotiaNote, pour iOS et Android.",
+        "Elle est faite en React Native avec Expo, en TypeScript et JavaScript. Il y a aussi du Swift et du Java pour les parties natives (widgets, activité en direct).",
+        "Ce qu'on y trouve : les notes avec moyennes, simulation et graphiques, l'emploi du temps synchronisé, le cahier de texte (fait / à faire) avec les pièces jointes, la vie scolaire et la messagerie. Sur Android, un widget affiche la moyenne sur l'écran d'accueil. On peut verrouiller l'appli avec Face ID ou Touch ID.",
+        "La sortie sur l'App Store arrive le [[notianote-app-store|3 mars]]. Mi-mars, je prépare déjà le passage à Expo SDK 55.",
       ],
       en: [
-        "On 20 January 2026, the first commit lands in Shai-Company-Ltd/NotiaNote-app. The repo is private. The app targets iOS and Android.",
-        "It includes the Galaxy dark mode, grades (averages, simulation, charts), a synced timetable, a homework diary with done and to-do, attachments, school life and messaging. Android has a home-screen widget for the average. Sign-in can use Face ID or Touch ID.",
-        "The stack is React Native with Expo SDK 54, a native prebuild, and Java 17 for Android. The repo README states a CC BY-NC-SA 4.0 license. The App Store release is [[notianote-app-store|3 March 2026]].",
+        "On the night of 20 to 21 January 2026 I created NotiaNote-app: the phone version of NotiaNote, for iOS and Android.",
+        "It's built with React Native and Expo, in TypeScript and JavaScript. There's also Swift and Java for the native parts (widgets, Live Activity).",
+        "What's inside: grades with averages, simulation and charts, a synced timetable, a homework diary (done / to do) with attachments, school life and messaging. On Android, a widget shows your average on the home screen. You can lock the app with Face ID or Touch ID.",
+        "The App Store release came on [[notianote-app-store|3 March]]. By mid-March I was already preparing the move to Expo SDK 55.",
       ],
     },
   },
   {
     slug: "shai-company",
     date: "2026-02-01",
-    title: {
-      fr: "Le site de Shaï Company",
-      en: "The Shaï Company website",
-    },
+    title: { fr: "Le site de Shaï Company", en: "The Shaï Company website" },
     description: {
-      fr: "Le dépôt du site vitrine est créé le 1er février 2026. Le premier commit date du 3 août.",
-      en: "The showcase site repo is created on 1 February 2026. The first commit is on 3 August.",
+      fr: "Le site vitrine de ma société, en React 19 avec de la 3D. Public sur GitHub.",
+      en: "My company's showcase site, in React 19 with some 3D. Public on GitHub.",
     },
     image: {
       src: "/images/shaiscompany-og.png",
@@ -330,27 +297,28 @@ export const posts: Post[] = [
     ],
     paragraphs: {
       fr: [
-        "Shaï Company est l'entreprise sous laquelle je range mes produits. Le dépôt public Shai-Company-Ltd/Shai-company-website est créé le 1er février 2026. Le premier commit, « Initial clean commit », est du 3 août 2026. Sept commits en tout, le dernier le 13 novembre 2026.",
-        "Le site [shaiscompany.com](https://shaiscompany.com) présente les divisions : Applications (NotiaNote, Left To Live), IA (NotiaNote IA), Web3 (un wallet annoncé) et Investissement & Trading, avec du copy trading.",
-        "La stack du site : React 19, TypeScript, Vite, Framer Motion, ShaderGradient, React Three Fiber. Les mentions légales récentes situent la société aux Bahamas et au Nouveau-Mexique, aux États-Unis.",
+        "Shaï Company, c'est le nom sous lequel je sors mes apps. Le dépôt du site vitrine, Shai-company-website, est créé le 1er février 2026, et le code propre arrive dans la nuit du 2 au 3 août.",
+        "Le site est en React 19 et TypeScript avec Vite. Les animations passent par Framer Motion, le fond dégradé par ShaderGradient, et la 3D par React Three Fiber.",
+        "Les mises à jour :",
+        "- 10 août : pages IA, Web3 et Investissement.\n- 30 août : v1.1, le site devient vraiment lisible sur mobile.\n- 9 octobre : pages légales de Fuel Tracker.\n- 13 novembre : politique de confidentialité complète de Fuel Tracker.",
+        "Le site est en ligne sur [shaiscompany.com](https://shaiscompany.com). Pour savoir quelle société porte quel projet, j'ai fait la page [Plan](/plan/).",
       ],
       en: [
-        "Shaï Company is the business I keep my products under. The public repo Shai-Company-Ltd/Shai-company-website was created on 1 February 2026. The first commit, “Initial clean commit”, is from 3 August 2026. Seven commits in total, the last on 13 November 2026.",
-        "The site [shaiscompany.com](https://shaiscompany.com) presents the divisions: Applications (NotiaNote, Left To Live), AI (NotiaNote IA), Web3 (a wallet announced) and Investment & Trading, including copy trading.",
-        "The site stack: React 19, TypeScript, Vite, Framer Motion, ShaderGradient, React Three Fiber. Recent legal notices place the company in the Bahamas and in New Mexico, United States.",
+        "Shaï Company is the name I ship my apps under. The showcase site repo, Shai-company-website, was created on 1 February 2026, and the clean code landed on the night of 2 to 3 August.",
+        "The site is React 19 and TypeScript with Vite. Animations use Framer Motion, the gradient background uses ShaderGradient, and the 3D uses React Three Fiber.",
+        "Updates:",
+        "- 10 August: AI, Web3 and Investment pages.\n- 30 August: v1.1, the site becomes properly readable on mobile.\n- 9 October: Fuel Tracker legal pages.\n- 13 November: Fuel Tracker's full privacy policy.",
+        "The site is live at [shaiscompany.com](https://shaiscompany.com). To see which company runs which project, I made the [Map](/plan/) page.",
       ],
     },
   },
   {
     slug: "notianote-app-store",
     date: "2026-03-03",
-    title: {
-      fr: "NotiaNote arrive sur l'App Store",
-      en: "NotiaNote lands on the App Store",
-    },
+    title: { fr: "NotiaNote sort sur l'App Store", en: "NotiaNote is out on the App Store" },
     description: {
-      fr: "Sortie iOS le 3 mars 2026. L'application Android existe aussi, sous com.dontbyshai.notianote.",
-      en: "iOS release on 3 March 2026. The Android app also exists, as com.dontbyshai.notianote.",
+      fr: "Le 3 mars 2026, NotiaNote est sur l'App Store, dans la catégorie Éducation. Gratuite.",
+      en: "On 3 March 2026 NotiaNote went live on the App Store, in the Education category. Free.",
     },
     links: [
       {
@@ -369,27 +337,24 @@ export const posts: Post[] = [
     image: notianoteNotes,
     paragraphs: {
       fr: [
-        "Le 3 mars 2026, NotiaNote est sur l'App Store français. L'identifiant est 6758548199. L'éditeur indiqué sur la fiche est « laure dugat ».",
-        "Le paquet Android est `com.dontbyshai.notianote`. Je n'ai pas de date de mise en ligne Play Store à citer. La version 2.7.2 de la fiche App Store est datée du [[notianote-2-7-2|7 octobre 2026]].",
-        "L'application mobile elle-même a démarré le [[notianote-mobile|20 janvier]]. Le dépôt reste privé.",
+        "Le 3 mars 2026, NotiaNote sort sur l'App Store français. Elle est gratuite, rangée dans Éducation, et tourne à partir d'iOS 15.1. Elle existe aussi sur Android, sur le Play Store.",
+        "Le principe ne change pas : on connecte son compte scolaire, et on retrouve au même endroit les notes, l'emploi du temps et les devoirs. L'écran d'accueil résume la journée : moyenne, devoirs, cours et messages.",
+        "Depuis, l'appli continue d'avancer : la [[notianote-uca|connexion à l'UCA]] en septembre, puis la [[notianote-2-7-2|2.7.2]] en octobre. Mi-novembre 2026, elle a une note de 4,5 sur 5 sur l'App Store, avec 16 avis.",
       ],
       en: [
-        "On 3 March 2026, NotiaNote is on the French App Store. The id is 6758548199. The publisher shown on the listing is “laure dugat”.",
-        "The Android package is `com.dontbyshai.notianote`. I don't have a Play Store release date to cite. Version 2.7.2 on the App Store listing is dated [[notianote-2-7-2|7 October 2026]].",
-        "The mobile app itself started on [[notianote-mobile|20 January]]. The repo stays private.",
+        "On 3 March 2026 NotiaNote went live on the French App Store. It's free, listed under Education, and runs on iOS 15.1 and later. It's also on Android, on the Play Store.",
+        "The idea stays the same: you connect your school account and find your grades, timetable and homework in one place. The home screen sums up the day: average, homework, classes and messages.",
+        "Since then the app has kept moving: the [[notianote-uca|UCA sign-in]] in September, then [[notianote-2-7-2|2.7.2]] in October. In mid-November 2026 it's rated 4.5 out of 5 on the App Store, from 16 ratings.",
       ],
     },
   },
   {
     slug: "notianote-connexion",
     date: "2026-05-21",
-    title: {
-      fr: "NotiaNote Connexion, en licence MIT",
-      en: "NotiaNote Connexion, under the MIT license",
-    },
+    title: { fr: "NotiaNote Connexion, en open source", en: "NotiaNote Connexion, open source" },
     description: {
-      fr: "Le connecteur universel, seul morceau de NotiaNote resté open source. Dépôt ouvert le 21 mai 2026.",
-      en: "The universal connector, the only part of NotiaNote still open source. Repo opened on 21 May 2026.",
+      fr: "Le module qui connecte NotiaNote aux plateformes scolaires, publié en MIT le 21 mai 2026.",
+      en: "The module that connects NotiaNote to school platforms, published under MIT on 21 May 2026.",
     },
     links: [
       {
@@ -399,80 +364,69 @@ export const posts: Post[] = [
     ],
     paragraphs: {
       fr: [
-        "Le 21 mai 2026, j'ouvre le dépôt public Shai-Company-Ltd/Notianote-Connexion. Six commits, le dernier le 23 septembre 2026. Licence MIT. C'est un module JavaScript, `NotiaNote-app-publique.js`, sans interface.",
-        "Il gère l'authentification vers des plateformes scolaires, universitaires et de restauration.",
-        "La v1.0.0, archivée, couvrait ÉcoleDirecte, Pronote, Smartschool, WebUntis, PowerSchool et Infinite Campus.",
-        "La v2.0.0, actuelle, ajoute l'enseignement supérieur et le CAS (UCA, Moodle, AppScho, Multi-ENT), la restauration (TurboSelf, Izly, Alise & ARD), et met à jour Skolengo et Pronote. Edsby et Skyward sont aussi dans le périmètre secondaire et international.",
-        "Le [[notianote-uca|travail sur l'UCA]], le 23 septembre, alimente ce connecteur. Depuis les [[notianote-code-ferme|CGU du 1er juin 2026]], c'est le seul composant de NotiaNote dont le code reste public.",
+        "Le 21 mai 2026, je sors de l'appli la partie qui gère les connexions et je la publie à part : Notianote-Connexion, en licence MIT. C'est un module JavaScript, sans interface, que n'importe qui peut réutiliser.",
+        "La v1.0.0 couvrait ÉcoleDirecte, Pronote, Smartschool, WebUntis, PowerSchool et Infinite Campus.",
+        "Le 23 septembre, je le synchronise avec la dernière version de l'appli et je sors la v2.0.0. Elle ajoute les universités et le CAS (UCA, Moodle, AppScho, Multi-ENT), les cantines (TurboSelf, Izly, Alise) et met à jour Skolengo et Pronote.",
+        "C'est la seule partie de NotiaNote dont le code est public : le reste est [[notianote-code-ferme|fermé depuis juin]].",
       ],
       en: [
-        "On 21 May 2026 I opened the public repo Shai-Company-Ltd/Notianote-Connexion. Six commits, the last on 23 September 2026. MIT license. It is a JavaScript module, `NotiaNote-app-publique.js`, with no UI.",
-        "It handles sign-in to school, university and cafeteria platforms.",
-        "v1.0.0, now archived, covered ÉcoleDirecte, Pronote, Smartschool, WebUntis, PowerSchool and Infinite Campus.",
-        "v2.0.0, the current one, adds higher education and CAS (UCA, Moodle, AppScho, Multi-ENT), school catering (TurboSelf, Izly, Alise & ARD), and updates Skolengo and Pronote. Edsby and Skyward are in the secondary and international set too.",
-        "The [[notianote-uca|UCA work]], on 23 September, feeds this connector. Since the [[notianote-code-ferme|terms of 1 June 2026]], it is the only NotiaNote component whose code stays public.",
+        "On 21 May 2026 I pulled the part of the app that handles sign-in out and published it on its own: Notianote-Connexion, under the MIT license. It's a JavaScript module, with no UI, that anyone can reuse.",
+        "v1.0.0 covered ÉcoleDirecte, Pronote, Smartschool, WebUntis, PowerSchool and Infinite Campus.",
+        "On 23 September I synced it with the latest app and released v2.0.0. It adds universities and CAS (UCA, Moodle, AppScho, Multi-ENT), school canteens (TurboSelf, Izly, Alise) and updates Skolengo and Pronote.",
+        "It's the only part of NotiaNote whose code is public: the rest has been [[notianote-code-ferme|closed since June]].",
       ],
     },
   },
   {
     slug: "notianote-code-ferme",
     date: "2026-06-01",
-    title: {
-      fr: "Le code de NotiaNote devient propriétaire",
-      en: "NotiaNote's code becomes proprietary",
-    },
+    title: { fr: "Le code de NotiaNote devient privé", en: "NotiaNote's code goes private" },
     description: {
-      fr: "Depuis les CGU du 1er juin 2026, l'application est privée. Le connecteur reste en MIT.",
-      en: "Since the terms of 1 June 2026, the app is private. The connector stays MIT.",
+      fr: "Avec les CGU du 1er juin 2026, le code de NotiaNote n'est plus open source. Seul le connecteur reste public.",
+      en: "With the terms of 1 June 2026, NotiaNote's code is no longer open source. Only the connector stays public.",
     },
     paragraphs: {
       fr: [
-        "Le 1er juin 2026, les conditions de notianote.fr ferment le code de NotiaNote. L'application web et l'application mobile sont des dépôts privés. [[notianote-connexion|NotiaNote Connexion]] reste publié, en licence MIT.",
-        "Je continue de développer le produit. Le site [notianote.fr](https://notianote.fr) et les stores restent en ligne. Le code complet n'est plus un dépôt public.",
+        "Depuis les CGU du 1er juin 2026 sur notianote.fr, le code de NotiaNote est propriétaire. L'appli web et l'appli mobile sont dans des dépôts privés.",
+        "Une partie reste ouverte : [[notianote-connexion|NotiaNote Connexion]], le module de connexion aux plateformes scolaires, toujours en licence MIT.",
       ],
       en: [
-        "On 1 June 2026, the terms on notianote.fr close the NotiaNote source. The web app and the mobile app are private repos. [[notianote-connexion|NotiaNote Connexion]] stays published, under the MIT license.",
-        "I keep building the product. The site [notianote.fr](https://notianote.fr) and the stores stay up. The full source is no longer a public repo.",
+        "Since the terms of 1 June 2026 on notianote.fr, NotiaNote's code is proprietary. The web app and the mobile app live in private repos.",
+        "One part stays open: [[notianote-connexion|NotiaNote Connexion]], the module that signs in to school platforms, still under the MIT license.",
       ],
     },
   },
   {
     slug: "left-to-live",
-    date: "2026-08-02",
-    title: {
-      fr: "Left To Live, premiers commits",
-      en: "Left To Live, first commits",
-    },
+    date: "2026-08-03",
+    title: { fr: "Left To Live : le compte à rebours", en: "Left To Live: the countdown" },
     description: {
-      fr: "Une application iOS et Apple Watch qui compte les battements restants. Dépôt ouvert le 2 août 2026.",
-      en: "An iOS and Apple Watch app that counts the heartbeats left. Repo opened on 2 August 2026.",
+      fr: "Une appli iPhone et Apple Watch en Swift qui transforme ton espérance de vie en compte à rebours.",
+      en: "An iPhone and Apple Watch app in Swift that turns your life expectancy into a countdown.",
     },
     image: leftIcon,
     paragraphs: {
       fr: [
-        "Le 2 août 2026, le dépôt privé Shai-Company-Ltd/left-to-life reçoit deux commits : « Add legal documents », puis « Initial commit of the Left To Live iOS App ». Le dépôt a été créé le même jour.",
-        "Left To Live est un memento mori. À partir de HealthKit, l'application estime le nombre de battements qu'il reste, sur la base de l'espérance de vie, et lance un compte à rebours, battement après battement. Il y a un graphique de fréquence cardiaque en direct, des statistiques, une lecture en années, jours et heures, des complications pour l'Apple Watch, un mode hors ligne, et les langues français et anglais.",
-        "Elle ne lit que la fréquence cardiaque. Rien n'est envoyé sur un serveur.",
-        "Stack : Swift, Xcode 26, iOS 18 et plus, watchOS 26, HealthKit, App Group. Le README indique une licence MIT. Le dépôt, lui, est privé. La sortie App Store est le [[left-to-live-app-store|20 août 2026]].",
+        "Dans la nuit du 2 au 3 août 2026, je pousse Left To Live sur GitHub, dans le dépôt privé left-to-life : d'abord les documents légaux, puis l'appli, puis le README.",
+        "C'est un memento mori. À partir des données de santé (HealthKit), l'appli estime ton espérance de vie et l'affiche en compte à rebours, en années, en jours et en battements de cœur restants. Le compte tourne aussi sur l'Apple Watch.",
+        "Elle montre aussi l'effet de tes habitudes (sommeil, nutrition, sédentarité) et propose un testament numérique : un coffre protégé par Face ID pour laisser des messages à tes proches.",
+        "Tout est en Swift, avec HealthKit et un App Group pour partager les données avec la montre. Elle sort sur l'App Store le [[left-to-live-app-store|20 août]].",
       ],
       en: [
-        "On 2 August 2026, the private repo Shai-Company-Ltd/left-to-life gets two commits: “Add legal documents”, then “Initial commit of the Left To Live iOS App”. The repo was created the same day.",
-        "Left To Live is a memento mori. From HealthKit, the app estimates how many heartbeats are left, based on life expectancy, and starts a countdown, beat after beat. There is a live heart-rate chart, statistics, a reading in years, days and hours, Apple Watch complications, an offline mode, and French and English.",
-        "It only reads heart rate. Nothing is sent to a server.",
-        "Stack: Swift, Xcode 26, iOS 18 and later, watchOS 26, HealthKit, App Group. The README states an MIT license. The repo itself is private. The App Store release is [[left-to-live-app-store|20 August 2026]].",
+        "On the night of 2 to 3 August 2026 I pushed Left To Live to GitHub, in the private left-to-life repo: first the legal documents, then the app, then the README.",
+        "It's a memento mori. From your health data (HealthKit), the app estimates your life expectancy and shows it as a countdown, in years, days and heartbeats left. The countdown also runs on Apple Watch.",
+        "It also shows the effect of your habits (sleep, nutrition, sitting) and offers a digital will: a vault locked with Face ID to leave messages for the people close to you.",
+        "It's all Swift, with HealthKit and an App Group to share data with the watch. It hit the App Store on [[left-to-live-app-store|20 August]].",
       ],
     },
   },
   {
     slug: "love-map",
     date: "2026-08-10",
-    title: {
-      fr: "Love Map",
-      en: "Love Map",
-    },
+    title: { fr: "Love Map", en: "Love Map" },
     description: {
-      fr: "Une application mobile de cartographie. Dépôt privé ouvert le 10 août 2026. Pas de date de sortie publique.",
-      en: "A mobile mapping app. Private repo opened on 10 August 2026. No public release date.",
+      fr: "Une appli de carte pour iOS et Android, commencée le 10 août 2026. Pas encore sortie.",
+      en: "A map app for iOS and Android, started on 10 August 2026. Not out yet.",
     },
     links: [
       {
@@ -487,24 +441,22 @@ export const posts: Post[] = [
     image: loveMapIcon,
     paragraphs: {
       fr: [
-        "Le 10 août 2026, premier commit du dépôt privé Shai-Company-Ltd/love-map. Le langage principal est Swift, et un build Android est présent.",
-        "Love Map est une application de cartographie. Le dépôt contient des icônes de store, une image de présentation, des conditions d'utilisation, une politique de confidentialité, et des builds iOS et Android. Le site de Shaï Company a des pages dédiées pour la confidentialité et les CGU.",
-        "Je n'ai pas de date de sortie. Aucune fiche App Store ou Play Store à ce nom. Love Map n'est pas publié.",
+        "Le 10 août 2026, je pousse le premier commit de Love Map, dans un dépôt privé. C'est une appli de carte, avec une partie iOS en Swift et une partie Android en Kotlin.",
+        "Le 9 novembre, Love Map a ses pages de confidentialité et de CGU sur le site de Shaï Company. L'appli n'est pas encore sur les stores.",
       ],
       en: [
-        "On 10 August 2026, the first commit of the private repo Shai-Company-Ltd/love-map. The main language is Swift, and an Android build is there too.",
-        "Love Map is a mapping app. The repo holds store icons, a presentation image, terms of use, a privacy policy, and iOS and Android builds. The Shaï Company site has dedicated privacy and terms pages.",
-        "I have no release date. No App Store or Play Store listing under this name. Love Map is not published.",
+        "On 10 August 2026 I pushed the first commit of Love Map, in a private repo. It's a map app, with an iOS side in Swift and an Android side in Kotlin.",
+        "On 9 November Love Map got its privacy and terms pages on the Shaï Company site. The app isn't on the stores yet.",
       ],
     },
   },
   {
     slug: "solarscan",
     date: "2026-08-13",
-    title: { fr: "SolarScan", en: "SolarScan" },
+    title: { fr: "SolarScan : des devis à partir d'images satellite", en: "SolarScan: quotes from satellite images" },
     description: {
-      fr: "Logiciel de bureau pour chiffrer le nettoyage de panneaux solaires. Premier commit le 13 août 2026.",
-      en: "A desktop app for quoting solar-panel cleaning. First commit on 13 August 2026.",
+      fr: "Un logiciel pour les nettoyeurs de panneaux solaires : il repère les panneaux sur les toits et sort un devis PDF.",
+      en: "Software for solar-panel cleaners: it spots panels on roofs and produces a PDF quote.",
     },
     image: {
       src: "/images/solarscan-logo.webp",
@@ -525,24 +477,28 @@ export const posts: Post[] = [
     ],
     paragraphs: {
       fr: [
-        "Le dépôt public Dontbyshai/SolarScan est créé le 12 août 2026. Le premier commit est du 13 août. Huit commits, le dernier le 7 septembre 2026. Projet en cours. La licence n'est pas précisée.",
-        "SolarScan s'adresse aux professionnels du nettoyage de panneaux photovoltaïques, sur Windows, macOS et Linux. Il utilise l'imagerie satellite de l'IGN et une IA pour repérer les panneaux sur les toits, calculer la surface en mètres carrés et produire un devis PDF : tarifs par paliers, géocodage inverse, aperçu satellite annoté, filigrane. L'export CSV vise Excel en français. La couverture est la France, parce que la source est l'IGN.",
-        "La partie bureau est en Electron, HTML, CSS et JavaScript, avec Leaflet. Le backend est un FastAPI en Python, le géocodage passe par Nominatim (OpenStreetMap), et le PDF est produit par Chromium via `printToPDF`.",
+        "SolarScan, c'est un logiciel pour les pros du nettoyage de panneaux solaires. Tu tapes une adresse, il charge l'image satellite de l'IGN, repère les panneaux sur le toit, calcule leur surface en m² et génère un devis PDF avec l'aperçu annoté. Il y a aussi un export CSV pour Excel. Comme les images viennent de l'IGN, ça ne marche qu'en France.",
+        "C'est une app Electron (HTML, CSS, JavaScript et Leaflet pour la carte) avec un backend FastAPI en Python. Les adresses passent par Nominatim (OpenStreetMap), et le PDF est rendu par Chromium.",
+        "## Les versions",
+        "- 13 août 2026, v1.0.0 : la première version, avec l'icône et un workflow GitHub qui fabrique l'installeur Mac.\n- 6 septembre : proxy pour Nominatim (moins de blocages), sauvegarde de la session entre deux ouvertures, PDF découpé en modules.\n- 15 novembre, v1.5 : dossier utilisateur, moteur local plus solide, devis revus, meilleure gestion des erreurs réseau, et des installeurs Mac et Windows construits automatiquement.",
+        "Le code est public, en licence MIT.",
       ],
       en: [
-        "The public repo Dontbyshai/SolarScan was created on 12 August 2026. The first commit is from 13 August. Eight commits, the last on 7 September 2026. Still in progress. No license is specified.",
-        "SolarScan is for people who clean photovoltaic panels, on Windows, macOS and Linux. It uses IGN satellite imagery and an AI model to find panels on roofs, compute the area in square metres and produce a PDF quote: tiered pricing, reverse geocoding, an annotated satellite preview, a watermark. The CSV export targets French Excel. Coverage is France, because the source is IGN.",
-        "The desktop side is Electron, HTML, CSS and JavaScript, with Leaflet. The backend is FastAPI in Python, geocoding goes through Nominatim (OpenStreetMap), and the PDF is produced by Chromium via `printToPDF`.",
+        "SolarScan is software for people who clean solar panels. You type an address, it loads the IGN satellite image, spots the panels on the roof, computes their area in m² and generates a PDF quote with an annotated preview. There's also a CSV export for Excel. Since the images come from IGN, it only works in France.",
+        "It's an Electron app (HTML, CSS, JavaScript and Leaflet for the map) with a FastAPI backend in Python. Addresses go through Nominatim (OpenStreetMap), and the PDF is rendered by Chromium.",
+        "## Versions",
+        "- 13 August 2026, v1.0.0: the first version, with the icon and a GitHub workflow that builds the Mac installer.\n- 6 September: a proxy for Nominatim (fewer blocks), the session saved between launches, PDF generation split into modules.\n- 15 November, v1.5: a user folder, a sturdier local engine, reworked quotes, better network-error handling, and Mac and Windows installers built automatically.",
+        "The code is public, under the MIT license.",
       ],
     },
   },
   {
     slug: "shaicraft-economy",
     date: "2026-08-13",
-    title: { fr: "ShaiCraft Economy", en: "ShaiCraft Economy" },
+    title: { fr: "ShaiCraft Economy, mon mod Minecraft", en: "ShaiCraft Economy, my Minecraft mod" },
     description: {
-      fr: "Mod Minecraft Fabric 1.21.1 : économie de survie et trading branché sur Binance. Commit unique le 13 août 2026.",
-      en: "A Fabric 1.21.1 Minecraft mod: survival economy and trading wired to Binance. Single commit on 13 August 2026.",
+      fr: "Un mod Fabric pour Minecraft 1.21.1 : économie de survie et trading crypto en jeu, avec les prix Binance.",
+      en: "A Fabric mod for Minecraft 1.21.1: a survival economy and in-game crypto trading, with Binance prices.",
     },
     links: [
       {
@@ -553,29 +509,26 @@ export const posts: Post[] = [
     image: shaicraftIcon,
     paragraphs: {
       fr: [
-        "Le dépôt public Dontbyshai/shaicraft-economy est créé le 12 août 2026. Un seul commit, le 13 août. Projet en cours. Licence non précisée.",
-        "C'est un mod pour Minecraft 1.21.1, sous Fabric. Deux parties : une économie de survie, et un simulateur de trading crypto relié à l'API Binance. Les prix arrivent toutes les 5 secondes. On peut prendre une position long ou short, avec levier, liquidations, suivi des gains et des pertes, et des portefeuilles. Cobblemon ajoute un hôtel des ventes pour les Pokémon.",
-        "Les commandes sont `/balance`, `/pay`, `/shop`, `/trading`, `/hdv` et `/trade`.",
-        "Stack : Java 21, Fabric Loader 0.16 ou plus, Fabric API, Fabric Language Kotlin, Cobblemon, Gradle, journaux SLF4J.",
+        "ShaiCraft Economy, c'est mon mod pour Minecraft 1.21.1, sous Fabric. Il ajoute une vraie économie en survie (`/balance`, `/pay`, `/shop`) et un simulateur de trading crypto branché sur les prix réels de Binance : positions long ou short, levier, liquidations, suivi des gains. Avec Cobblemon, il y a aussi un hôtel des ventes pour les Pokémon (`/hdv`).",
+        "## Les versions",
+        "- 13 août 2026, v1.0.0 : la première version.\n- 15 novembre, v1.1.0 : les prix crypto sont lus côté serveur (plus moyen d'acheter du Bitcoin à 1 € avec un client modifié), la sauvegarde des soldes est fiabilisée, les commandes admin demandent la permission opérateur, et le mod se compile partout avec une CI GitHub. Trois nouveautés : `/historique`, une taxe réglable sur `/pay` (2 % par défaut) et `/baltop`.",
+        "C'est du Java 21, avec Gradle. Le code est public, en licence MIT.",
       ],
       en: [
-        "The public repo Dontbyshai/shaicraft-economy was created on 12 August 2026. A single commit, on 13 August. Still in progress. No license is specified.",
-        "It is a mod for Minecraft 1.21.1, on Fabric. Two parts: a survival economy, and a crypto trading simulator wired to the Binance API. Prices arrive every 5 seconds. You can open a long or short position, with leverage, liquidations, profit and loss tracking, and wallets. Cobblemon adds a Pokémon auction house.",
-        "The commands are `/balance`, `/pay`, `/shop`, `/trading`, `/hdv` and `/trade`.",
-        "Stack: Java 21, Fabric Loader 0.16 or newer, Fabric API, Fabric Language Kotlin, Cobblemon, Gradle, SLF4J logs.",
+        "ShaiCraft Economy is my mod for Minecraft 1.21.1, on Fabric. It adds a real survival economy (`/balance`, `/pay`, `/shop`) and a crypto trading simulator wired to live Binance prices: long or short positions, leverage, liquidations, profit tracking. With Cobblemon there's also a Pokémon auction house (`/hdv`).",
+        "## Versions",
+        "- 13 August 2026, v1.0.0: the first version.\n- 15 November, v1.1.0: crypto prices are read server-side (no more buying Bitcoin for €1 with a modded client), balance saving is more reliable, admin commands need operator permission, and the mod builds anywhere with GitHub CI. Three new things: `/historique`, an adjustable tax on `/pay` (2% by default) and `/baltop`.",
+        "It's Java 21, with Gradle. The code is public, under the MIT license.",
       ],
     },
   },
   {
     slug: "animation-manim",
     date: "2026-08-18",
-    title: {
-      fr: "Animations mathématiques avec Manim",
-      en: "Math animations with Manim",
-    },
+    title: { fr: "Des animations maths avec Manim", en: "Math animations with Manim" },
     description: {
-      fr: "Deux commits Python, du 18 au 20 août 2026. Des maths en format vertical.",
-      en: "Two Python commits, from 18 to 20 August 2026. Maths in a vertical format.",
+      fr: "Des vidéos verticales de maths générées en Python, dont une pizza en 3D.",
+      en: "Vertical math videos generated in Python, including a 3D pizza.",
     },
     links: [
       {
@@ -585,22 +538,22 @@ export const posts: Post[] = [
     ],
     paragraphs: {
       fr: [
-        "Le dépôt public Dontbyshai/Animation est créé le 17 août 2026. Premier commit le 18, dernier le 20. Deux commits. Petit projet, terminé.",
-        "Ce sont des animations mathématiques au format vertical, générées en Python avec Manim.",
+        "Petit projet de fin d'été : des animations mathématiques au format vertical, codées en Python avec la librairie Manim.",
+        "Le dépôt Animation est créé dans la nuit du 17 au 18 août 2026. Le 20 août, j'ajoute une animation de pizza en 3D pensée pour TikTok. Deux commits, c'est tout : c'était surtout pour tester Manim.",
       ],
       en: [
-        "The public repo Dontbyshai/Animation was created on 17 August 2026. First commit on the 18th, last on the 20th. Two commits. A small project, finished.",
-        "Vertical math animations, generated in Python with Manim.",
+        "A small end-of-summer project: vertical math animations, coded in Python with the Manim library.",
+        "The Animation repo was created on the night of 17 to 18 August 2026. On 20 August I added a 3D pizza animation made for TikTok. Two commits, that's it: it was mostly to try Manim.",
       ],
     },
   },
   {
     slug: "shai-biz",
     date: "2026-08-18",
-    title: { fr: "shai.biz", en: "shai.biz" },
+    title: { fr: "shai.biz, ce site", en: "shai.biz, this site" },
     description: {
-      fr: "Le dépôt du site personnel. Créé le 17 août 2026, commit du 18 août.",
-      en: "The personal site repo. Created on 17 August 2026, commit on 18 August.",
+      fr: "Mon site perso et mon blog, en Astro. Lancé en août 2026, réécrit de zéro en novembre.",
+      en: "My personal site and blog, in Astro. Started in August 2026, rewritten from scratch in November.",
     },
     links: [
       {
@@ -610,25 +563,22 @@ export const posts: Post[] = [
     ],
     paragraphs: {
       fr: [
-        "Le dépôt public Dontbyshai/shai.biz est créé le 17 août 2026. Le commit du 18 août pose la première version : un portfolio et un journal, avec l'accueil, le blog, les projets et la page à propos.",
-        "Cette version du site est une réécriture. Le code et le design de départ ont été remplacés.",
+        "Le dépôt shai.biz est créé le 17 août 2026, et la première version arrive le lendemain : accueil, blog, projets et page à propos.",
+        "En novembre 2026, je le réécris entièrement. C'est toujours de l'Astro en TypeScript, mais tout le reste est neuf : l'accueil en tuiles, la carte de la Chaîne des Puys, le calendrier de contributions GitHub récupéré au moment du build, le thème clair et sombre, la version anglaise, et la page [Plan](/plan/).",
       ],
       en: [
-        "The public repo Dontbyshai/shai.biz was created on 17 August 2026. The 18 August commit puts down the first version: a portfolio and a journal, with a home page, a blog, projects and an about page.",
-        "This version of the site is a rewrite. The original code and design have been replaced.",
+        "The shai.biz repo was created on 17 August 2026, and the first version landed the next day: home, blog, projects and an about page.",
+        "In November 2026 I rewrote it completely. It's still Astro in TypeScript, but everything else is new: the tiled home page, the Chaîne des Puys map, the GitHub contributions calendar fetched at build time, light and dark themes, the English version, and the [Map](/plan/) page.",
       ],
     },
   },
   {
     slug: "profil-github",
     date: "2026-08-18",
-    title: {
-      fr: "Le README du profil GitHub",
-      en: "The GitHub profile README",
-    },
+    title: { fr: "Mon README GitHub", en: "My GitHub README" },
     description: {
-      fr: "Dontbyshai/dontbyshai, créé le 18 août 2026.",
-      en: "Dontbyshai/dontbyshai, created on 18 August 2026.",
+      fr: "La page qui me présente sur github.com/Dontbyshai, créée le 18 août 2026.",
+      en: "The page that introduces me on github.com/Dontbyshai, created on 18 August 2026.",
     },
     links: [
       {
@@ -638,27 +588,22 @@ export const posts: Post[] = [
     ],
     paragraphs: {
       fr: [
-        "Le 18 août 2026, je crée le dépôt de profil Dontbyshai/dontbyshai. Huit commits, le dernier le 24 octobre 2026.",
-        "Le texte me présente comme développeur full-stack, intéressé par le hacking éthique et la cybersécurité. Les technos affichées : JavaScript, TypeScript, React, Vue, Swift, Kotlin, Linux, Windows, HTML, CSS, Git, GitHub, Node.js, PHP, Astro, Kali, C++.",
-        "Les contacts du README : [dontbyshai@gmail.com](mailto:dontbyshai@gmail.com), [X](https://twitter.com/Dontbyshai), [LinkedIn](https://www.linkedin.com/in/shai-chomette-dugat-276a542a0/) et [Instagram](https://www.instagram.com/dontbyshai/).",
+        "Le 18 août 2026, je crée le dépôt Dontbyshai/dontbyshai : c'est le README qui s'affiche en haut de mon profil GitHub. Je le règle dans la nuit, puis je le retouche fin octobre. 8 commits.",
+        "Il me présente comme développeur full-stack, intéressé par le hacking éthique et la cybersécurité, avec les technos que j'utilise : JavaScript, TypeScript, React, Vue, Swift, Kotlin, Node.js, PHP, Astro, C++, Linux et Kali.",
       ],
       en: [
-        "On 18 August 2026 I created the profile repo Dontbyshai/dontbyshai. Eight commits, the last on 24 October 2026.",
-        "The text introduces me as a full-stack developer, interested in ethical hacking and cybersecurity. The listed tools: JavaScript, TypeScript, React, Vue, Swift, Kotlin, Linux, Windows, HTML, CSS, Git, GitHub, Node.js, PHP, Astro, Kali, C++.",
-        "Contacts on the README: [dontbyshai@gmail.com](mailto:dontbyshai@gmail.com), [X](https://twitter.com/Dontbyshai), [LinkedIn](https://www.linkedin.com/in/shai-chomette-dugat-276a542a0/) and [Instagram](https://www.instagram.com/dontbyshai/).",
+        "On 18 August 2026 I created the Dontbyshai/dontbyshai repo: it's the README shown at the top of my GitHub profile. I set it up that same night, then tweaked it at the end of October. 8 commits.",
+        "It introduces me as a full-stack developer into ethical hacking and cybersecurity, with the tools I use: JavaScript, TypeScript, React, Vue, Swift, Kotlin, Node.js, PHP, Astro, C++, Linux and Kali.",
       ],
     },
   },
   {
     slug: "left-to-live-app-store",
     date: "2026-08-20",
-    title: {
-      fr: "Left To Live sort sur l'App Store",
-      en: "Left To Live ships on the App Store",
-    },
+    title: { fr: "Left To Live sort sur l'App Store", en: "Left To Live is out on the App Store" },
     description: {
-      fr: "Version 1.0, le 20 août 2026, sur iOS. L'application vise aussi l'Apple Watch.",
-      en: "Version 1.0, on 20 August 2026, on iOS. The app also targets Apple Watch.",
+      fr: "Le 20 août 2026, la version 1.0 de Left To Live est sur l'App Store, avec l'Apple Watch.",
+      en: "On 20 August 2026, Left To Live 1.0 went live on the App Store, with Apple Watch.",
     },
     image: leftIcon,
     links: [
@@ -673,25 +618,22 @@ export const posts: Post[] = [
     ],
     paragraphs: {
       fr: [
-        "Le 20 août 2026, Left To Live est sur l'App Store. Identifiant 6793693539, version 1.0, éditeur indiqué « laure dugat ».",
-        "L'application tourne sur iOS et sur Apple Watch, à partir de watchOS 26. Le développement a commencé le [[left-to-live|2 août]] : compte à rebours des battements, HealthKit, mode hors ligne, français et anglais. Le dépôt reste privé.",
+        "Le 20 août 2026, Left To Live 1.0 sort sur l'App Store, dans la catégorie Santé et forme. Elle est gratuite et demande iOS 26.1.",
+        "Sur l'iPhone et sur l'Apple Watch, elle affiche le temps qu'il te reste en années, en jours et en battements de cœur. J'ai raconté sa construction dans l'article du [[left-to-live|3 août]].",
       ],
       en: [
-        "On 20 August 2026, Left To Live is on the App Store. Id 6793693539, version 1.0, publisher shown as “laure dugat”.",
-        "The app runs on iOS and on Apple Watch, from watchOS 26. Development started on [[left-to-live|2 August]]: a heartbeat countdown, HealthKit, offline mode, French and English. The repo stays private.",
+        "On 20 August 2026, Left To Live 1.0 went live on the App Store, under Health & Fitness. It's free and needs iOS 26.1.",
+        "On iPhone and Apple Watch it shows the time you have left in years, days and heartbeats. I wrote about building it in the [[left-to-live|3 August]] post.",
       ],
     },
   },
   {
     slug: "obsidianrat",
     date: "2026-09-02",
-    title: {
-      fr: "ObsidianRAT, un travail de recherche",
-      en: "ObsidianRAT, a research project",
-    },
+    title: { fr: "ObsidianRAT, un projet de recherche", en: "ObsidianRAT, a research project" },
     description: {
-      fr: "Outil d'accès à distance pour Windows et panneau web, publié pour l'étude. Dépôt ouvert le 2 septembre 2026.",
-      en: "A Windows remote-access tool and a web panel, published for study. Repo opened on 2 September 2026.",
+      fr: "Un outil d'accès à distance pour Windows avec son panneau web, publié pour l'étude. 46 commits en cinq jours.",
+      en: "A Windows remote-access tool with a web panel, published for study. 46 commits in five days.",
     },
     image: {
       src: "/images/obsidianrat-logo.webp",
@@ -711,27 +653,24 @@ export const posts: Post[] = [
     ],
     paragraphs: {
       fr: [
-        "Le 2 septembre 2026, j'ouvre le dépôt public Dontbyshai/ObsidianRAT, en version 1.0.0. Les commits vont du 2 au 7 septembre, quarante-six en tout.",
-        "C'est un travail de recherche en cybersécurité : un fork très remanié de win-rat. Il comprend un agent Windows, écrit en C# sur .NET 4.7.2, et un panneau de commande web, en PHP/Laravel et React. L'intégration continue passe par GitHub Actions, avec MSBuild et ILRepack.",
-        "Le README porte un avertissement : l'usage doit rester autorisé et éthique. Je le présente ici comme un projet d'étude.",
+        "Début septembre 2026, je bosse sur ObsidianRAT, un projet de recherche en cybersécurité. C'est un fork très retravaillé de win-rat : un agent Windows en C# (.NET 4.7.2) et un panneau de contrôle web en PHP/Laravel et React.",
+        "Le dépôt est ouvert le 2 septembre, et j'enchaîne 46 commits jusqu'au 6 : corrections de l'agent, CI GitHub Actions qui compile tout (MSBuild et ILRepack), puis le nom ObsidianRAT et un déploiement propre sur VPS.",
+        "Le README le dit clairement : c'est pour apprendre et tester dans un cadre autorisé, pas pour s'en servir contre quelqu'un.",
       ],
       en: [
-        "On 2 September 2026 I opened the public repo Dontbyshai/ObsidianRAT, at v1.0.0. Commits run from 2 to 7 September, forty-six in all.",
-        "It is cybersecurity research: a heavily reworked fork of win-rat. There is a Windows agent, written in C# on .NET 4.7.2, and a web command panel, in PHP/Laravel and React. Continuous integration goes through GitHub Actions, with MSBuild and ILRepack.",
-        "The README carries a warning: use has to stay authorized and ethical. I present it here as a study project.",
+        "In early September 2026 I worked on ObsidianRAT, a cybersecurity research project. It's a heavily reworked fork of win-rat: a Windows agent in C# (.NET 4.7.2) and a web control panel in PHP/Laravel and React.",
+        "The repo opened on 2 September, and I pushed 46 commits up to the 6th: agent fixes, a GitHub Actions CI that builds everything (MSBuild and ILRepack), then the ObsidianRAT name and a clean VPS deployment.",
+        "The README says it plainly: it's for learning and testing in an authorised setting, not for use against anyone.",
       ],
     },
   },
   {
     slug: "notianote-uca",
     date: "2026-09-23",
-    title: {
-      fr: "NotiaNote et le portail de l'UCA",
-      en: "NotiaNote and the UCA student portal",
-    },
+    title: { fr: "NotiaNote et le portail de l'UCA", en: "NotiaNote and the UCA student portal" },
     description: {
-      fr: "Notes et code de recherche pour l'Université Clermont Auvergne. Quatre commits le 23 septembre 2026.",
-      en: "Research notes and code for Université Clermont Auvergne. Four commits on 23 September 2026.",
+      fr: "Le 23 septembre 2026, NotiaNote se connecte au portail de l'Université Clermont Auvergne.",
+      en: "On 23 September 2026, NotiaNote learns to sign in to the Université Clermont Auvergne portal.",
     },
     links: [
       {
@@ -741,14 +680,14 @@ export const posts: Post[] = [
     ],
     paragraphs: {
       fr: [
-        "Le dépôt public Shai-Company-Ltd/notianote-uca-integration est créé le 23 septembre 2026. Quatre commits, le même jour.",
-        "Le sujet : faire entrer le portail étudiant de l'Université Clermont Auvergne dans NotiaNote. Emploi du temps ADE, notes Pégase et Apogée, cours Moodle.",
-        "L'approche écrite dans le dépôt : une WebView récupère les cookies CAS (CASTGC et JSESSIONID), puis un driver `UCADriver.ts` les réinjecte. Stack : TypeScript, JavaScript, React Native WebView. C'est de la documentation et de la recherche, au service de [[notianote-connexion|NotiaNote Connexion]].",
+        "Le 23 septembre 2026, je publie notianote-uca-integration : comment j'ai branché le portail de l'Université Clermont Auvergne dans NotiaNote. Emploi du temps ADE, notes Pégase et Apogée, cours Moodle.",
+        "La technique : l'étudiant se connecte dans une WebView, l'appli récupère les cookies CAS, puis un driver en TypeScript, `UCADriver.ts`, les réutilise pour lire les mails, l'emploi du temps, les notes et les devoirs.",
+        "Dans l'appli, ça sort avec la v2.7 le 11 septembre (« UCA Integration »). Le code part aussi dans [[notianote-connexion|NotiaNote Connexion]].",
       ],
       en: [
-        "The public repo Shai-Company-Ltd/notianote-uca-integration was created on 23 September 2026. Four commits, the same day.",
-        "The subject: bring the Université Clermont Auvergne student portal into NotiaNote. ADE timetable, Pégase and Apogée grades, Moodle courses.",
-        "The approach written in the repo: a WebView collects the CAS cookies (CASTGC and JSESSIONID), then a `UCADriver.ts` driver injects them again. Stack: TypeScript, JavaScript, React Native WebView. Documentation and research, in service of [[notianote-connexion|NotiaNote Connexion]].",
+        "On 23 September 2026 I published notianote-uca-integration: how I plugged the Université Clermont Auvergne portal into NotiaNote. ADE timetable, Pégase and Apogée grades, Moodle courses.",
+        "How it works: the student signs in inside a WebView, the app picks up the CAS cookies, then a TypeScript driver, `UCADriver.ts`, reuses them to read emails, the timetable, grades and homework.",
+        "In the app, it shipped with v2.7 on 11 September (“UCA Integration”). The code also went into [[notianote-connexion|NotiaNote Connexion]].",
       ],
     },
   },
@@ -757,8 +696,8 @@ export const posts: Post[] = [
     date: "2026-09-23",
     title: { fr: "Fuel Tracker", en: "Fuel Tracker" },
     description: {
-      fr: "Application pour trouver le plein ou la recharge au meilleur prix. Premier commit le 23 septembre 2026. Dépôt privé.",
-      en: "An app for finding the cheapest fill-up or charge. First commit on 23 September 2026. Private repo.",
+      fr: "Une appli pour trouver le carburant ou la recharge au meilleur prix, en Expo et React Native.",
+      en: "An app to find the cheapest fuel or charging, in Expo and React Native.",
     },
     links: [
       {
@@ -769,27 +708,28 @@ export const posts: Post[] = [
     image: fuelIcon,
     paragraphs: {
       fr: [
-        "Le premier commit, « Initial commit, create-expo », date du 23 septembre 2026. Le dépôt Shai-Company-Ltd/Fuel-Tracker est poussé le 2 novembre 2026. Dernier commit le 15 novembre 2026. Il est privé, et le projet est en cours. Je n'ai pas trouvé de fiche App Store ou Play Store à ce nom. Des pages légales sont sur le site de Shaï Company.",
-        "L'application, en Expo et React Native, montre une carte des stations-service, des bornes de recharge et des stations hydrogène, avec les prix en direct. Les sources sont des données ouvertes officielles : France, Espagne, Portugal, Andorre, Autriche, Allemagne, Royaume-Uni. Elle calcule le coût d'un plein, garde un historique, des favoris, des alertes de prix, et un signalement communautaire. Les comptes passent par Apple, Google ou l'e-mail, via Firebase. Cinq langues : français, anglais, espagnol, italien, portugais.",
-        "Il y a de la publicité AdMob. Une partie de la couche données est adaptée de Plein, le projet open source de Zadkiel Aharonian, en licence MIT.",
+        "Fuel Tracker, c'est une appli iOS et Android pour savoir où faire le plein ou recharger au meilleur prix. Elle affiche sur une carte les stations-service, les bornes de recharge et les stations hydrogène avec les prix en direct, à partir des données ouvertes officielles : France, Espagne, Portugal, Andorre, Autriche, Allemagne et Royaume-Uni.",
+        "On peut calculer le coût d'un plein, voir l'historique des prix, garder des favoris, recevoir des alertes et signaler un prix. Les comptes passent par Apple, Google ou l'e-mail (Firebase), et l'appli existe en cinq langues. Une partie de la couche données vient du projet open source Plein (licence MIT), crédité dans l'appli.",
+        "## Le chemin",
+        "- 23 septembre 2026 : premier commit, avec create-expo.\n- 5 octobre : publicités AdMob et connexion Google native.\n- 2 novembre : plus de pays, préparation de la sortie Play Store.\n- 13 novembre : corrections demandées par la review d'Apple (règles 4.3 et 4.2.6) : suppression de compte dans les réglages, localisation seulement pendant l'utilisation, publicités qui respectent le suivi (ATT), manifeste de confidentialité. Et des règles de sécurité Firestore.\n- 15 novembre : tag v1.0.0-release.",
+        "C'est du TypeScript, avec Expo, Firebase et AdMob.",
       ],
       en: [
-        "The first commit, “Initial commit, create-expo”, is from 23 September 2026. The Shai-Company-Ltd/Fuel-Tracker repo was pushed on 2 November 2026. Last commit on 15 November 2026. It is private, and the project is in progress. I have not found an App Store or Play Store listing under this name. Legal pages live on the Shaï Company site.",
-        "The app, in Expo and React Native, shows a map of petrol stations, charging points and hydrogen stations, with live prices. The sources are official open data: France, Spain, Portugal, Andorra, Austria, Germany, the United Kingdom. It computes the cost of a fill-up, keeps a history, favourites, price alerts, and community reports. Accounts go through Apple, Google or email, via Firebase. Five languages: French, English, Spanish, Italian, Portuguese.",
-        "There are AdMob ads. Part of the data layer is adapted from Plein, the open-source project by Zadkiel Aharonian, under the MIT license.",
+        "Fuel Tracker is an iOS and Android app to find where to fill up or charge for the best price. It maps petrol stations, charging points and hydrogen stations with live prices, from official open data: France, Spain, Portugal, Andorra, Austria, Germany and the UK.",
+        "You can work out the cost of a fill-up, see price history, keep favourites, get alerts and report a price. Accounts go through Apple, Google or email (Firebase), and the app comes in five languages. Part of the data layer comes from the open-source project Plein (MIT), credited in the app.",
+        "## The road so far",
+        "- 23 September 2026: first commit, with create-expo.\n- 5 October: AdMob ads and native Google sign-in.\n- 2 November: more countries, getting ready for the Play Store.\n- 13 November: fixes asked for by Apple's review (guidelines 4.3 and 4.2.6): account deletion in settings, location only while in use, ads that respect tracking (ATT), a privacy manifest. Plus Firestore security rules.\n- 15 November: tag v1.0.0-release.",
+        "It's TypeScript, with Expo, Firebase and AdMob.",
       ],
     },
   },
   {
     slug: "notianote-2-7-2",
     date: "2026-10-07",
-    title: {
-      fr: "NotiaNote 2.7.2 sur l'App Store",
-      en: "NotiaNote 2.7.2 on the App Store",
-    },
+    title: { fr: "NotiaNote 2.7.2", en: "NotiaNote 2.7.2" },
     description: {
-      fr: "La fiche iOS indique la version 2.7.2 le 7 octobre 2026.",
-      en: "The iOS listing shows version 2.7.2 on 7 October 2026.",
+      fr: "Le 7 octobre 2026 : un gros correctif pour les connexions Pronote et ÉcoleDirecte.",
+      en: "7 October 2026: a big fix for Pronote and ÉcoleDirecte sign-ins.",
     },
     links: [
       {
@@ -804,25 +744,24 @@ export const posts: Post[] = [
     image: notianoteEdt,
     paragraphs: {
       fr: [
-        "Le 7 octobre 2026, la fiche App Store de NotiaNote affiche la version 2.7.2. Je n'ai pas le détail des changements de cette version.",
-        "Côté dépôt mobile, privé, les tags vont jusqu'à v2.7 et v2.7.1. Le dernier push date du 27 septembre 2026. L'application reste sur l'App Store et le Play Store. La sortie initiale est racontée le [[notianote-app-store|3 mars]].",
+        "Le 7 octobre 2026, la version 2.7.2 de NotiaNote sort sur l'App Store. C'est un correctif : les connexions à Pronote et à ÉcoleDirecte posaient problème, elles remarchent normalement. Il y a aussi des corrections de stabilité.",
+        "## Les versions d'avant",
+        "- 21 mai, 2.5.1 : téléchargement des pièces jointes des devoirs réparé, plus de plantage du verrouillage biométrique, graphique de l'accueil corrigé.\n- 11 août, 2.5.2 : corrections sur les achats intégrés, la moyenne et les devoirs.\n- 11 septembre, 2.7 : la [[notianote-uca|connexion à l'UCA]] et des retouches d'interface.\n- 27 septembre, 2.7.1 : correction du lien de l'activité en direct dans la Dynamic Island.",
       ],
       en: [
-        "On 7 October 2026, the NotiaNote App Store listing shows version 2.7.2. I don't have the changelog for that version.",
-        "On the private mobile repo, tags go up to v2.7 and v2.7.1. The last push is dated 27 September 2026. The app stays on the App Store and the Play Store. The original release is written up on [[notianote-app-store|3 March]].",
+        "On 7 October 2026, NotiaNote 2.7.2 went out on the App Store. It's a fix: sign-ins to Pronote and ÉcoleDirecte were failing, and they work again. There are stability fixes too.",
+        "## Earlier versions",
+        "- 21 May, 2.5.1: homework attachment downloads fixed, no more biometric-lock crash, home chart fixed.\n- 11 August, 2.5.2: fixes for in-app purchases, the average and homework.\n- 11 September, 2.7: the [[notianote-uca|UCA sign-in]] and UI touch-ups.\n- 27 September, 2.7.1: fixed the Live Activity link in the Dynamic Island.",
       ],
     },
   },
   {
     slug: "kairo",
-    date: "2026-10-21",
-    title: {
-      fr: "Kairo, moteur de trading, puis pause",
-      en: "Kairo, a trading engine, then a pause",
-    },
+    date: "2026-10-20",
+    title: { fr: "Kairo, mon moteur de trading", en: "Kairo, my trading engine" },
     description: {
-      fr: "Premier commit le 21 octobre 2026. Dépôt public, archivé, licence propriétaire.",
-      en: "First commit on 21 October 2026. Public repo, archived, proprietary license.",
+      fr: "Un bot de trading crypto en Python, 18 versions en huit jours, puis archivé. Il a mené à Bitixe.",
+      en: "A crypto trading bot in Python, 18 versions in eight days, then archived. It led to Bitixe.",
     },
     links: [
       {
@@ -832,57 +771,60 @@ export const posts: Post[] = [
     ],
     paragraphs: {
       fr: [
-        "Le 21 octobre 2026, le commit « v4.0 : premier moteur, paper par défaut » ouvre Shai-Company-Ltd/kairo. Le projet s'appelait Trading v4. Kairo 1 en v1.0.0 correspond à Trading v4.3.0.",
-        "Entre le 21 et le 25 octobre 2026, les tags vont de v4.0 à v4.2.5. Le README date cette fourchette. Vingt commits, le dernier le 15 novembre 2026. Le dépôt est public, archivé, et il n'est plus maintenu. La licence est propriétaire.",
-        "Kairo est un moteur Python qui tourne en continu sur un VPS et passe des ordres sur Bitunix, sur BTCUSDT, avec six unités de temps. Il rend compte à plusieurs agents : Scalpeur, Intraday, Swing, Risk, Journal. Les indicateurs cités sont EMA, RSI, ATR, VWAP, ADX et OBV. Les setups décrits : breakout, pullback, RSI. La gestion du risque prévue : levier x20 isolé, kill switch, stop et take profit par trade. Un module d'observation s'appelle Kronos. Les récaps sont espacés de trois heures.",
-        "Stack : Python 3.10 ou plus, SQLite, systemd, API Bitunix Futures. Le README demande de ne pas l'utiliser avec des fonds réels. Je le laisse archivé.",
+        "Le 20 octobre 2026 au soir, je lance la v4.0 de mon moteur de trading, d'abord en mode papier (sans argent réel). Il s'appelle encore Trading v4. Il tourne en Python sur un VPS, 24 h sur 24, et trade le BTCUSDT sur Bitunix.",
+        "Il calcule des indicateurs (EMA, RSI, ATR, VWAP, ADX, OBV), cherche des setups (cassure, pullback, RSI), et fait des comptes rendus à une équipe d'agents IA : scalpeur, intraday, swing, risque et journal.",
+        "## Huit jours de versions",
+        "- 21 octobre, v4.0.1 : passage en réel.\n- 22 octobre, v4.0-stable puis v4.1 : stop et take profit par trade avec réparation automatique, récap toutes les 3 heures, filtre ADX.\n- 23 au 25 octobre, v4.2 à v4.2.6 : prise de gain partielle, suivi des ordres par identifiant, entrées limite avec délai, calcul du capital total pour le kill switch.\n- 28 octobre, v4.2.7 puis v4.3.0 : le moteur ne touche plus jamais aux positions manuelles, filtres de tendance, risque à 3 %. Je le renomme Kairo 1.",
+        "Le même jour, je commence [[bitixe|Bitixe]], et Kairo s'arrête là. Le 15 novembre, je fais le ménage dans le dépôt et je l'archive. Le README le précise : ce n'est pas fait pour trader de l'argent réel.",
       ],
       en: [
-        "On 21 October 2026, the commit “v4.0 : premier moteur, paper par défaut” opens Shai-Company-Ltd/kairo. The project used to be called Trading v4. Kairo 1 v1.0.0 corresponds to Trading v4.3.0.",
-        "Between 21 and 25 October 2026, tags run from v4.0 to v4.2.5. The README dates that range. Twenty commits, the last on 15 November 2026. The repo is public, archived, and no longer maintained. The license is proprietary.",
-        "Kairo is a Python engine that runs continuously on a VPS and places orders on Bitunix, on BTCUSDT, across six timeframes. It reports to several agents: Scalper, Intraday, Swing, Risk, Journal. Indicators named in the README: EMA, RSI, ATR, VWAP, ADX and OBV. Setups described: breakout, pullback, RSI. The planned risk handling: isolated x20 leverage, a kill switch, a stop and a take profit per trade. An observation module is called Kronos. Recaps are spaced three hours apart.",
-        "Stack: Python 3.10 or newer, SQLite, systemd, the Bitunix Futures API. The README says not to use it with real funds. I leave it archived.",
+        "On the evening of 20 October 2026 I started v4.0 of my trading engine, first in paper mode (no real money). It was still called Trading v4. It runs in Python on a VPS, around the clock, and trades BTCUSDT on Bitunix.",
+        "It computes indicators (EMA, RSI, ATR, VWAP, ADX, OBV), looks for setups (breakout, pullback, RSI), and reports to a team of AI agents: scalper, intraday, swing, risk and journal.",
+        "## Eight days of versions",
+        "- 21 October, v4.0.1: going live.\n- 22 October, v4.0-stable then v4.1: per-trade stop and take profit with automatic repair, a recap every 3 hours, an ADX filter.\n- 23 to 25 October, v4.2 to v4.2.6: partial profit-taking, order tracking by ID, limit entries with a timeout, total equity for the kill switch.\n- 28 October, v4.2.7 then v4.3.0: the engine never touches manual positions, trend filters, 3% risk. I renamed it Kairo 1.",
+        "That same day I started [[bitixe|Bitixe]], and Kairo stopped there. On 15 November I cleaned up the repo and archived it. The README says so: it's not meant for trading real money.",
       ],
     },
   },
   {
     slug: "bitixe",
     date: "2026-10-29",
-    title: { fr: "Bitixe, première bêta", en: "Bitixe, first beta" },
+    title: { fr: "Bitixe, ma plateforme de trading", en: "Bitixe, my trading platform" },
     description: {
-      fr: "Plateforme web de trading crypto. Le tag v0.9.0-beta date du 29 octobre 2026. Le service est en ligne.",
-      en: "A crypto trading website. Tag v0.9.0-beta is from 29 October 2026. The service is online.",
+      fr: "Commencée le 28 octobre 2026, plus de 60 versions en deux semaines. Ouverture publique le 8 décembre.",
+      en: "Started on 28 October 2026, more than 60 versions in two weeks. Public launch on 8 December.",
     },
     links: [
       {
-        href: "https://app.bitixe.com",
-        label: { fr: "app.bitixe.com", en: "app.bitixe.com" },
+        href: "https://bitixe.com",
+        label: { fr: "bitixe.com", en: "bitixe.com" },
       },
     ],
     image: bitixeShot,
     paragraphs: {
       fr: [
-        "Le dépôt privé Shai-Company-Ltd/bitixe est créé le 28 octobre 2026. Le 29 octobre, le tag v0.9.0-beta. Les tags continuent jusqu'à v0.13.6. Je n'ai pas la date de chaque palier. Dernier push le 12 novembre 2026.",
-        "Bitixe est une plateforme web. Une base de code, deux modes : mainnet et testnet. L'instance [app.bitixe.com](https://app.bitixe.com) est en argent réel, sur des perpétuels. Le site est en français, avec l'anglais en option. On y trouve des résultats live Bitunix pour le copy-trading, des comptes (scrypt, sessions, vérification e-mail), une offre A de copy-trading Bitunix, et une offre B : un abonnement avec une instance paper du moteur, par abonné. Un espace « Kairo chat » est dans le socle, et il est désactivé. Le moteur [[kairo|Kairo]] n'est pas inclus dans l'application officielle.",
-        "Stack : Flask, SQLite, waitress, Nginx, API publiques Bitunix. Stripe est désactivé. Shaï Company range Bitixe dans Web3 & Crypto.",
+        "Le 28 octobre 2026 au matin, je commence un nouveau projet, qui s'appelle d'abord Essaim. Un peu plus d'une heure après, je le renomme Bitixe. L'idée : rendre le trading crypto simple, en français.",
+        "Le serveur est en Python (Flask, SQLite, waitress, derrière Nginx), et l'interface en JavaScript, HTML et CSS. Le compte se crée avec Google, Apple ou un e-mail, et c'est un portefeuille non custodial : les fonds restent à l'utilisateur.",
+        "## Deux semaines de versions",
+        "- 29 octobre, v0.9.0-beta : nouvel accueil et première bêta. Le soir même, v0.10 et v0.11 : connexion des portefeuilles (EIP-6963, WalletConnect), copy trading avec page détail, parrainage, classement, prix de liquidation estimé.\n- 30 octobre, de la v0.11.5 à la v0.12.28 : graphiques avec les positions, portefeuille complet, compte Bitixe avec portefeuille intégré, achat par carte ou virement, échanges entre réseaux, et les actions, matières premières et obligations en plus des cryptos.\n- 2 et 3 novembre : nouvelle page d'accueil, l'appli passe sur app.bitixe.com, et des tests de frais de réseau offerts sur le réseau de test.\n- 11 novembre, v0.13 : TP/SL simplifiés, gain estimé, partage d'un trade avec une carte de résultat, appli installable sur le téléphone.",
+        "Pour l'instant, le site est fermé au public : [bitixe.com](https://bitixe.com) affiche un compte à rebours jusqu'au lancement, le 8 décembre 2026. Il est né juste après [[kairo|Kairo]], mais le moteur Kairo n'est pas dedans.",
       ],
       en: [
-        "The private repo Shai-Company-Ltd/bitixe was created on 28 October 2026. On 29 October, tag v0.9.0-beta. Tags continue up to v0.13.6. I don't have the date of each step. Last push on 12 November 2026.",
-        "Bitixe is a website. One codebase, two modes: mainnet and testnet. The [app.bitixe.com](https://app.bitixe.com) instance uses real money, on perpetuals. The site is in French, with English as an option. It shows live Bitunix results for copy trading, accounts (scrypt, sessions, email verification), an offer A of Bitunix copy trading, and an offer B: a subscription with a paper instance of the engine, per subscriber. A “Kairo chat” space sits in the base and is switched off. The [[kairo|Kairo]] engine is not included in the official app.",
-        "Stack: Flask, SQLite, waitress, Nginx, public Bitunix APIs. Stripe is disabled. Shaï Company files Bitixe under Web3 & Crypto.",
+        "On the morning of 28 October 2026 I started a new project, first called Essaim. A little over an hour later I renamed it Bitixe. The idea: make crypto trading simple, in French.",
+        "The server is Python (Flask, SQLite, waitress, behind Nginx), and the interface is JavaScript, HTML and CSS. You sign up with Google, Apple or an email, and it's a non-custodial wallet: the funds stay with the user.",
+        "## Two weeks of versions",
+        "- 29 October, v0.9.0-beta: a new home page and the first beta. That same evening, v0.10 and v0.11: wallet connection (EIP-6963, WalletConnect), copy trading with a detail page, referrals, a leaderboard, estimated liquidation price.\n- 30 October, v0.11.5 to v0.12.28: charts showing positions, a full portfolio, a Bitixe account with a built-in wallet, buying by card or bank transfer, cross-chain swaps, and stocks, commodities and bonds on top of crypto.\n- 2 and 3 November: a new home page, the app moves to app.bitixe.com, and tests of sponsored network fees on the testnet.\n- 11 November, v0.13: simpler TP/SL, estimated profit, sharing a trade as a result card, an app you can install on your phone.",
+        "For now the site is closed to the public: [bitixe.com](https://bitixe.com) shows a countdown to the launch, on 8 December 2026. It was born right after [[kairo|Kairo]], but the Kairo engine isn't in it.",
       ],
     },
   },
   {
     slug: "shaiscompany-deploiement",
     date: "2026-11-02",
-    title: {
-      fr: "L'outil qui déploie shaiscompany.com",
-      en: "The tool that deploys shaiscompany.com",
-    },
+    title: { fr: "Le petit outil qui met à jour shaiscompany.com", en: "The little tool that updates shaiscompany.com" },
     description: {
-      fr: "Dépôt privé de scripts, ouvert le 2 novembre 2026. Le code React d'origine n'y est pas.",
-      en: "A private repo of scripts, opened on 2 November 2026. The original React source is not in it.",
+      fr: "Des scripts Python pour modifier et déployer le site de Shaï Company, en novembre 2026.",
+      en: "Python scripts to edit and deploy the Shaï Company site, in November 2026.",
     },
     links: [
       {
@@ -893,24 +835,22 @@ export const posts: Post[] = [
     image: shaiscompanySite,
     paragraphs: {
       fr: [
-        "Shai-Company-Ltd/shaiscompany est créé le 2 novembre 2026. Dernier commit le 9 novembre. Usage interne, dépôt privé.",
-        "Le code source React du site n'est pas dans ce dépôt. Un script `patch.py` applique des changements au bundle déjà compilé : ajustements de contenu autour de Love Map, de Bitixe présenté en Web3 & Crypto, de Fuel Tracker, et des correctifs. Le dossier `dist/` est ce qui part en production. La config Nginx porte des redirections 301.",
-        "Le site public reste [shaiscompany.com](https://shaiscompany.com). L'histoire du site vitrine est dans l'article du [[shai-company|1er février]].",
+        "Le 2 novembre 2026, je crée un dépôt privé, shaiscompany, pour mettre à jour le site de [[shai-company|Shaï Company]] sans repartir du code React : un script Python, `patch.py`, modifie directement le site compilé, puis le dossier `dist/` part en ligne derrière Nginx.",
+        "Le soir même, je passe le site en version statique optimisée, j'ajoute les nouvelles apps, le vrai logo de Bitixe (le B avec une bougie) et un aperçu de l'appli Bitixe en trois captures. Le 9 novembre, Love Map a ses propres pages de confidentialité et de CGU.",
       ],
       en: [
-        "Shai-Company-Ltd/shaiscompany was created on 2 November 2026. Last commit on 9 November. Internal use, private repo.",
-        "The React source of the site is not in this repo. A `patch.py` script applies changes to the already compiled bundle: content adjustments around Love Map, Bitixe presented as Web3 & Crypto, Fuel Tracker, and fixes. The `dist/` folder is what goes to production. The Nginx config carries 301 redirects.",
-        "The public site remains [shaiscompany.com](https://shaiscompany.com). The story of the showcase site is in the [[shai-company|1 February]] post.",
+        "On 2 November 2026 I created a private repo, shaiscompany, to update the [[shai-company|Shaï Company]] site without going back to the React code: a Python script, `patch.py`, edits the built site directly, then the `dist/` folder goes live behind Nginx.",
+        "That evening I switched the site to an optimised static build, added the new apps, the real Bitixe logo (the B with a candle) and a three-screenshot preview of the Bitixe app. On 9 November, Love Map got its own privacy and terms pages.",
       ],
     },
   },
   {
     slug: "serpentix",
     date: "2026-11-09",
-    title: { fr: "Serpentix, projet NSI", en: "Serpentix, an NSI project" },
+    title: { fr: "Serpentix, un Snake multijoueur pour la NSI", en: "Serpentix, a multiplayer Snake for school" },
     description: {
-      fr: "Snake multijoueur dans le navigateur, Flask et SQLite. Premier commit le 9 novembre 2026.",
-      en: "Multiplayer Snake in the browser, Flask and SQLite. First commit on 9 November 2026.",
+      fr: "Projet NSI : un site Flask avec une base SQLite et un jeu entre Snake et Slither.io, jusqu'à 3 joueurs.",
+      en: "School project: a Flask site with a SQLite database and a game between Snake and Slither.io, up to 3 players.",
     },
     links: [
       {
@@ -921,33 +861,33 @@ export const posts: Post[] = [
     image: serpentixShot,
     paragraphs: {
       fr: [
-        "Le dépôt public Dontbyshai/Serpentix est créé le 6 novembre 2026. Premier commit le 9 novembre, dernier le même jour. Quatorze commits. Projet d'école, usage libre pour une démo éducative.",
-        "C'est un site Flask, une base SQLite, et un jeu dans le navigateur pour 2 ou 3 joueurs, entre Snake et Slither.io. Inscription et connexion avec mots de passe hachés, fiche joueur, boutique de skins, classement, mode solo, parties en temps réel avec Socket.IO, six bonus, arène dessinée en canvas. Trente et un tests unitaires. L'interface est noir et blanc.",
-        "Stack : Python, Flask, Socket.IO, SQLite, HTML, CSS, JavaScript, Jinja, Werkzeug.",
+        "Serpentix, c'est mon projet de NSI de novembre 2026 : un site web en Flask avec une base SQLite, et un jeu dans le navigateur entre Snake et Slither.io.",
+        "Le 9 novembre, je pousse tout en 14 commits. Il y a les comptes (mots de passe hachés, jeton CSRF), une boutique de skins avec des pièces, un classement en SQL qu'on peut trier, un mode solo et des parties en temps réel à 2 ou 3 joueurs avec Socket.IO.",
+        "Pour le jeu : collisions case par case, bouclier, compte à rebours et des bonus comme le fantôme, l'aimant, les ciseaux ou le gel. Le tout est couvert par 31 tests unitaires, avec une interface entièrement en noir et blanc et des contrôles tactiles.",
       ],
       en: [
-        "The public repo Dontbyshai/Serpentix was created on 6 November 2026. First commit on 9 November, last the same day. Fourteen commits. A school project, free to use for an educational demo.",
-        "A Flask site, a SQLite database, and a browser game for 2 or 3 players, somewhere between Snake and Slither.io. Sign-up and sign-in with hashed passwords, a player profile, a skin shop, a leaderboard, a solo mode, real-time matches with Socket.IO, six bonuses, an arena drawn on a canvas. Thirty-one unit tests. The interface is black and white.",
-        "Stack: Python, Flask, Socket.IO, SQLite, HTML, CSS, JavaScript, Jinja, Werkzeug.",
+        "Serpentix is my November 2026 computer-science project: a Flask website with a SQLite database, and a browser game somewhere between Snake and Slither.io.",
+        "On 9 November I pushed it all in 14 commits. There are accounts (hashed passwords, CSRF token), a skin shop with coins, a sortable SQL leaderboard, a solo mode and real-time matches for 2 or 3 players with Socket.IO.",
+        "For the game: cell-by-cell collisions, a shield, a countdown and power-ups like ghost, magnet, scissors or freeze. It's covered by 31 unit tests, with a fully black-and-white interface and touch controls.",
       ],
     },
   },
   {
     slug: "snowbound",
     date: null,
-    title: { fr: "Snowbound arrive", en: "Snowbound is on the way" },
+    title: { fr: "Snowbound, ma boutique de Noël", en: "Snowbound, my Christmas shop" },
     description: {
-      fr: "Projet de Noël personnel. Pas encore publié, et pas de date.",
-      en: "A personal Christmas project. Not published yet, and no date.",
+      fr: "Une boutique Shopify éphémère de produits de Noël : elle ouvre pour les fêtes, puis elle disparaît.",
+      en: "A pop-up Shopify shop for Christmas products: it opens for the holidays, then it disappears.",
     },
     paragraphs: {
       fr: [
-        "Snowbound est un projet perso pour Noël, à côté des autres. Il n'est pas publié.",
-        "Je n'ai pas trouvé de dépôt GitHub à ce nom, ni chez Dontbyshai ni dans Shaï Company. Je n'ai donc ni stack ni date. Je les ajouterai ici quand le projet sortira.",
+        "Snowbound, c'est une boutique de Noël éphémère, faite avec Shopify. Elle vend des produits de Noël, ouvre seulement pour les fêtes, puis elle disparaît.",
+        "C'est Shai Company France qui la porte (voir le [Plan](/plan/)). J'écrirai la suite ici quand elle ouvrira.",
       ],
       en: [
-        "Snowbound is a personal project for Christmas, separate from the others. It is not published.",
-        "I have not found a GitHub repo by that name, neither under Dontbyshai nor under Shaï Company. So I have neither a stack nor a date. I will add them here when it ships.",
+        "Snowbound is a pop-up Christmas shop built with Shopify. It sells Christmas products, opens only for the holidays, then it disappears.",
+        "It's run by Shai Company France (see the [Map](/plan/)). I'll write more here when it opens.",
       ],
     },
   },
