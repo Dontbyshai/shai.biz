@@ -1002,6 +1002,8 @@ const companySummary = (c: Company) => `${c.country[locale]} · ${c.owners[local
     max-width: 100%;
     justify-self: center;
     display: grid;
+    overflow: hidden;
+    border-radius: var(--radius);
   }
   .group-card .root {
     width: 100%;
@@ -1020,9 +1022,10 @@ const companySummary = (c: Company) => `${c.country[locale]} · ${c.owners[local
     flex: none;
   }
   .n-site {
-    display: inline-flex;
+    display: flex;
     align-items: center;
     gap: 6px;
+    width: 100%;
     padding: 7px 14px 9px;
     border: 1px solid var(--line);
     border-top: 0;
@@ -1031,8 +1034,14 @@ const companySummary = (c: Company) => `${c.country[locale]} · ${c.owners[local
     color: var(--ink-2);
     font-size: 11.5px;
   }
-  .n-site:hover {
+  .n-site:hover,
+  .n-site:focus-visible {
     color: var(--accent-ink);
+    background: color-mix(in srgb, var(--accent) 12%, var(--tile));
+  }
+  .n-site:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: -2px;
   }
   .n-name {
     font-family: var(--font-serif);
@@ -1125,6 +1134,7 @@ const companySummary = (c: Company) => `${c.country[locale]} · ${c.owners[local
     border: 1px solid var(--line);
     border-top: 0;
     border-radius: 0 0 var(--radius) var(--radius);
+    overflow: hidden;
   }
   .branch .pjs,
   .oss-wrap .pjs {
@@ -1200,6 +1210,10 @@ const companySummary = (c: Company) => `${c.country[locale]} · ${c.owners[local
       transform 0.3s var(--ease),
       color 0.2s;
   }
+  .pj-main:hover,
+  .p-pjs a:hover {
+    background: color-mix(in srgb, var(--accent) 10%, var(--tile));
+  }
   .pj-main:hover .pj-name,
   .p-pjs a:hover strong {
     color: var(--accent-ink);
@@ -1245,8 +1259,10 @@ const companySummary = (c: Company) => `${c.country[locale]} · ${c.owners[local
     color: var(--ink-2);
     border-top: 1px solid var(--line);
   }
-  .n-foot:hover {
+  .n-foot:hover,
+  .n-foot:focus-visible {
     color: var(--accent-ink);
+    background: color-mix(in srgb, var(--accent) 10%, var(--tile));
   }
 
   .panel {
@@ -1372,6 +1388,21 @@ const companySummary = (c: Company) => `${c.country[locale]} · ${c.owners[local
     margin-top: 22px;
     font-size: 13px;
     color: var(--ink-2);
+  }
+
+  /* Le contour global (offset 3px, coins 4px) déborde des cartes */
+  .node:focus-visible,
+  .pj-main:focus-visible,
+  .n-foot:focus-visible,
+  .p-pjs a:focus-visible,
+  .p-site:focus-visible,
+  .p-work:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: -2px;
+  }
+  .pj-main:focus-visible,
+  .p-pjs a:focus-visible {
+    background: color-mix(in srgb, var(--accent) 10%, var(--tile));
   }
 
   /* À 1440 le panneau latéral coincé trop les cartes : on le passe en dessous */
