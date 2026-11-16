@@ -53,13 +53,35 @@ const fuelIcon: PostImage = {
 
 const notianoteApp: PostImage = {
   src: "/images/notianote-accueil.webp",
-  width: 780,
-  height: 1688,
+  width: 720,
+  height: 1563,
   alt: {
-    fr: "Écran d'accueil de l'application NotiaNote : moyenne générale et cours du jour.",
-    en: "NotiaNote app home screen: overall average and today's classes.",
+    fr: "Écran d'accueil de l'application NotiaNote : moyenne du trimestre, devoirs, cours, messages et cours du lendemain.",
+    en: "NotiaNote app home screen: term average, homework, classes, messages and tomorrow's lessons.",
   },
-  caption: { fr: "L'accueil de l'application mobile.", en: "The mobile app home screen." },
+  caption: { fr: "L'accueil de l'application, sur iPhone.", en: "The app home screen, on iPhone." },
+}
+
+const notianoteNotes: PostImage = {
+  src: "/images/notianote-notes.webp",
+  width: 720,
+  height: 1563,
+  alt: {
+    fr: "Écran Notes de NotiaNote : moyenne générale, moyenne de classe et notes par matière.",
+    en: "NotiaNote grades screen: overall average, class average and grades per subject.",
+  },
+  caption: { fr: "L'écran des notes, sur iPhone.", en: "The grades screen, on iPhone." },
+}
+
+const notianoteEdt: PostImage = {
+  src: "/images/notianote-edt.webp",
+  width: 720,
+  height: 1563,
+  alt: {
+    fr: "Écran Emploi du temps de NotiaNote : les cours de la journée, avec salles et professeurs.",
+    en: "NotiaNote timetable screen: the day's classes, with rooms and teachers.",
+  },
+  caption: { fr: "L'emploi du temps, sur iPhone.", en: "The timetable, on iPhone." },
 }
 
 const serpentixShot: PostImage = {
@@ -330,7 +352,6 @@ export const posts: Post[] = [
       fr: "Sortie iOS le 3 mars 2026. L'application Android existe aussi, sous com.dontbyshai.notianote.",
       en: "iOS release on 3 March 2026. The Android app also exists, as com.dontbyshai.notianote.",
     },
-    image: notianoteIcon,
     links: [
       {
         href: "https://apps.apple.com/fr/app/notianote/id6758548199",
@@ -345,6 +366,7 @@ export const posts: Post[] = [
         label: { fr: "notianote.fr", en: "notianote.fr" },
       },
     ],
+    image: notianoteNotes,
     paragraphs: {
       fr: [
         "Le 3 mars 2026, NotiaNote est sur l'App Store français. L'identifiant est 6758548199. L'éditeur indiqué sur la fiche est « laure dugat ».",
@@ -779,6 +801,7 @@ export const posts: Post[] = [
         label: { fr: "Play Store", en: "Play Store" },
       },
     ],
+    image: notianoteEdt,
     paragraphs: {
       fr: [
         "Le 7 octobre 2026, la fiche App Store de NotiaNote affiche la version 2.7.2. Je n'ai pas le détail des changements de cette version.",

@@ -2,6 +2,7 @@
 import Contributions from "@/components/Contributions.astro"
 import Icon from "@/components/Icon.astro"
 import Logo from "@/components/Logo.astro"
+import Phone from "@/components/Phone.astro"
 import Scene from "@/components/Scene.astro"
 import Topo from "@/components/Topo.astro"
 import Base from "@/layouts/Base.astro"
@@ -58,7 +59,7 @@ const status = {
       <p class="nn-text">{t(locale, "notianoteText")}</p>
       <p class="mono nn-meta">{t(locale, "notianoteMeta")}</p>
       <div class="phone" aria-hidden="true">
-        <img src="/images/notianote-accueil.webp" alt="" width="390" height="844" loading="lazy" />
+        <Phone src="/images/notianote-accueil.webp" />
       </div>
       <span class="go"><Icon name="arrow" size={16} /></span>
     </a>
@@ -441,21 +442,9 @@ const status = {
     left: 14%;
     right: 14%;
     bottom: -40%;
-    aspect-ratio: 390 / 844;
-    max-height: 72%;
-    border-radius: 24px 24px 0 0;
-    border: 6px solid var(--ink);
-    border-bottom: 0;
-    overflow: hidden;
-    background: #fff;
     transform: translateY(18%) rotate(-3deg);
     transition: transform 0.7s var(--ease);
     z-index: -1;
-    box-shadow: 0 24px 50px -20px rgb(0 0 0 / 0.5);
-  }
-  .phone img {
-    width: 100%;
-    height: auto;
   }
   .nn:hover .phone {
     transform: translateY(6%) rotate(0deg);
@@ -937,9 +926,9 @@ const status = {
     }
     .phone {
       left: auto;
-      right: 16px;
-      width: 37%;
-      bottom: -30%;
+      right: 18px;
+      width: 40%;
+      bottom: -34%;
       max-height: none;
     }
     .nn-text,

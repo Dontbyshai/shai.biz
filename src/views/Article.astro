@@ -2,6 +2,7 @@
 import Icon from "@/components/Icon.astro"
 import Base from "@/layouts/Base.astro"
 import type { Locale, Post } from "@/data/types"
+import Phone from "@/components/Phone.astro"
 import { postIcon } from "@/data/icons"
 import { t } from "@/i18n/ui"
 import { formatDay } from "@/lib/dates"
@@ -63,9 +64,7 @@ const icon = kind === "icon" && img ? { src: img.src, alt: img.alt[locale], pixe
         {
           kind === "phone" && img && (
             <figure class="phone-fig">
-              <div class="phone">
-                <img src={img.src} alt={img.alt[locale]} width={img.width} height={img.height} loading="lazy" />
-              </div>
+              <Phone class="phone" src={img.src} alt={img.alt[locale]} width={img.width} height={img.height} />
               <figcaption class="mono">{img.caption[locale]}</figcaption>
             </figure>
           )
@@ -258,17 +257,21 @@ const icon = kind === "icon" && img ? { src: img.src, alt: img.alt[locale], pixe
     color: var(--accent-ink);
     transform: translateX(2px);
   }
-  .phone {
-    border: 6px solid var(--ink);
-    border-radius: 26px;
-    overflow: hidden;
-    background: #fff;
-    box-shadow: var(--shadow);
-    transform: rotate(2deg);
+  .phone-fig {
+    margin: 0 0 28px;
+    max-width: 280px;
   }
-  .phone img {
-    width: 100%;
-    height: auto;
+  .phone-fig figcaption {
+    margin-top: 14px;
+    font-size: 11.5px;
+    color: var(--muted);
+  }
+  .phone-fig :global(.phone) {
+    transform: rotate(1.5deg);
+    transition: transform 0.6s var(--ease);
+  }
+  .phone-fig:hover :global(.phone) {
+    transform: rotate(0deg);
   }
   .pager {
     display: grid;
